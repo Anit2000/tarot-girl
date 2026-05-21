@@ -30,7 +30,13 @@ class FeaturedSlider extends HTMLElement {
             "(min-width: 768px)": {
               slides: {
                 perView: 4,
-                spacing: 32,
+                spacing: 16,
+              },
+            },
+             "(min-width: 1200px)": {
+              slides: {
+                perView: 6,
+                spacing: 16,
               },
             },
           },

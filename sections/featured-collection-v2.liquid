@@ -61,8 +61,93 @@
     {% endif %}
     <section id="{{ section.id }}-featured-collection" data-id="featured-collection-v2">
         <div class="featured-collection-wrapper {% if section.settings.internal_bg_color != blank %}sw-px-0{% else %}sw-pl-2{% endif %}{% if section.settings.slider %} sw-pl-2{% else %} sw-px-2 {% endif %} sw-py-4 lg:sw-px-[32px] lg:sw-py-8">
-            
-            <div class="featured-collection-wrapper">
+
+
+
+        <div class="sw-text-center sw-mb-2 sm:sw-mb-3">
+            <div class="featured-collection-wrapper sw-max-w-7xl sw-mx-auto sw-relative sw-z-10 lg:sw-px-4">
+                <div
+                    class="sw-text-center"
+                    style="
+                        padding-top:{{ section.settings.section_top_spacing }}px;
+                        padding-bottom:{{ section.settings.section_bottom_spacing }}px;
+                    "
+                    >
+                    <div class="sw-text-center sw-mb-2 sm:sw-mb-3">
+                        <div
+                        class="
+                            sw-inline-flex
+                            sw-px-4
+                            sm:sw-px-5
+                            sw-py-2
+                            sw-rounded-full
+                            sw-border-2
+                            sw-backdrop-blur-sm
+                            sw-mb-2
+                            sm:sw-mb-3
+                            sw-shadow-sm
+                        "
+                        style="
+                            background:{{ section.settings.badge_bg }};
+                            border-color:{{ section.settings.badge_border_color }};
+                        "
+                        >
+                        <span
+                            class="
+                            sw-text-xs
+                            sw-tracking-wider
+                            sw-uppercase
+                            sw-font-secondary
+                            sw-font-semibold
+                            "
+                            style="
+                            color:{{ section.settings.badge_text_color }};
+                            "
+                        >
+                            {{ section.settings.badge_text }}
+                        </span>
+                        </div>
+                    </div>
+
+                    <h2
+                        class="
+                        sw-text-2xl
+                        sm:sw-text-3xl
+                        md:sw-text-4xl
+                        sw-text-center
+                        sw-mb-2
+                        sw-px-4
+                        sw-font-primary
+                        "
+                        style="
+                        color:{{ section.settings.heading_color_new }};
+                        "
+                    >
+                        {{ section.settings.heading }}
+                    </h2>
+
+                    <p
+                        class="
+                        sw-text-center
+                        sw-mb-4
+                        sm:sw-mb-6
+                        sw-text-sm
+                        sw-max-w-2xl
+                        sw-mx-auto
+                        sw-leading-relaxed
+                        sw-px-4
+                        sw-font-secondary
+                        sw-font-normal
+                        "
+                        style="
+                        color:{{ section.settings.description_color }};
+                        "
+                    >
+                        {{ section.settings.description }}
+                    </p>
+
+                    </div>
+
                 {% if section.settings.section_heading !=  blank or section.settings.section_heading_svg != blank %}
                     <div class="featured-collection-heading sw-flex sw-items-center sw-gap-3 sw-pl-2 sw-pr-4 sw-mb-4 lg:sw-mb-[40px] sw-justify-between">
                         {% if section.settings.heading_type == 'svg' %}
@@ -80,7 +165,7 @@
                 {% endif %}
                 <div class="featured-collection-content_wrapper">
                     {% if section.settings.internal_bg_color != blank %}<div style="background:{{ section.settings.internal_bg_color }};border-radius:{{ section.settings.border_radius_mob }}px;" class="internal-wrapper sw-p-2 lg:sw-px-[32px] lg:sw-py-10">{% endif %}
-                    <div class="featured-collection-cards  {% unless section.settings.slider and section.settings.collection.products.size > 1 %} sw-grid sw-grid-cols-2 lg:sw-grid-cols-4 sw-gap-3 sw-gap-y-2 lg:sw-gap-[32px]{% endunless %}">
+                    <div class="featured-collection-cards  {% unless section.settings.slider and section.settings.collection.products.size > 1 %} sw-grid sw-grid-cols-2 lg:sw-grid-cols-6 sw-gap-3 sw-gap-y-2 lg:sw-gap-[16px]{% endunless %}">
                         {% if section.settings.slider and section.settings.collection.products.size > 1  %}<featured-slider class=""><div class="sw-flex-nowrap sw-overflow-hidden sw-flex sw-w-full" data-role="slider-wrapper">{% endif %} 
                         {% for product in section.settings.collection.products  limit : section.settings.product_limit %}
                             <div class="{% if section.settings.slider and section.settings.collection.products.size > 1  %}keen-slider__slide sw-flex-[0_0_calc(100%/2_-_4px)] lg:sw-flex-[0_0_calc(100%/4_-_14px)] !sw-overflow-visible sw-pt-[1px] sw-p-[1px]{% if forloop.index == 1 %} sw-ml-[1px] {% elsif forloop.last %} sw-ml-[-2px] {% endif %}{% endif %}">
@@ -104,7 +189,11 @@
                 </div>
             </div>
         </div>
-    </section>
+
+
+
+    
+    </section> 
 {% schema %}
     {
         "name":"Featured collection v2",
@@ -219,6 +308,79 @@
                 "label":"Enable lightning counter",
                 "id":"lightning_counter"
             },
+             {
+                    "type": "text",
+                    "id": "badge_text",
+                    "label": "Badge Text",
+                    "default": "Our Services ✨"
+                    },
+                    {
+                    "type": "text",
+                    "id": "heading",
+                    "label": "Heading",
+                    "default": "Choose Your Divine Guidance"
+                    },
+                    {
+                    "type": "textarea",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "Crafted with love to bring clarity & magic into your life ✨"
+                    },
+
+                    {
+                    "type": "color",
+                    "id": "heading_color",
+                    "label": "Heading Color",
+                    "default": "#581c87"
+                    },
+                    {
+                    "type": "color",
+                    "id": "description_color",
+                    "label": "Description Color",
+                    "default": "#6b21a8"
+                    },
+                    {
+                    "type": "color",
+                    "id": "badge_text_color",
+                    "label": "Badge Text Color",
+                    "default": "#581c87"
+                    },
+
+                    {
+                    "type": "color_background",
+                    "id": "badge_bg",
+                    "label": "Badge Background",
+                    "default": "linear-gradient(90deg, #fae8ff 0%, #fce7f3 100%)"
+                    },
+
+                    {
+                    "type": "color",
+                    "id": "badge_border_color",
+                    "label": "Badge Border Color",
+                    "default": "#d8b4fe"
+                    },
+
+                    {
+                    "type": "range",
+                    "id": "section_top_spacing",
+                    "label": "Top Spacing",
+                    "min": 0,
+                    "max": 120,
+                    "step": 4,
+                    "unit": "px",
+                    "default": 20
+                    },
+
+                    {
+                    "type": "range",
+                    "id": "section_bottom_spacing",
+                    "label": "Bottom Spacing",
+                    "min": 0,
+                    "max": 120,
+                    "step": 4,
+                    "unit": "px",
+                    "default": 24
+                    },
             {
                 "type":"text",
                 "label":"Enter section heading text",
@@ -227,7 +389,7 @@
             {
                 "type":"color",
                 "label":"Choose heading color",
-                "id":"heading_color",
+                "id":"heading_color_new",
                 "default":"#000"
             },
             {

@@ -1,0 +1,281 @@
+<section class="sw-relative sw-overflow-hidden sw-py-8 md:sw-py-14 sw-px-4 sw-bg-gradient-to-b sw-from-purple-50 sw-via-pink-50/30 sw-to-fuchsia-50">
+
+  <!-- TOP WAVE -->
+
+  <div class="sw-absolute sw-top-0 sw-left-0 sw-right-0 sw-h-10 sw-overflow-hidden">
+    <svg class="sw-absolute sw-top-0 sw-w-full sw-h-16 sw-rotate-180"
+      preserveAspectRatio="none"
+      viewBox="0 0 1200 120"
+      xmlns="http://www.w3.org/2000/svg">
+
+      <path
+        d="M0,0 C150,60 350,60 600,30 C850,0 1050,0 1200,30 L1200,120 L0,120 Z"
+        fill="#fae8ff"
+        opacity="0.5"
+      />
+ 
+      <path
+        d="M0,20 C150,80 350,80 600,50 C850,20 1050,20 1200,50 L1200,120 L0,120 Z"
+        fill="#fdf4ff"
+      />
+
+    </svg>
+  </div>
+
+  <!-- FLOATING BLOBS -->
+
+  <div class="sw-absolute sw-inset-0 sw-overflow-hidden sw-opacity-20">
+
+    <div class="sw-absolute sw-top-20 sw-right-20 sw-w-32 sw-h-32 sw-bg-fuchsia-400/40 sw-rounded-full sw-blur-3xl sw-animate-[swFloat_7s_ease-in-out_infinite]"></div>
+
+    <div class="sw-absolute sw-bottom-20 sw-left-20 sw-w-36 sw-h-36 sw-bg-pink-400/40 sw-rounded-full sw-blur-3xl sw-animate-[swFloat_9s_ease-in-out_infinite]"></div>
+
+    <div class="sw-absolute sw-top-1/2 sw-right-1/3 sw-w-24 sw-h-24 sw-bg-purple-400/30 sw-rounded-full sw-blur-2xl sw-animate-[swFloat_8s_ease-in-out_infinite]"></div>
+
+  </div>
+
+  <div class="sw-max-w-7xl sw-mx-auto sw-relative sw-z-10">
+
+    <!-- BADGE -->
+
+    <div class="sw-text-center sw-mb-3">
+
+      <div class="sw-inline-flex sw-items-center sw-gap-2 sw-px-5 sw-py-2 sw-rounded-full sw-bg-gradient-to-r sw-from-pink-100 sw-to-fuchsia-100 sw-border-2 sw-border-purple-300/50 sw-shadow-md">
+
+        <span class="sw-text-fuchsia-800 sw-text-xs sw-font-semibold sw-uppercase sw-tracking-[1.5px]">
+          {{ section.settings.badge_text }}
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- TITLE -->
+
+    <h2 class="sw-text-center sw-text-3xl md:sw-text-5xl sw-leading-tight sw-font-semibold sw-text-purple-900 sw-mb-3">
+      {{ section.settings.heading }}
+    </h2>
+
+    <p class="sw-text-center sw-text-sm md:sw-text-lg sw-text-fuchsia-800/70 sw-max-w-2xl sw-mx-auto sw-leading-relaxed sw-mb-8">
+      {{ section.settings.subheading }}
+    </p>
+
+    <!-- GRID -->
+
+    <div class="sw-grid sw-grid-cols-1 sm:sw-grid-cols-2 lg:sw-grid-cols-4 sw-gap-4 sw-mb-8">
+
+      {% for block in section.blocks %}
+
+        <div class="sw-relative sw-group">
+
+          <!-- NUMBER -->
+
+          <div class="sw-absolute -sw-top-3 -sw-left-3 sw-w-10 sw-h-10 sw-rounded-full sw-bg-gradient-to-br sw-from-fuchsia-600 sw-to-pink-600 sw-flex sw-items-center sw-justify-center sw-text-white sw-font-bold sw-shadow-lg sw-z-20">
+            {{ forloop.index }}
+          </div>
+
+          <!-- CARD -->
+
+          <div class="sw-h-full sw-p-5 sw-rounded-[24px] sw-backdrop-blur-md sw-bg-white/90 sw-border-2 sw-border-purple-200/60 sw-shadow-md hover:sw-shadow-2xl sw-transition-all sw-duration-500 hover:-sw-translate-y-1">
+
+            <!-- ICON -->
+
+            <div class="sw-mb-4">
+
+              <div class="sw-w-14 sw-h-14 sw-rounded-full sw-bg-gradient-to-br sw-from-fuchsia-100 sw-via-pink-100 sw-to-purple-100 sw-flex sw-items-center sw-justify-center sw-text-2xl">
+
+                {{ block.settings.icon }}
+
+              </div>
+
+            </div>
+
+            <!-- TITLE -->
+
+            <h3 class="sw-text-xl sw-text-purple-900 sw-leading-tight sw-mb-2">
+
+              {{ block.settings.title }}
+
+            </h3>
+
+            <!-- DESC -->
+
+            <p class="sw-text-purple-800/70 sw-text-sm sw-leading-relaxed">
+
+              {{ block.settings.description }}
+
+            </p>
+
+          </div>
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+    <!-- NOTE -->
+
+    <div class="sw-max-w-3xl sw-mx-auto">
+
+      <div class="sw-p-5 sw-rounded-[24px] sw-bg-gradient-to-br sw-from-fuchsia-100 sw-via-pink-100 sw-to-purple-100 sw-border-2 sw-border-purple-300/60 sw-shadow-lg">
+
+        <div class="sw-flex sw-gap-4">
+
+          <div class="sw-text-3xl">
+            💜
+          </div>
+
+          <div>
+
+            <h3 class="sw-text-xl sw-text-purple-900 sw-mb-2">
+
+              {{ section.settings.note_heading }}
+
+            </h3>
+
+            <p class="sw-text-purple-800/80 sw-leading-relaxed sw-text-sm md:sw-text-base">
+
+              {{ section.settings.note_text }}
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BOTTOM WAVE -->
+
+  <div class="sw-absolute sw-bottom-0 sw-left-0 sw-right-0 sw-h-10 sw-overflow-hidden">
+
+    <svg class="sw-absolute sw-bottom-0 sw-w-full sw-h-16"
+      preserveAspectRatio="none"
+      viewBox="0 0 1200 120"
+      xmlns="http://www.w3.org/2000/svg">
+
+      <path
+        d="M0,0 C150,60 350,60 600,30 C850,0 1050,0 1200,30 L1200,120 L0,120 Z"
+        fill="#fae8ff"
+        opacity="0.5"
+      />
+
+      <path
+        d="M0,20 C150,80 350,80 600,50 C850,20 1050,20 1200,50 L1200,120 L0,120 Z"
+        fill="#fdf4ff"
+      />
+
+    </svg>
+
+  </div>
+
+</section>
+
+<style>
+
+@keyframes swFloat{
+
+  0%,100%{
+    transform:
+      translateY(0px)
+      translateX(0px);
+  }
+
+  50%{
+    transform:
+      translateY(-10px)
+      translateX(5px);
+  }
+}
+
+</style>
+
+
+{% schema %}
+{
+  "name": "Easy Process",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Easy Process 💫"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Booking Your Reading is Easy 💜"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sub Heading",
+      "default": "Just 4 simple steps to begin your spiritual journey ✨"
+    },
+    {
+      "type": "text",
+      "id": "note_heading",
+      "label": "Important Note Heading",
+      "default": "Important Note"
+    },
+    {
+      "type": "textarea",
+      "id": "note_text",
+      "label": "Important Note Text",
+      "default": "Please make sure your correct WhatsApp number is entered during checkout so we can contact you easily regarding your reading. 📱✨"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon Emoji",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Choose Your Service"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Browse the readings or healing services and pick the one you want."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SW Easy Process",
+      "blocks": [
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        },
+        {
+          "type": "step"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

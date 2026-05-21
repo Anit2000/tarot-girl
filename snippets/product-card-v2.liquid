@@ -1,83 +1,318 @@
 {% liquid
   assign card_product = card_product
   assign has_popular_tag = false
+
   for tag in card_product.tags
     if tag == 'popular' or tag == 'Popular'
       assign has_popular_tag = true
     endif
   endfor
+  assign icon_image = card_product.metafields.custom.icon
+  assign subtitle = card_product.metafields.custom.one_line_description
 %}
 
-<a href="{{ card_product.url }}" class="sw-block sw-no-underline sw-h-full">
+<a
+  href="{{ card_product.url }}"
+  class="sw-block sw-no-underline sw-h-full"
+>
+
   <div
-    class="sw-rounded-2xl sw-overflow-hidden sw-shadow-md sw-flex sw-flex-col sw-h-full"
-    style="background:{{ card_bg | default: '#ffffff' }}"
+    class="
+      sw-relative
+      sw-rounded-[20px]
+      sw-overflow-hidden
+      sw-bg-white
+      sw-shadow-[0px_4px_20px_rgba(149,76,233,0.12)]
+      hover:sw-shadow-[0px_8px_30px_rgba(149,76,233,0.18)]
+      sw-transition-all
+      sw-duration-300
+      sw-flex
+      sw-flex-col
+      sw-h-full
+      sw-border
+      sw-border-[#EADCF8]
+    "
   >
 
+    <!-- TOP IMAGE -->
+
     <div class="sw-relative">
-      <div class="sw-aspect-[4/3] sw-overflow-hidden">
-        {% if card_product.featured_image %}
-          <img
-            src="{{ card_product.featured_image | image_url: width: 500 }}"
-            alt="{{ card_product.featured_image.alt | escape }}"
-            class="sw-w-full sw-h-full sw-object-cover"
-            loading="lazy"
-            width="500"
-            height="375"
-          >
-        {% endif %}
-      </div>
+
       <div
-        class="sw-absolute sw-bottom-0 sw-left-0 sw-right-0 sw-h-16 sw-pointer-events-none"
-        style="background: linear-gradient(to bottom, transparent, {{ card_bg | default: '#ffffff' }})"
-      ></div>
-      {% if has_popular_tag %}
-        <span
-          class="sw-absolute sw-top-3 sw-right-3 sw-text-white sw-text-[11px] sw-font-semibold sw-px-2.5 sw-py-1 sw-rounded-full sw-flex sw-items-center sw-gap-1"
-          style="background:{{ card_tag_color | default: '#FF007A' }}"
-        >
-          Popular ⭐
-        </span>
-      {% endif %}
-    </div>
-    <div class="sw-flex sw-flex-col sw-items-center sw-px-4 sw-pb-4 sw-flex-1 sw-text-center">
-      {% if card_product.images[1] %}
-        <div class="sw-w-14 sw-h-14 sw-mt-[-20px] sw-mb-2 sw-relative sw-z-10">
+        class="
+          sw-aspect-[4/3]
+          sw-overflow-hidden
+        "
+      >
+
+        {% if card_product.featured_image %}
+
           <img
-            src="{{ card_product.images[1] | image_url: width: 112 }}"
+            src="{{ card_product.featured_image | image_url: width: 700 }}"
             alt="{{ card_product.title }}"
-            class="sw-w-full sw-h-full sw-object-contain"
+            class="
+              sw-w-full
+              sw-h-full
+              sw-object-cover
+            "
             loading="lazy"
-            width="56"
-            height="56"
+            width="700"
+            height="525"
           >
+
+        {% endif %}
+
+      </div>
+
+      <!-- WHITE OVERLAY -->
+
+      <div
+        class="
+          sw-absolute
+          sw-bottom-0
+          sw-left-0
+          sw-right-0
+          sw-h-[110px]
+          sw-pointer-events-none
+        "
+        style="
+          background:
+          linear-gradient(
+            to bottom,
+            rgba(255,255,255,0),
+            rgba(255,255,255,0.8),
+            #ffffff
+          );
+        "
+      ></div>
+
+      <!-- POPULAR TAG -->
+
+      {% if has_popular_tag %}
+
+        <div
+          class="
+            sw-absolute
+            sw-top-3
+            sw-right-3
+            sw-bg-fuchsia-500
+            sw-text-white
+            sw-text-[11px]
+            sw-font-semibold
+            sw-px-2.5
+            sw-py-1
+            sw-rounded-full
+            sw-flex
+            sw-items-center
+            sw-gap-1
+            sw-shadow-md
+          "
+        >
+
+          Popular ⭐
+
         </div>
+
       {% endif %}
 
-      <h3 class="sw-text-[16px] lg:sw-text-[18px] sw-font-bold sw-text-gray-900 sw-leading-tight sw-m-0 sw-mb-1">
+    </div>
+
+    <!-- CONTENT -->
+
+    <div
+      class="
+        sw-relative
+        sw-z-10
+        sw-flex
+        sw-flex-col
+        sw-items-center
+        sw-text-center
+        sw-px-1
+        lg:sw-px-2
+        sw-pb-4
+        sw-flex-1
+      "
+    >
+
+      <!-- ICON -->
+
+      <div
+        class="
+         
+        "
+      >
+
+        {% if icon_image != blank %}
+
+          <img
+            src="{{ icon_image | image_url: width: 120 }}"
+            alt="{{ card_product.title }}"
+            class="
+              sw-w-[34px]
+              sw-h-[34px]
+              lg:sw-w-[40px]
+              lg:sw-h-[40px]
+              sw-object-contain
+            "
+            width="40"
+            height="40"
+            loading="lazy"
+          >
+
+        {% elsif card_product.images[1] %}
+
+          <img
+            src="{{ card_product.images[1] | image_url: width: 120 }}"
+            alt="{{ card_product.title }}"
+            class="
+              sw-w-[34px]
+              sw-h-[34px]
+              lg:sw-w-[40px]
+              lg:sw-h-[40px]
+              sw-object-contain
+            "
+            width="40"
+            height="40"
+            loading="lazy"
+          >
+
+        {% endif %}
+
+      </div>
+
+      <!-- TITLE -->
+
+      <h3
+        class="
+          sw-text-[18px]
+          lg:sw-text-[20px]
+          sw-leading-tight
+          sw-font-primary
+          sw-font-semibold
+          sw-text-[#5E189B]
+          sw-m-0
+          sw-mb-2
+        "
+      >
         {{ card_product.title }}
       </h3>
 
-      {% if card_product.description != blank %}
-        <p class="sw-text-[13px] sw-text-gray-500 sw-m-0 sw-mb-2 sw-line-clamp-2">
+      <!-- DESCRIPTION -->
+
+      {% if subtitle != blank %}
+
+        <p
+          class="
+            sw-text-[13px]
+            lg:sw-text-[14px]
+            sw-leading-[1.6]
+            sw-text-[#9A5FE0]
+            sw-font-secondary
+            sw-m-0
+            sw-mb-3
+            sw-max-w-[230px]
+          "
+        >
+          {{ subtitle }}
+        </p>
+
+      {% elsif card_product.description != blank %}
+
+        <p
+          class="
+            sw-text-[13px]
+            lg:sw-text-[14px]
+            sw-leading-[1.6]
+            sw-text-[#9A5FE0]
+            sw-font-secondary
+            sw-m-0
+            sw-mb-3
+            sw-line-clamp-2
+            sw-max-w-[230px]
+          "
+        >
           {{ card_product.description | strip_html | truncate: 70 }}
         </p>
+
       {% endif %}
 
-      <div class="sw-mt-auto sw-w-full sw-pt-2">
-        <p class="sw-text-[11px] sw-text-gray-400 sw-m-0 sw-mb-0.5">starting from</p>
-        <p class="sw-text-[22px] sw-font-bold sw-m-0 sw-mb-3" style="color:{{ price_color | default: '#CC007A' }}">
+      <!-- PRICE -->
+
+      <div
+        class="
+          sw-mt-auto
+          sw-w-full
+        "
+      >
+
+        <p
+          class="
+            sw-text-[11px]
+            sw-text-[#C78BEA]
+            sw-font-secondary
+            sw-m-0
+            sw-mb-1
+          "
+        >
+          starting from
+        </p>
+
+        <p
+          class="
+            sw-text-[24px]
+            sw-leading-none
+            sw-font-bold
+             sw-font-secondary
+            sw-m-0
+            sw-mb-4
+          "
+          style="
+            color:
+            {{ price_color | default: '#CC007A' }}
+          "
+        >
           {{ card_product.price_min | money }}
         </p>
 
+        <!-- BUTTON -->
+
         <button
-          class="sw-w-full sw-py-3 sw-rounded-full sw-text-[14px] sw-font-semibold sw-border-0 sw-cursor-pointer"
-          style="background:{{ button_bg | default: '#CC007A' }};color:{{ button_text_color | default: '#ffffff' }}"
-          onclick="event.preventDefault(); window.location.href='{{ card_product.url }}'"
+          class="
+            sw-w-full
+            sw-rounded-full
+            sw-py-2
+            sw-px-4
+            sw-text-[15px]
+            sw-font-semibold
+            sw-border-0
+            sw-font-secondary
+            sw-cursor-pointer
+            sw-transition-all
+            sw-duration-300
+            hover:sw-opacity-90
+            hover:sw-scale-[0.98]
+            sw-shadow-lg
+            sw-bg-gradient-to-r sw-from-fuchsia-600 sw-via-purple-600 sw-to-pink-600
+          "
+          style="
+           
+            color:
+            {{ button_text_color | default: '#ffffff' }}
+          "
+          onclick="
+            event.preventDefault();
+            window.location.href='{{ card_product.url }}'
+          "
         >
+
           Book Now
+
         </button>
+
       </div>
+
     </div>
+
   </div>
+
 </a>
