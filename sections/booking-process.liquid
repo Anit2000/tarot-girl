@@ -1,0 +1,1017 @@
+{% comment %}
+  Section : booking-process.liquid
+  Design  : Modern Tarot — "Easy Process" steps + Important Note + CTA Strip
+  Features: All content editable via Theme Editor, up to 6 step blocks
+  Tested  : mobile 375px / tablet 768px / desktop 1280px+
+{% endcomment %}
+
+<div id="bp-{{ section.id }}" class="bp">
+
+  {%- comment %} ── SECTION HEADER ── {%- endcomment %}
+  <div class="bp__header">
+    {%- if section.settings.tagline != blank -%}
+      <div class="bp__tagline-wrap">
+        <span class="bp__tagline">
+          {{ section.settings.tagline | escape }}
+          {%- if section.settings.tagline_emoji != blank -%}
+            <span aria-hidden="true"> {{ section.settings.tagline_emoji }}</span>
+          {%- endif -%}
+        </span>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="bp__heading">
+        {{ section.settings.heading | escape }}
+        {%- if section.settings.heading_emoji != blank -%}
+          <span aria-hidden="true"> {{ section.settings.heading_emoji }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+    {%- if section.settings.subtext != blank -%}
+      <p class="bp__subtext">
+        {{ section.settings.subtext | escape }}
+        {%- if section.settings.subtext_emoji != blank -%}
+          <span aria-hidden="true"> {{ section.settings.subtext_emoji }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+
+  {%- comment %} ── STEP CARDS ── {%- endcomment %}
+  {%- if section.blocks.size > 0 -%}
+    <div class="bp__steps">
+      {%- for block in section.blocks -%}
+        <div class="bp__step" {{ block.shopify_attributes }}>
+          <div class="bp__step-num" aria-label="Step {{ forloop.index }}">{{ forloop.index }}</div>
+          {%- if block.settings.icon != blank -%}
+            <div class="bp__step-icon-wrap" aria-hidden="true">
+              <span class="bp__step-icon">{{ block.settings.icon }}</span>
+            </div>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            <h3 class="bp__step-title">{{ block.settings.title | escape }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="bp__step-desc">{{ block.settings.description | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── IMPORTANT NOTE ── {%- endcomment %}
+  {%- if section.settings.show_note and section.settings.note_body != blank -%}
+    <div class="bp__note" role="note">
+      <div class="bp__note-inner">
+        <span class="bp__note-icon" aria-hidden="true">{{ section.settings.note_icon | default: '💜' }}</span>
+        <div class="bp__note-content">
+          {%- if section.settings.note_title != blank -%}
+            <p class="bp__note-title">{{ section.settings.note_title | escape }}</p>
+          {%- endif -%}
+          <p class="bp__note-body">{{ section.settings.note_body | escape }}</p>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── CTA STRIP DIVIDER ── {%- endcomment %}
+  <div class="bp__cta-divider" aria-hidden="true"></div>
+
+  {%- comment %} ── CTA STRIP ── {%- endcomment %}
+  <div class="bp__cta">
+
+    {%- if section.settings.show_sparkles -%}
+      <div class="bp__cta-sparkles" aria-hidden="true">
+        <span>✦</span><span>✧</span><span>✦</span>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.services_text != blank -%}
+      <p class="bp__cta-services">
+        {{ section.settings.services_text | escape }}
+        {%- if section.settings.services_emoji != blank -%}
+          <span aria-hidden="true"> {{ section.settings.services_emoji }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.show_rating -%}
+      <div class="bp__cta-rating">
+        <div class="bp__cta-stars" aria-label="5 star rating">
+          {%- for i in (1..5) -%}
+            <svg width="18" height="18" viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M6 .5l1.39 2.82 3.11.45-2.25 2.19.53 3.09L6 7.5l-2.78 1.46.53-3.09L1.5 3.77l3.11-.45L6 .5z" fill="currentColor"/>
+            </svg>
+          {%- endfor -%}
+        </div>
+        {%- if section.settings.proof_text != blank -%}
+          <span class="bp__cta-proof">
+            {{ section.settings.proof_text | escape }}
+            {%- if section.settings.proof_emoji != blank -%}
+              <span aria-hidden="true"> {{ section.settings.proof_emoji }}</span>
+            {%- endif -%}
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="bp__cta-actions">
+      {%- if section.settings.primary_label != blank -%}
+        <a
+          href="{{ section.settings.primary_url | default: '#' }}"
+          class="bp__cta-btn bp__cta-btn--primary"
+          {% if section.settings.primary_url == blank %}aria-disabled="true"{% endif %}
+        >
+          {{ section.settings.primary_label | escape }}
+          {%- if section.settings.primary_emoji != blank -%}
+            <span aria-hidden="true"> {{ section.settings.primary_emoji }}</span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.secondary_label != blank -%}
+        <a
+          href="{{ section.settings.secondary_url | default: '#' }}"
+          class="bp__cta-btn bp__cta-btn--ghost"
+          {% if section.settings.secondary_url == blank %}aria-disabled="true"{% endif %}
+        >
+          {{ section.settings.secondary_label | escape }}
+          {%- if section.settings.secondary_emoji != blank -%}
+            <span aria-hidden="true"> {{ section.settings.secondary_emoji }}</span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.urgency_text != blank -%}
+      <p class="bp__cta-urgency">
+        {%- if section.settings.urgency_emoji != blank -%}
+          <span aria-hidden="true">{{ section.settings.urgency_emoji }} </span>
+        {%- endif -%}
+        {{ section.settings.urgency_text | escape }}
+      </p>
+    {%- endif -%}
+
+  </div>
+
+</div>
+
+<style>
+  /* ─────────────────────────────────────────────
+     RESET & SCOPE
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }},
+  #bp-{{ section.id }} * { box-sizing: border-box; }
+  #bp-{{ section.id }} p,
+  #bp-{{ section.id }} h2,
+  #bp-{{ section.id }} h3 { margin: 0; padding: 0; }
+
+  /* ─────────────────────────────────────────────
+     CSS TOKENS
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} {
+    /* Section */
+    --col-bg:              {{ section.settings.section_bg }};
+    /* Header */
+    --col-heading:         {{ section.settings.heading_color }};
+    --col-subtext:         {{ section.settings.subtext_color }};
+    --col-tagline-text:    {{ section.settings.tagline_text_color }};
+    --col-tagline-border:  {{ section.settings.tagline_border_color }};
+    /* Step cards */
+    --col-card-bg:         {{ section.settings.card_bg }};
+    --col-card-border:     {{ section.settings.card_border_color }};
+    --col-num-bg:          {{ section.settings.step_num_bg }};
+    --col-num-text:        {{ section.settings.step_num_text }};
+    --col-icon-bg:         {{ section.settings.step_icon_bg }};
+    --col-icon-text:       {{ section.settings.step_icon_color }};
+    --col-step-title:      {{ section.settings.step_title_color }};
+    --col-step-desc:       {{ section.settings.step_desc_color }};
+    --radius-card:         {{ section.settings.card_radius }}px;
+    /* Note */
+    --col-note-bg-from:    {{ section.settings.note_bg_from }};
+    --col-note-bg-to:      {{ section.settings.note_bg_to }};
+    --col-note-border:     {{ section.settings.note_border_color }};
+    --col-note-title:      {{ section.settings.note_title_color }};
+    --col-note-body:       {{ section.settings.note_body_color }};
+    --radius-note:         {{ section.settings.note_radius }}px;
+    /* CTA strip */
+    --col-sparkle:         {{ section.settings.sparkle_color }};
+    --col-services:        {{ section.settings.services_color }};
+    --col-stars:           {{ section.settings.stars_color }};
+    --col-proof-bg:        {{ section.settings.proof_bg }};
+    --col-proof-border:    {{ section.settings.proof_border }};
+    --col-proof-text:      {{ section.settings.proof_text_color }};
+    --col-urgency:         {{ section.settings.urgency_color }};
+    --col-btn-p-from:      {{ section.settings.primary_btn_from }};
+    --col-btn-p-to:        {{ section.settings.primary_btn_to }};
+    --col-btn-p-text:      {{ section.settings.primary_btn_text }};
+    --col-btn-g-bg:        {{ section.settings.ghost_btn_bg }};
+    --col-btn-g-border:    {{ section.settings.ghost_btn_border }};
+    --col-btn-g-text:      {{ section.settings.ghost_btn_text }};
+    --radius-btn:          {{ section.settings.btn_radius }}px;
+    /* Layout */
+    --speed:               0.2s;
+    --px:                  clamp(1.25rem, 5vw, 4rem);
+    --py:                  clamp(3rem, 6vw, 5rem);
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION SHELL
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} {
+    background: var(--col-bg);
+    padding: var(--py) var(--px) 0;
+    font-family: inherit;
+  }
+
+  /* ─────────────────────────────────────────────
+     HEADER
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} .bp__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  #bp-{{ section.id }} .bp__tagline-wrap { margin-bottom: 0.2rem; }
+  #bp-{{ section.id }} .bp__tagline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--col-tagline-text);
+    border: 1.5px solid var(--col-tagline-border);
+    border-radius: 100px;
+    padding: 6px 18px;
+    line-height: 1;
+  }
+  #bp-{{ section.id }} .bp__heading {
+    font-size: clamp(1.7rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--col-heading);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #bp-{{ section.id }} .bp__subtext {
+    font-size: 15px;
+    color: var(--col-subtext);
+    line-height: 1.6;
+    max-width: 48ch;
+  }
+
+  /* ─────────────────────────────────────────────
+     STEPS GRID
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} .bp__steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    max-width: 1280px;
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+  }
+
+  /* ─────────────────────────────────────────────
+     STEP CARD
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} .bp__step {
+    position: relative;
+    background: var(--col-card-bg);
+    border: 1px solid var(--col-card-border);
+    border-radius: var(--radius-card);
+    padding: 2rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+  }
+  #bp-{{ section.id }} .bp__step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(180, 80, 200, 0.12);
+  }
+
+  /* Step number badge */
+  #bp-{{ section.id }} .bp__step-num {
+    position: absolute;
+    top: -14px;
+    left: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--col-num-bg);
+    color: var(--col-num-text);
+    font-size: 13px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgba(200, 0, 180, 0.35);
+  }
+
+  /* Icon circle */
+  #bp-{{ section.id }} .bp__step-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--col-icon-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.1rem;
+    flex-shrink: 0;
+  }
+  #bp-{{ section.id }} .bp__step-icon {
+    font-size: 22px;
+    color: var(--col-icon-text);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #bp-{{ section.id }} .bp__step-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--col-step-title);
+    margin-bottom: 0.45rem;
+    line-height: 1.3;
+  }
+  #bp-{{ section.id }} .bp__step-desc {
+    font-size: 13px;
+    color: var(--col-step-desc);
+    line-height: 1.65;
+  }
+
+  /* ─────────────────────────────────────────────
+     IMPORTANT NOTE
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} .bp__note {
+    max-width: 740px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  }
+  #bp-{{ section.id }} .bp__note-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: linear-gradient(135deg, var(--col-note-bg-from), var(--col-note-bg-to));
+    border: 1.5px solid var(--col-note-border);
+    border-radius: var(--radius-note);
+    padding: 1.4rem 1.75rem;
+  }
+  #bp-{{ section.id }} .bp__note-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  #bp-{{ section.id }} .bp__note-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  #bp-{{ section.id }} .bp__note-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--col-note-title);
+    line-height: 1.3;
+  }
+  #bp-{{ section.id }} .bp__note-body {
+    font-size: 14px;
+    color: var(--col-note-body);
+    line-height: 1.65;
+  }
+
+  /* ─────────────────────────────────────────────
+     CTA STRIP DIVIDER — wavy separator line
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} .bp__cta-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--col-tagline-border) 30%,
+      var(--col-tagline-border) 70%,
+      transparent 100%
+    );
+    opacity: 0.35;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ─────────────────────────────────────────────
+     CTA STRIP
+  ───────────────────────────────────────────── */
+  #bp-{{ section.id }} .bp__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.1rem;
+    padding: clamp(3rem, 6vw, 5rem) var(--px);
+  }
+
+  /* Sparkle row */
+  #bp-{{ section.id }} .bp__cta-sparkles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--col-sparkle);
+    font-size: 20px;
+    line-height: 1;
+    margin-bottom: -0.2rem;
+  }
+  #bp-{{ section.id }} .bp__cta-sparkles span:nth-child(2) {
+    font-size: 14px;
+    opacity: 0.6;
+  }
+
+  /* Services text */
+  #bp-{{ section.id }} .bp__cta-services {
+    font-size: clamp(15px, 2vw, 18px);
+    font-weight: 500;
+    color: var(--col-services);
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  /* Rating row */
+  #bp-{{ section.id }} .bp__cta-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  #bp-{{ section.id }} .bp__cta-stars {
+    display: flex;
+    gap: 2px;
+    color: var(--col-stars);
+  }
+  #bp-{{ section.id }} .bp__cta-proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--col-proof-bg);
+    border: 1px solid var(--col-proof-border);
+    color: var(--col-proof-text);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 100px;
+    line-height: 1;
+  }
+
+  /* CTA buttons */
+  #bp-{{ section.id }} .bp__cta-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 0.25rem;
+  }
+  #bp-{{ section.id }} .bp__cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: var(--radius-btn);
+    border: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 0.85rem 2rem;
+    {% comment %} transition: opacity var(--speed) ease, transform var(--speed) ease; {% endcomment %}
+  }
+  #bp-{{ section.id }} .bp__cta-btn:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+  }
+  #bp-{{ section.id }} .bp__cta-btn:active { transform: translateY(0); }
+  #bp-{{ section.id }} .bp__cta-btn[aria-disabled="true"] {
+    {% comment %} opacity: 0.4; {% endcomment %}
+    pointer-events: none;
+  }
+  #bp-{{ section.id }} .bp__cta-btn--primary {
+    background: linear-gradient(90deg, var(--col-btn-p-from), var(--col-btn-p-to));
+    color: var(--col-btn-p-text);
+    box-shadow: 0 4px 20px rgba(200, 0, 180, 0.3);
+  }
+  #bp-{{ section.id }} .bp__cta-btn--ghost {
+    background: var(--col-btn-g-bg);
+    border-color: var(--col-btn-g-border);
+    color: var(--col-btn-g-text);
+  }
+
+  /* Urgency */
+  #bp-{{ section.id }} .bp__cta-urgency {
+    font-size: 13px;
+    color: var(--col-urgency);
+    font-weight: 500;
+    margin-top: -0.2rem;
+  }
+
+  /* ─────────────────────────────────────────────
+     TABLET  ≤ 900px  →  2 columns
+  ───────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    #bp-{{ section.id }} .bp__steps {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px 16px;
+    }
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE  ≤ 480px  →  1 column
+  ───────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    #bp-{{ section.id }} .bp__steps { grid-template-columns: 1fr; gap: 24px; }
+    #bp-{{ section.id }} .bp__heading { font-size: 1.55rem; }
+    #bp-{{ section.id }} .bp__note-inner { flex-direction: column; gap: 8px; padding: 1.1rem 1.25rem; }
+    #bp-{{ section.id }} .bp__cta-btn {
+      font-size: 14px;
+      padding: 0.78rem 1.5rem;
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+    #bp-{{ section.id }} .bp__cta-actions { flex-direction: column; align-items: center; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Booking Process",
+  "tag": "section",
+  "class": "booking-process-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#fdf0f8"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline text",
+      "default": "EASY PROCESS"
+    },
+    {
+      "type": "text",
+      "id": "tagline_emoji",
+      "label": "Tagline emoji",
+      "default": "🔑"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Booking Your Reading is Easy"
+    },
+    {
+      "type": "text",
+      "id": "heading_emoji",
+      "label": "Heading emoji",
+      "default": "💜"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Just 4 simple steps to begin your spiritual journey"
+    },
+    {
+      "type": "text",
+      "id": "subtext_emoji",
+      "label": "Subtext emoji",
+      "default": "✨"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext colour",
+      "default": "#a07abf"
+    },
+    {
+      "type": "color",
+      "id": "tagline_text_color",
+      "label": "Tagline text colour",
+      "default": "#3d1a6e"
+    },
+    {
+      "type": "color",
+      "id": "tagline_border_color",
+      "label": "Tagline border colour",
+      "default": "#c084d4"
+    },
+    {
+      "type": "header",
+      "content": "Step Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border colour",
+      "default": "#ede8f8"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "step_num_bg",
+      "label": "Step number badge colour",
+      "default": "#cc00bb"
+    },
+    {
+      "type": "color",
+      "id": "step_num_text",
+      "label": "Step number text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "step_icon_bg",
+      "label": "Icon circle background",
+      "default": "#f0e6ff"
+    },
+    {
+      "type": "color",
+      "id": "step_icon_color",
+      "label": "Icon colour",
+      "default": "#8b30d0"
+    },
+    {
+      "type": "color",
+      "id": "step_title_color",
+      "label": "Step title colour",
+      "default": "#1a0a3e"
+    },
+    {
+      "type": "color",
+      "id": "step_desc_color",
+      "label": "Step description colour",
+      "default": "#777777"
+    },
+    {
+      "type": "header",
+      "content": "Important Note"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_note",
+      "label": "Show important note",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "note_icon",
+      "label": "Note icon (emoji)",
+      "default": "💜"
+    },
+    {
+      "type": "text",
+      "id": "note_title",
+      "label": "Note title",
+      "default": "Important Note"
+    },
+    {
+      "type": "textarea",
+      "id": "note_body",
+      "label": "Note body text",
+      "default": "Please make sure your correct WhatsApp number is entered during checkout so we can contact you easily regarding your reading. 📱 ✨"
+    },
+    {
+      "type": "color",
+      "id": "note_bg_from",
+      "label": "Note gradient — start",
+      "default": "#f8eeff"
+    },
+    {
+      "type": "color",
+      "id": "note_bg_to",
+      "label": "Note gradient — end",
+      "default": "#ffe8f8"
+    },
+    {
+      "type": "color",
+      "id": "note_border_color",
+      "label": "Note border colour",
+      "default": "#d4a0e8"
+    },
+    {
+      "type": "color",
+      "id": "note_title_color",
+      "label": "Note title colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "color",
+      "id": "note_body_color",
+      "label": "Note body colour",
+      "default": "#6a3a9a"
+    },
+    {
+      "type": "range",
+      "id": "note_radius",
+      "label": "Note corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "CTA Strip — Sparkles & Services"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sparkles",
+      "label": "Show sparkle icons",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "sparkle_color",
+      "label": "Sparkle colour",
+      "default": "#a855f7"
+    },
+    {
+      "type": "text",
+      "id": "services_text",
+      "label": "Services list text",
+      "default": "Tarot • Oracle • Spells • Healing • Bay Leaf"
+    },
+    {
+      "type": "text",
+      "id": "services_emoji",
+      "label": "Services emoji",
+      "default": "✨"
+    },
+    {
+      "type": "color",
+      "id": "services_color",
+      "label": "Services text colour",
+      "default": "#7e22ce"
+    },
+    {
+      "type": "header",
+      "content": "CTA Strip — Star Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating row",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "stars_color",
+      "label": "Stars colour",
+      "default": "#d946c0"
+    },
+    {
+      "type": "text",
+      "id": "proof_text",
+      "label": "Social proof text",
+      "default": "500+ Happy Souls"
+    },
+    {
+      "type": "text",
+      "id": "proof_emoji",
+      "label": "Proof emoji",
+      "default": "💜"
+    },
+    {
+      "type": "color",
+      "id": "proof_bg",
+      "label": "Proof pill background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "proof_border",
+      "label": "Proof pill border",
+      "default": "#e0d0f0"
+    },
+    {
+      "type": "color",
+      "id": "proof_text_color",
+      "label": "Proof pill text colour",
+      "default": "#5b21b6"
+    },
+    {
+      "type": "header",
+      "content": "CTA Strip — Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button label",
+      "default": "Book Your Reading"
+    },
+    {
+      "type": "text",
+      "id": "primary_emoji",
+      "label": "Primary button emoji",
+      "default": "✨"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_from",
+      "label": "Primary gradient — start",
+      "default": "#9b00d0"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_to",
+      "label": "Primary gradient — end",
+      "default": "#e000c0"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_text",
+      "label": "Primary button text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "CTA Strip — Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button label",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "text",
+      "id": "secondary_emoji",
+      "label": "Secondary button emoji",
+      "default": "💬"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "color",
+      "id": "ghost_btn_bg",
+      "label": "Ghost button background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "ghost_btn_border",
+      "label": "Ghost button border colour",
+      "default": "#d0c0e8"
+    },
+    {
+      "type": "color",
+      "id": "ghost_btn_text",
+      "label": "Ghost button text colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "label": "Button border radius",
+      "min": 4,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "CTA Strip — Urgency"
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency text",
+      "default": "Limited slots available this week"
+    },
+    {
+      "type": "text",
+      "id": "urgency_emoji",
+      "label": "Urgency emoji",
+      "default": "🔔"
+    },
+    {
+      "type": "color",
+      "id": "urgency_color",
+      "label": "Urgency text colour",
+      "default": "#c026a0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "✦",
+          "info": "Paste any emoji — e.g. ✦ 🛒 💳 💬"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Choose Your Service"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Step description",
+          "default": "Browse the readings or healing services and pick the one you want."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Booking Process",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "✦",
+            "title": "Choose Your Service",
+            "description": "Browse the readings or healing services and pick the one you want."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "🛒",
+            "title": "Add to Cart & Checkout",
+            "description": "Click \"Add to Cart\" and proceed to Checkout."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "💳",
+            "title": "Complete Payment",
+            "description": "Enter your details and finish the payment securely."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "💬",
+            "title": "Get Your Reading",
+            "description": "You'll receive a WhatsApp message. Share your details and receive your reading."
+          }
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6
+}
+{% endschema %}

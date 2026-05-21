@@ -1,0 +1,83 @@
+{% liquid
+  assign card_product = card_product
+  assign has_popular_tag = false
+  for tag in card_product.tags
+    if tag == 'popular' or tag == 'Popular'
+      assign has_popular_tag = true
+    endif
+  endfor
+%}
+
+<a href="{{ card_product.url }}" class="sw-block sw-no-underline sw-h-full">
+  <div
+    class="sw-rounded-2xl sw-overflow-hidden sw-shadow-md sw-flex sw-flex-col sw-h-full"
+    style="background:{{ card_bg | default: '#ffffff' }}"
+  >
+
+    <div class="sw-relative">
+      <div class="sw-aspect-[4/3] sw-overflow-hidden">
+        {% if card_product.featured_image %}
+          <img
+            src="{{ card_product.featured_image | image_url: width: 500 }}"
+            alt="{{ card_product.featured_image.alt | escape }}"
+            class="sw-w-full sw-h-full sw-object-cover"
+            loading="lazy"
+            width="500"
+            height="375"
+          >
+        {% endif %}
+      </div>
+      <div
+        class="sw-absolute sw-bottom-0 sw-left-0 sw-right-0 sw-h-16 sw-pointer-events-none"
+        style="background: linear-gradient(to bottom, transparent, {{ card_bg | default: '#ffffff' }})"
+      ></div>
+      {% if has_popular_tag %}
+        <span
+          class="sw-absolute sw-top-3 sw-right-3 sw-text-white sw-text-[11px] sw-font-semibold sw-px-2.5 sw-py-1 sw-rounded-full sw-flex sw-items-center sw-gap-1"
+          style="background:{{ card_tag_color | default: '#FF007A' }}"
+        >
+          Popular ⭐
+        </span>
+      {% endif %}
+    </div>
+    <div class="sw-flex sw-flex-col sw-items-center sw-px-4 sw-pb-4 sw-flex-1 sw-text-center">
+      {% if card_product.images[1] %}
+        <div class="sw-w-14 sw-h-14 sw-mt-[-20px] sw-mb-2 sw-relative sw-z-10">
+          <img
+            src="{{ card_product.images[1] | image_url: width: 112 }}"
+            alt="{{ card_product.title }}"
+            class="sw-w-full sw-h-full sw-object-contain"
+            loading="lazy"
+            width="56"
+            height="56"
+          >
+        </div>
+      {% endif %}
+
+      <h3 class="sw-text-[16px] lg:sw-text-[18px] sw-font-bold sw-text-gray-900 sw-leading-tight sw-m-0 sw-mb-1">
+        {{ card_product.title }}
+      </h3>
+
+      {% if card_product.description != blank %}
+        <p class="sw-text-[13px] sw-text-gray-500 sw-m-0 sw-mb-2 sw-line-clamp-2">
+          {{ card_product.description | strip_html | truncate: 70 }}
+        </p>
+      {% endif %}
+
+      <div class="sw-mt-auto sw-w-full sw-pt-2">
+        <p class="sw-text-[11px] sw-text-gray-400 sw-m-0 sw-mb-0.5">starting from</p>
+        <p class="sw-text-[22px] sw-font-bold sw-m-0 sw-mb-3" style="color:{{ price_color | default: '#CC007A' }}">
+          {{ card_product.price_min | money }}
+        </p>
+
+        <button
+          class="sw-w-full sw-py-3 sw-rounded-full sw-text-[14px] sw-font-semibold sw-border-0 sw-cursor-pointer"
+          style="background:{{ button_bg | default: '#CC007A' }};color:{{ button_text_color | default: '#ffffff' }}"
+          onclick="event.preventDefault(); window.location.href='{{ card_product.url }}'"
+        >
+          Book Now
+        </button>
+      </div>
+    </div>
+  </div>
+</a>

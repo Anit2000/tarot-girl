@@ -1,0 +1,349 @@
+{% comment %}
+  Section : how-to-book.liquid
+  Design  : Modern Tarot — "How to Book Your Reading" vertical steps list
+  Features: Heading, subtext, up to 10 step blocks — all Theme Editor editable
+  Tested  : mobile 375px / tablet 768px / desktop 1280px+
+{% endcomment %}
+
+<div id="hb-{{ section.id }}" class="hb">
+  <div class="hb__inner">
+
+    {%- comment %} ── HEADER ── {%- endcomment %}
+    <div class="hb__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="hb__heading">
+          {{ section.settings.heading | escape }}
+          {%- if section.settings.heading_emoji != blank -%}
+            <span class="hb__heading-emoji" aria-hidden="true"> {{ section.settings.heading_emoji }}</span>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <p class="hb__subtext">{{ section.settings.subtext | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} ── STEPS LIST ── {%- endcomment %}
+    {%- if section.blocks.size > 0 -%}
+      <ol class="hb__steps" role="list">
+        {%- for block in section.blocks -%}
+          <li class="hb__step" {{ block.shopify_attributes }}>
+            <span class="hb__num" aria-label="Step {{ forloop.index }}">{{ forloop.index }}</span>
+            <p class="hb__step-text">{{ block.settings.text | escape }}</p>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  /* ─────────────────────────────────────────────
+     RESET & SCOPE
+  ───────────────────────────────────────────── */
+  #hb-{{ section.id }},
+  #hb-{{ section.id }} * { box-sizing: border-box; }
+  #hb-{{ section.id }} p,
+  #hb-{{ section.id }} h2 { margin: 0; padding: 0; }
+
+  /* ─────────────────────────────────────────────
+     CSS TOKENS
+  ───────────────────────────────────────────── */
+  #hb-{{ section.id }} {
+    --col-bg:          {{ section.settings.section_bg }};
+    --col-heading:     {{ section.settings.heading_color }};
+    --col-subtext:     {{ section.settings.subtext_color }};
+    --col-card-bg:     {{ section.settings.card_bg }};
+    --col-card-border: {{ section.settings.card_border }};
+    --col-num-bg:      {{ section.settings.num_bg }};
+    --col-num-text:    {{ section.settings.num_text }};
+    --col-step-text:   {{ section.settings.step_text_color }};
+    --radius-card:     {{ section.settings.card_radius }}px;
+    --speed:           0.2s;
+    --px:              clamp(1.25rem, 5vw, 4rem);
+    --py:              clamp(3rem, 6vw, 5rem);
+    --max-w:           {{ section.settings.max_width }}px;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION SHELL
+  ───────────────────────────────────────────── */
+  #hb-{{ section.id }} {
+    background: var(--col-bg);
+    padding: var(--py) var(--px);
+    font-family: inherit;
+  }
+
+  #hb-{{ section.id }} .hb__inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+
+  /* ─────────────────────────────────────────────
+     HEADER
+  ───────────────────────────────────────────── */
+  #hb-{{ section.id }} .hb__header {
+    text-align: center;
+    margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  #hb-{{ section.id }} .hb__heading {
+    font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+    font-weight: 700;
+    color: var(--col-heading);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  #hb-{{ section.id }} .hb__heading-emoji {
+    display: inline-block;
+    font-style: normal;
+    font-size: 0.9em;
+  }
+
+  #hb-{{ section.id }} .hb__subtext {
+    font-size: 14.5px;
+    color: var(--col-subtext);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────────
+     STEPS LIST
+  ───────────────────────────────────────────── */
+  #hb-{{ section.id }} .hb__steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.step_gap }}px;
+  }
+
+  /* ─────────────────────────────────────────────
+     STEP CARD
+  ───────────────────────────────────────────── */
+  #hb-{{ section.id }} .hb__step {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    background: var(--col-card-bg);
+    border: 1px solid var(--col-card-border);
+    border-radius: var(--radius-card);
+    padding: 1.1rem 1.5rem;
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+  }
+
+  #hb-{{ section.id }} .hb__step:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 20px rgba(180, 0, 200, 0.08);
+  }
+
+  /* Number badge */
+  #hb-{{ section.id }} .hb__num {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--col-num-bg);
+    color: var(--col-num-text);
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+    box-shadow: 0 2px 8px rgba(200, 0, 180, 0.3);
+  }
+
+  /* Step text */
+  #hb-{{ section.id }} .hb__step-text {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--col-step-text);
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE  ≤ 480px
+  ───────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    #hb-{{ section.id }} .hb__step { padding: 0.9rem 1.1rem; gap: 0.85rem; }
+    #hb-{{ section.id }} .hb__step-text { font-size: 13.5px; }
+    #hb-{{ section.id }} .hb__num { width: 30px; height: 30px; font-size: 13px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "How to Book",
+  "tag": "section",
+  "class": "how-to-book-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#f5eeff"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to Book Your Reading"
+    },
+    {
+      "type": "text",
+      "id": "heading_emoji",
+      "label": "Heading emoji",
+      "default": "✨"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Simple, easy, and designed for you"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext colour",
+      "default": "#a07abf"
+    },
+    {
+      "type": "header",
+      "content": "Step Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border colour",
+      "default": "#ede8f8"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "step_gap",
+      "label": "Gap between steps",
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "step_text_color",
+      "label": "Step text colour",
+      "default": "#3d1a6e"
+    },
+    {
+      "type": "header",
+      "content": "Number Badge"
+    },
+    {
+      "type": "color",
+      "id": "num_bg",
+      "label": "Badge background",
+      "default": "#d400c0"
+    },
+    {
+      "type": "color",
+      "id": "num_text",
+      "label": "Badge text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width",
+      "min": 600,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "default": 880
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Step text",
+          "default": "Choose the number of questions you want guidance on."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "How to Book",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": { "text": "Choose the number of questions you want guidance on." }
+        },
+        {
+          "type": "step",
+          "settings": { "text": "Book your reading and complete the payment." }
+        },
+        {
+          "type": "step",
+          "settings": { "text": "Enter your correct WhatsApp number while booking." }
+        },
+        {
+          "type": "step",
+          "settings": { "text": "You will automatically receive a WhatsApp message to share your details and questions." }
+        },
+        {
+          "type": "step",
+          "settings": { "text": "Your tarot reading will be delivered within 24–48 hours after booking." }
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10
+}
+{% endschema %}

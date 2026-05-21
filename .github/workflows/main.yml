@@ -1,0 +1,64 @@
+name: Deploy to Shopify 
+
+on:
+  push:
+    branches:
+      - feature
+      - feature-shade
+      - feature-shade-alter
+      - staging
+      - featured-search-revamp
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build 
+        run: npm run build
+
+      - name: Deploy Shopify theme
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "feature" ]]; then
+            THEME=${{ secrets.SHOPIFY_FEATURE_THEME }}
+
+          elif [[ "${GITHUB_REF##*/}" == "featured-search-revamp" ]]; then
+            THEME=${{ secrets.SHOPIFY_SEARCH_FEATURE_THEME }}
+
+          elif [[ "${GITHUB_REF##*/}" == "feature-shade" ]]; then
+            THEME=${{ secrets.SHOPIFY_SHADE_THEME }}
+
+          elif [[ "${GITHUB_REF##*/}" == "feature-shade-alter" ]]; then
+            THEME=${{ secrets.SHOPIFY_SHADE_THEME_ALTER }}
+
+          elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+            THEME=${{ secrets.SHOPIFY_STAGING_THEME }}
+
+          elif [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            THEME=${{ secrets.SHOPIFY_PRODUCTION_THEME }}
+          fi
+
+          npx @shopify/cli theme push \
+            --nodelete \
+            --ignore config/settings_data.json templates/*/*.json templates/*.json sections/*.json locales/*.json jsconfig.json pacakge-lock.json package.json postcss.config.cjs Readme.md tailwind.config.ts tsconfig.json vite.config.ts assets/.vite/*  \
+            --theme $THEME \
+            --store ${{ secrets.SHOPIFY_STORE }} \
+            --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }} \
+            --allow-live
+            

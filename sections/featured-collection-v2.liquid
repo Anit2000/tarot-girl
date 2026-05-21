@@ -1,0 +1,338 @@
+
+    {% style %}
+        section#{{ section.id }}-featured-collection{
+            {% if section.settings.bg_style == 'default' %}
+                background:{{ section.settings.bg_color }};
+            {% else %}
+                background-image: url("{{ section.settings.bg_image | image_url: width: '412', height: '600' }}");
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            {% endif %}
+            border-radius:{{ section.settings.border_radius_mob }}px;
+            position:relative;
+            z-index:1;
+            margin-top:{{ section.settings.margin_mobile }}px;
+        }
+        section#{{ section.id }}-featured-collection h3.bg::after{
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='41' viewBox='0 0 42 41' fill='none'%3E%3Cpath d='M4.76359e-06 20.5C4.76359e-06 9.17816 -4.93316e-06 3.5 3.3429e-06 0H40.7912C41.6511 0 42.11 1.01358 41.5426 1.6598L25.5793 19.8402C25.2479 20.2176 25.2479 20.7824 25.5793 21.1598L41.5426 39.3402C42.11 39.9864 41.6511 41 40.7912 41H4.76359e-06V20.5Z' fill='{{ section.settings.heading_bg | replace : "#", "%23" }}'/%3E%3C/svg%3E")
+        }
+        section#{{ section.id }}-featured-collection h3.bg::before{
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 13 13' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0 0H12.5C10.8585 0 9.23303 0.323322 7.71646 0.951506C6.19989 1.57969 4.8219 2.50043 3.66117 3.66116C2.50043 4.8219 1.57969 6.19989 0.951506 7.71646C0.323322 9.23303 0 10.8585 0 12.5V0Z' fill='{{ section.settings.heading_bg | replace : "#", "%23" }}'/%3E%3C/svg%3E");
+        }
+        {% if section.settings.external_border_radius %}
+            section#{{ section.id }}-featured-collection .featured-collection-wrapper::before,section#{{ section.id }}-featured-collection .featured-collection-wrapper::after{
+                position:absolute;
+                content:'';
+                width:100%;
+                height:100px;
+                z-index:-1;
+                top:0px;
+                left:0px;
+                transform:translateY(-50%) rotate(180deg);
+                background:{{ section.settings.bg_color_external }};
+            }
+            section#{{ section.id }}-featured-collection{
+                z-index:0;
+            }
+            section#{{ section.id }}-featured-collection .featured-collection-wrapper::after{
+                bottom:0px;
+                transform:translateY(50%);
+                top:unset;
+            }
+        {% endif %}
+        @media(min-width:768px){
+            section#{{ section.id }}--featured-collection,section#{{ section.id }}-featured-collection .internal-wrapper{
+                border-radius:{{ section.settings.border_radius_desk }}px!important;
+            }
+            section#{{ section.id }}{
+                margin-top:{{ section.settings.margin_desktop }}px;
+            }
+            section#{{ section.id }}-featured-collection{
+            {% unless section.settings.bg_style == 'default' %}
+                background-image: url("{{ section.settings.bg_image_desktop | image_url: width: '1400', height: '700' }}");
+            {% endunless %}
+        }
+        }
+    {% endstyle %}
+    {% if section.settings.slider and section.settings.collection.products.size > 1 %}
+        {% render 'vite-tag' with 'featured-collection-slider-v2.js' %}
+    {% endif %}
+    <section id="{{ section.id }}-featured-collection" data-id="featured-collection-v2">
+        <div class="featured-collection-wrapper {% if section.settings.internal_bg_color != blank %}sw-px-0{% else %}sw-pl-2{% endif %}{% if section.settings.slider %} sw-pl-2{% else %} sw-px-2 {% endif %} sw-py-4 lg:sw-px-[32px] lg:sw-py-8">
+            
+            <div class="featured-collection-wrapper">
+                {% if section.settings.section_heading !=  blank or section.settings.section_heading_svg != blank %}
+                    <div class="featured-collection-heading sw-flex sw-items-center sw-gap-3 sw-pl-2 sw-pr-4 sw-mb-4 lg:sw-mb-[40px] sw-justify-between">
+                        {% if section.settings.heading_type == 'svg' %}
+                            <h3 class="sw-text-center sw-flex sw-justify-center sw-items-center sw-w-[132px] sw-h-auto lg:sw-w-[211px]">{{ section.settings.section_heading_svg }}</h3>
+                        {% else %}
+                            <h3 style="color:{{ section.settings.heading_color }};{% if section.settings.heading_bg != blank %}background-color:{{ section.settings.heading_bg }}{% endif %}" class="sw-text-center {% if section.settings.heading_bg != blank %}bg{% endif %} sw-flex sw-justify-center sw-items-center sw-whitespace-nowrap sw-font-primary sw-text-[18px] lg:sw-text-[24px] sw-font-medium [&.bg]:sw-px-6 [&.bg]:sw-py-[6px] [&.bg]:sw-ml-[-16px] [&.bg]:lg:sw-ml-[-40px] [&.bg]:sw-relative [&.bg]:sw-rounded-ss-xl [&.bg]:lg:sw-rounded-ss-[20px] [&.bg]:after:sw-bg-cover [&.bg]:after:sw-translate-x-[50%] [&.bg]:after:sw-aspect-square [&.bg]:after:sw-absolute [&.bg]:after:sw-h-full [&.bg]:after:sw-top-0 [&.bg]:after:sw-right-0 [&.bg]:before:sw-left-0 [&.bg]:before:sw-h-[20px] [&.bg]:before:sw-aspect-square [&.bg]:before:sw-bg-cover [&.bg]:before:sw-bottom-0 [&.bg]:before:sw-translate-y-[88%] [&.bg]:lg:before:sw-translate-y-[99%] [&.bg]:before:sw-absolute">{{ section.settings.section_heading }}</h3>
+                        {% endif %}
+                        {% if section.settings.heading_decoration %}
+                            <span class="lg:sw-hidden sw-w-full sw-overflow-hidden">{% render 'icons-v2', icon:'icon-heading-decor',class:'lg:sw-w-[32px] lg:sw-h-auto' %}</span>
+                        {% endif %}
+                        {% if section.settings.view_all_btn %}
+                            <a data-role="view-btn" style="color:{{ section.settings.view_all_btn_color }}" href="{{ section.settings.collection.url }}" class="sw-text-[12px] lg:sw-text-[16px] sw-font-primary sw-leading-none sw-font-normal sw-flex sw-items-center sw-gap-1 sw-whitespace-nowrap">View All <span style="fill:{{ section.settings.view_all_btn_color }}">{% render 'icons-v2', icon:"icon-view-all-caret",class:"sw-fill-inherit" %}</span></a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="featured-collection-content_wrapper">
+                    {% if section.settings.internal_bg_color != blank %}<div style="background:{{ section.settings.internal_bg_color }};border-radius:{{ section.settings.border_radius_mob }}px;" class="internal-wrapper sw-p-2 lg:sw-px-[32px] lg:sw-py-10">{% endif %}
+                    <div class="featured-collection-cards  {% unless section.settings.slider and section.settings.collection.products.size > 1 %} sw-grid sw-grid-cols-2 lg:sw-grid-cols-4 sw-gap-3 sw-gap-y-2 lg:sw-gap-[32px]{% endunless %}">
+                        {% if section.settings.slider and section.settings.collection.products.size > 1  %}<featured-slider class=""><div class="sw-flex-nowrap sw-overflow-hidden sw-flex sw-w-full" data-role="slider-wrapper">{% endif %} 
+                        {% for product in section.settings.collection.products  limit : section.settings.product_limit %}
+                            <div class="{% if section.settings.slider and section.settings.collection.products.size > 1  %}keen-slider__slide sw-flex-[0_0_calc(100%/2_-_4px)] lg:sw-flex-[0_0_calc(100%/4_-_14px)] !sw-overflow-visible sw-pt-[1px] sw-p-[1px]{% if forloop.index == 1 %} sw-ml-[1px] {% elsif forloop.last %} sw-ml-[-2px] {% endif %}{% endif %}">
+                                {% render 'product-card-v2',card_product : product,button_bg: section.settings.card_button_bg,button_text_color:section.settings.card_button_color,card_tag_color: section.settings.tags_bg, notify_border:section.settings.notify_me_border, notify_text_color: section.settings.notify_me_text_color,lightning: section.settings.lightning_counter, price_color: section.settings.card_price_color, card_bg: section.settings.card_bg_color %}
+                            </div>
+                        {% endfor %}
+
+                        {% if section.settings.slider and section.settings.collection.products.size > 1  %}
+                            </div>  
+                            {%  if section.settings.slider_bar and section.settings.collection.products.size > 2 %}
+                                <div class="featured-collection-slider-bar sw-max-w-[calc(100%_-_80px)] sw-mx-auto sw-mt-3 lg:sw-mt-[26px] {% if section.settings.collection.products.size <= 4 %}lg:sw-hidden{% endif %}">
+                                    <div dat-role="thumb-wrapper" style="background-color:{{ section.settings.thumb_bg }}" class="sw-w-full sw-relative sw-h-1 sw-ml-[-4px] sw-rounded-sm">
+                                        <div data-role="thumb" style="background-color:{{ section.settings.thumb_color }}" class="sw-h-full sw-w-[60px] sw-rounded-sm sw-absolute sw-left-0 sw-top-0 sw-transition-all sw-duration-0"></div>
+                                    </div>
+                                </div>
+                            {%  endif %}  
+                        </featured-slider>
+                    {% endif %}
+                    </div>
+                    {% if section.settings.internal_bg_color != blank %}</div>{% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% schema %}
+    {
+        "name":"Featured collection v2",
+        "settings":[
+            {
+                "type":"range",
+                "label":"Margin top on mobile",
+                "max":100,
+                "min":0,
+                "default":0,
+                "step":1,
+                "id":"margin_mobile"
+            },
+            {
+                "type":"range",
+                "label":"Margin top on desktop",
+                "max":100,
+                "min":0,
+                "default":0,
+                "step":1,
+                "id":"margin_desktop"
+            },
+            {
+                "type":"select",
+                "id":"bg_style",
+                "label":"Background style",
+                "options":[
+                    {
+                        "label": "Default",
+                        "value":"default"
+                    },
+                    {
+                        "label":"Parallax",
+                        "value":"parallax"
+                    }
+                ],
+                "default":"default"
+            },
+            {
+                "type":"color_background",
+                "label":"Choose background color",
+                "id":"bg_color"
+            },
+            {
+                "type":"image_picker",
+                "label":"Choose background image",
+                "id":"bg_image",
+                "info":"This option will be picked if background style is parallax"
+            },
+            {
+                "type":"image_picker",
+                "label":"Choose background image desktop",
+                "id":"bg_image_desktop",
+                "info":"This option will be picked if background style is parallax"
+            },
+            {
+                "type":"color_background",
+                "label":"Choose external border background color",
+                "id":"bg_color_external"
+            },
+            {
+                "type":"color_background",
+                "label":"Internal background color",
+                "id":"internal_bg_color"
+            },
+            {
+                "type":"checkbox",
+                "label":"Display external border radius",
+                "id":"external_border_radius"
+            },
+            {
+                "type":"range",
+                "label":"Section border radius mobile in PX",
+                "id":"border_radius_mob",
+                "step": 1,
+                "max": 100,
+                "min":0,
+                "default":0
+            },
+            {
+                "type":"range",
+                "label":"Section border radius desktop in PX",
+                "id":"border_radius_desk",
+                "step": 1,
+                "max": 100,
+                "min":0,
+                "default":0
+            },
+            {
+                "type":"select",
+                "label":"Section heading type",
+                "id":"heading_type",
+                "options":[
+                    {
+                        "value":"text",
+                        "label":"Text"
+                    },
+                    {
+                        "value":"svg",
+                        "label":"SVG"
+                    }
+                ],
+                "default":"text"
+            },
+            {
+                "type":"color",
+                "label":"Heading background color",
+                "id":"heading_bg"
+            },
+            {
+                "type":"checkbox",
+                "label":"Enable lightning counter",
+                "id":"lightning_counter"
+            },
+            {
+                "type":"text",
+                "label":"Enter section heading text",
+                "id":"section_heading",
+            },
+            {
+                "type":"color",
+                "label":"Choose heading color",
+                "id":"heading_color",
+                "default":"#000"
+            },
+            {
+                "type":"html",
+                "label":"Enter section heading svg",
+                "id":"section_heading_svg"
+            },
+            {
+                "type":"checkbox",
+                "label":"Display heading decoration",
+                "id":"heading_decoration"
+            },
+            {   
+                "type":"checkbox",
+                "label":"Display view all button",
+                "id":"view_all_btn"
+            },
+            {
+                "type":"color",
+                "label":"View all btn color",
+                "id":"view_all_btn_color",
+                "default":"#FF5B6F"
+            },
+            {
+                "type":"checkbox",
+                "label":"Dsiplay slider bar",
+                "id":"slider_bar",
+                "default": true
+            },
+            {
+                "type":"color",
+                "label":"Thumb slider background color",
+                "id":"thumb_bg",
+                "default":"#D9D9D9"
+            },
+            {
+                "type":"color",
+                "label":"Thumb color",
+                "id":"thumb_color",
+                "default":"#707070"
+            },
+            {
+                "type":"collection",
+                "label":"Choose collection to display",
+                "id":"collection"
+            },
+            {
+                "type":"range",
+                "label":"Number of products to display",
+                "id":"product_limit",
+                "min":3,
+                "step":1,
+                "max":40,
+                "default":12
+            },
+            {
+                "type":"header",
+                "content":"Product card style"
+            },
+            {
+                "type":"color_background",
+                "label":"Product card background color",
+                "id":"card_bg_color"
+            },
+            {
+                "type":"color",
+                "label":"Product card price color",
+                "id":"card_price_color",
+                "default":"#CC007A"
+            },
+            {
+                "type":"color",
+                "label":"Tags background color",
+                "id":"tags_bg"
+            },
+            {
+                "type":"color_background",
+                "label":"Product card button background color",
+                "id":"card_button_bg"
+            },
+            {
+                "type":"color",
+                "label":"Product card button text color",
+                "id":"card_button_color"
+            },
+            {
+                "type":"color_background",
+                "label":"Notify me border color",
+                "id":"notify_me_border"
+            },
+            {
+                "type":"color",
+                "label":"Notify me text color",
+                "id":"notify_me_text_color"
+            },
+            {
+                "type":"checkbox",
+                "label":"Enable slider",
+                "id":"slider"
+            }
+        ],
+        "presets": [
+            {
+                "name":"Featured collection v2"
+            }
+        ]
+    }
+{% endschema %}

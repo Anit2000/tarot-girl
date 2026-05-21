@@ -1,0 +1,952 @@
+{% comment %}
+  Section : main-product-tarot.liquid
+  Design  : Modern Tarot PDP — image left, variant pricing grid right,
+            custom questions calculator, Book Now button
+  Usage   : Assign template "product.tarot" to service products
+  Tested  : mobile 375px / tablet 768px / desktop 1280px+
+{% endcomment %}
+
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
+{%- assign product_form_id = 'ptf-' | append: section.id -%}
+
+<div id="pt-{{ section.id }}" class="pt" data-section="{{ section.id }}">
+  <div class="pt__inner page-width">
+
+    {%- comment %} ── BACK LINK ── {%- endcomment %}
+    {%- if section.settings.back_label != blank -%}
+      <a href="{{ section.settings.back_url | default: '/collections/all' }}" class="pt__back">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ section.settings.back_label | escape }}
+      </a>
+    {%- endif -%}
+
+    <div class="pt__layout">
+
+      {%- comment %} ── LEFT: IMAGE ── {%- endcomment %}
+      <div class="pt__media">
+        {%- if product.featured_media != blank -%}
+          {{
+            product.featured_media
+            | image_url: width: 900
+            | image_tag:
+              loading: 'eager',
+              class: 'pt__img',
+              widths: '400, 600, 900',
+              sizes: '(max-width: 767px) 100vw, 45vw',
+              alt: product.featured_media.alt | default: product.title | escape
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'pt__img pt__img--ph' }}
+        {%- endif -%}
+      </div>
+
+      {%- comment %} ── RIGHT: INFO ── {%- endcomment %}
+      <div class="pt__info">
+
+        {%- comment %} Service tag pill ── {%- endcomment %}
+        {%- if section.settings.service_tag != blank -%}
+          <div class="pt__tag-wrap">
+            <span class="pt__tag">
+              {{ section.settings.service_tag | escape }}
+              {%- if section.settings.service_tag_emoji != blank -%}
+                <span aria-hidden="true"> {{ section.settings.service_tag_emoji }}</span>
+              {%- endif -%}
+            </span>
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Product title ── {%- endcomment %}
+        <h1 class="pt__title">{{ product.title | escape }}</h1>
+
+        {%- comment %} Description ── {%- endcomment %}
+        {%- if product.description != blank -%}
+          <div class="pt__desc">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- comment %} ── PRICING & VARIANTS ── {%- endcomment %}
+        {%- if product.variants.size > 1 or section.settings.pricing_heading != blank -%}
+          <div class="pt__pricing-head">
+            <h2 class="pt__pricing-title">
+              {{ section.settings.pricing_heading | default: 'Pricing & Questions' | escape }}
+            </h2>
+            {%- if section.settings.pricing_subtext != blank -%}
+              <p class="pt__pricing-sub">{{ section.settings.pricing_subtext | escape }}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Variant grid ── {%- endcomment %}
+        <div class="pt__variants" id="pt-variants-{{ section.id }}" role="radiogroup" aria-label="Select a package">
+          {%- for variant in product.variants -%}
+            <button
+              class="pt__variant{% if variant.id == selected_variant.id %} pt__variant--selected{% endif %}{% unless variant.available %} pt__variant--unavailable{% endunless %}"
+              data-variant-id="{{ variant.id }}"
+              data-price="{{ variant.price | money }}"
+              aria-checked="{% if variant.id == selected_variant.id %}true{% else %}false{% endif %}"
+              aria-label="{{ variant.title }} — {{ variant.price | money }}"
+              role="radio"
+              type="button"
+              {% unless variant.available %}aria-disabled="true"{% endunless %}
+            >
+              <span class="pt__variant-check" aria-hidden="true">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-width="1.2"/>
+    <path d="M4 7l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</span>
+<span class="pt__variant-name">{{ variant.title | escape }}</span>
+<span class="pt__variant-price">{{ variant.price | money }}</span>
+            </button>
+          {%- endfor -%}
+        </div>
+
+        {%- comment %} ── CUSTOM QUESTIONS CALCULATOR ── {%- endcomment %}
+        {%- if section.settings.show_custom_calc -%}
+          <div class="pt__calc" id="pt-calc-{{ section.id }}">
+            <p class="pt__calc-title">{{ section.settings.calc_title | default: 'Custom Questions' | escape }}</p>
+            <p class="pt__calc-desc">{{ section.settings.calc_desc | default: 'More than 5 questions? Get ₹50 discount per question after 5.' | escape }}</p>
+            <div class="pt__calc-row">
+              <label class="pt__calc-label" for="pt-qty-{{ section.id }}">
+                {{ section.settings.calc_label | default: 'Questions:' | escape }}
+              </label>
+              <input
+                class="pt__calc-input"
+                type="number"
+                id="pt-qty-{{ section.id }}"
+                min="{{ section.settings.calc_min | default: 6 }}"
+                max="{{ section.settings.calc_max | default: 20 }}"
+                value="{{ section.settings.calc_min | default: 6 }}"
+                aria-label="Number of questions"
+              >
+            </div>
+            {%- if section.settings.show_calc_total -%}
+              <p class="pt__calc-total" id="pt-total-{{ section.id }}" aria-live="polite"></p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment %} ── PRODUCT FORM + BOOK NOW BUTTON ── {%- endcomment %}
+{%- form 'product', product, id: product_form_id, class: 'pt__form' -%}
+  <input type="hidden" name="id" id="pt-variant-input-{{ section.id }}" value="{{ selected_variant.id }}">
+
+  <p class="pt__helper" id="pt-helper-{{ section.id }}" aria-live="polite">
+    <span aria-hidden="true">✨</span>
+    <span id="pt-helper-text-{{ section.id }}">
+      {{ section.settings.helper_text | default: 'Package selected! Click "Book Now" below to proceed.' | escape }}
+    </span>
+  </p>
+
+  <button
+    type="submit"
+    class="pt__btn"
+    id="pt-btn-{{ section.id }}"
+    {% unless selected_variant.available %}disabled aria-disabled="true"{% endunless %}
+  >
+    {%- if selected_variant.available -%}
+      <span id="pt-btn-label-{{ section.id }}">
+        {{ section.settings.btn_label | default: 'Book Now' | escape }} — {{ selected_variant.title | escape }} — {{ selected_variant.price | money }}
+      </span>
+    {%- else -%}
+      {{ 'products.product.sold_out' | t }}
+    {%- endif -%}
+  </button>
+{%- endform -%}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ─────────────────────────────────────────────
+     RESET & SCOPE
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }},
+  #pt-{{ section.id }} * { box-sizing: border-box; }
+  #pt-{{ section.id }} p,
+  #pt-{{ section.id }} h1,
+  #pt-{{ section.id }} h2 { margin: 0; padding: 0; }
+
+  /* ─────────────────────────────────────────────
+     CSS TOKENS
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} {
+    --col-bg:              {{ section.settings.section_bg }};
+    --col-tag-bg:          {{ section.settings.tag_bg }};
+    --col-tag-border:      {{ section.settings.tag_border }};
+    --col-tag-text:        {{ section.settings.tag_text_color }};
+    --col-title:           {{ section.settings.title_color }};
+    --col-desc:            {{ section.settings.desc_color }};
+    --col-pricing-title:   {{ section.settings.pricing_title_color }};
+    --col-pricing-sub:     {{ section.settings.pricing_sub_color }};
+    --col-variant-bg:      {{ section.settings.variant_bg }};
+    --col-variant-border:  {{ section.settings.variant_border }};
+    --col-variant-name:    {{ section.settings.variant_name_color }};
+    --col-variant-price:   {{ section.settings.variant_price_color }};
+    --col-variant-sel-border: {{ section.settings.variant_selected_border }};
+    --col-variant-sel-bg:  {{ section.settings.variant_selected_bg }};
+    --col-calc-bg:         {{ section.settings.calc_bg }};
+    --col-calc-border:     {{ section.settings.calc_border }};
+    --col-calc-title:      {{ section.settings.calc_title_color }};
+    --col-calc-desc:       {{ section.settings.calc_desc_color }};
+    --col-calc-input-bg:   {{ section.settings.calc_input_bg }};
+    --col-calc-input-border: {{ section.settings.calc_input_border }};
+    --col-btn-from:        {{ section.settings.btn_from }};
+    --col-btn-to:          {{ section.settings.btn_to }};
+    --col-btn-text:        {{ section.settings.btn_text_color }};
+    --col-back:            {{ section.settings.back_color }};
+    --radius-img:          {{ section.settings.img_radius }}px;
+    --radius-variant:      {{ section.settings.variant_radius }}px;
+    --radius-btn:          {{ section.settings.btn_radius }}px;
+    --radius-calc:         {{ section.settings.calc_radius }}px;
+    --speed:               0.18s;
+    --px:                  clamp(1rem, 4vw, 3rem);
+    --py:                  clamp(2rem, 4vw, 3.5rem);
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION SHELL
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} {
+    background: var(--col-bg);
+    padding: var(--py) 0;
+    font-family: inherit;
+    min-height: 60vh;
+  }
+  #pt-{{ section.id }} .pt__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--px);
+  }
+
+  /* ─────────────────────────────────────────────
+     BACK LINK
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--col-back);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    transition: gap var(--speed) ease, opacity var(--speed) ease;
+  }
+  #pt-{{ section.id }} .pt__back:hover { gap: 10px; opacity: 0.75; }
+
+  /* ─────────────────────────────────────────────
+     TWO-COLUMN LAYOUT
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__layout {
+    display: grid;
+    grid-template-columns: 45fr 55fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  /* ─────────────────────────────────────────────
+     IMAGE
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__media {
+    position: sticky;
+    top: 100px;
+  }
+  #pt-{{ section.id }} .pt__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--radius-img);
+  }
+  #pt-{{ section.id }} .pt__img--ph {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #f0d0f8, #e8c0ee);
+    border-radius: var(--radius-img);
+  }
+
+  /* ─────────────────────────────────────────────
+     INFO COLUMN
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* Service tag pill */
+  #pt-{{ section.id }} .pt__tag-wrap { }
+  #pt-{{ section.id }} .pt__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--col-tag-bg);
+    border: 1.5px solid var(--col-tag-border);
+    color: var(--col-tag-text);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    line-height: 1;
+  }
+
+  /* Title */
+  #pt-{{ section.id }} .pt__title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: var(--col-title);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  /* Description */
+  #pt-{{ section.id }} .pt__desc {
+    font-size: 14.5px;
+    color: var(--col-desc);
+    line-height: 1.75;
+  }
+  #pt-{{ section.id }} .pt__desc p { margin: 0; }
+
+  /* Pricing section heading */
+  #pt-{{ section.id }} .pt__pricing-head { display: flex; flex-direction: column; gap: 3px; }
+  #pt-{{ section.id }} .pt__pricing-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--col-pricing-title);
+    line-height: 1.3;
+  }
+  #pt-{{ section.id }} .pt__pricing-sub {
+    font-size: 13px;
+    color: var(--col-pricing-sub);
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────────
+     VARIANT PRICING GRID
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__variants {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  #pt-{{ section.id }} .pt__variant {
+    background: var(--col-variant-bg);
+    border: 1.5px solid var(--col-variant-border);
+    border-radius: var(--radius-variant);
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: border-color var(--speed) ease, background var(--speed) ease, transform var(--speed) ease;
+  }
+  #pt-{{ section.id }} .pt__variant:hover {
+    border-color: var(--col-variant-sel-border);
+    transform: translateY(-1px);
+  }
+  #pt-{{ section.id }} .pt__variant--selected {
+    border-color: var(--col-variant-sel-border);
+    background: var(--col-variant-sel-bg);
+  }
+  #pt-{{ section.id }} .pt__variant--unavailable {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  #pt-{{ section.id }} .pt__variant-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--col-variant-name);
+    line-height: 1.3;
+  }
+  #pt-{{ section.id }} .pt__variant-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--col-variant-price);
+    line-height: 1.2;
+  }
+
+  /* ─────────────────────────────────────────────
+     CUSTOM QUESTIONS CALCULATOR
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__calc {
+    background: var(--col-calc-bg);
+    border: 1.5px solid var(--col-calc-border);
+    border-radius: var(--radius-calc);
+    padding: 1.1rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  #pt-{{ section.id }} .pt__calc-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--col-calc-title);
+    line-height: 1.3;
+  }
+  #pt-{{ section.id }} .pt__calc-desc {
+    font-size: 12.5px;
+    color: var(--col-calc-desc);
+    line-height: 1.55;
+  }
+  #pt-{{ section.id }} .pt__calc-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  #pt-{{ section.id }} .pt__calc-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--col-calc-title);
+    white-space: nowrap;
+  }
+  #pt-{{ section.id }} .pt__calc-input {
+    width: 80px;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--col-calc-title);
+    background: var(--col-calc-input-bg);
+    border: 1.5px solid var(--col-calc-input-border);
+    border-radius: 8px;
+    text-align: center;
+    outline: none;
+    transition: border-color var(--speed) ease;
+  }
+  #pt-{{ section.id }} .pt__calc-input:focus {
+    border-color: {{ section.settings.variant_selected_border }};
+  }
+  #pt-{{ section.id }} .pt__calc-total {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--col-pricing-title);
+    margin-top: 4px;
+  }
+
+  /* ─────────────────────────────────────────────
+     PRODUCT FORM + BUTTON
+  ───────────────────────────────────────────── */
+  #pt-{{ section.id }} .pt__form { display: flex; flex-direction: column; }
+  #pt-{{ section.id }} .pt__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(90deg, var(--col-btn-from), var(--col-btn-to));
+    color: var(--col-btn-text);
+    font-size: 16px;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    border: none;
+    border-radius: var(--radius-btn);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(150, 0, 200, 0.3);
+    transition: opacity var(--speed) ease, transform var(--speed) ease;
+  }
+  #pt-{{ section.id }} .pt__btn:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+  }
+  #pt-{{ section.id }} .pt__btn:active { transform: translateY(0); }
+  #pt-{{ section.id }} .pt__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* ── Variant checkmark ── */
+#pt-{{ section.id }} .pt__variant {
+  position: relative;
+}
+#pt-{{ section.id }} .pt__variant-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: var(--col-variant-border);
+  opacity: 0;
+  transition: opacity var(--speed) ease, color var(--speed) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+#pt-{{ section.id }} .pt__variant--selected .pt__variant-check {
+  opacity: 1;
+  color: var(--col-variant-sel-border);
+}
+
+/* ── Helper text ── */
+#pt-{{ section.id }} .pt__helper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: {{ section.settings.helper_color | default: '#7e22ce' }};
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+  /* ─────────────────────────────────────────────
+     TABLET  ≤ 768px
+  ───────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    #pt-{{ section.id }} .pt__layout {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+    #pt-{{ section.id }} .pt__media { position: static; }
+    #pt-{{ section.id }} .pt__img { aspect-ratio: 16 / 9; }
+    #pt-{{ section.id }} .pt__title { font-size: 1.75rem; }
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE  ≤ 480px
+  ───────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    #pt-{{ section.id }} .pt__variants { grid-template-columns: 1fr 1fr; gap: 8px; }
+    #pt-{{ section.id }} .pt__variant { padding: 0.85rem 1rem; }
+    #pt-{{ section.id }} .pt__variant-name { font-size: 12px; }
+    #pt-{{ section.id }} .pt__variant-price { font-size: 14px; }
+    #pt-{{ section.id }} .pt__btn { font-size: 15px; }
+  }
+</style>
+
+<script>
+(function() {
+  var sectionId = {{ section.id | json }};
+  var container = document.getElementById('pt-' + sectionId);
+  if (!container) return;
+
+  var variantInput = document.getElementById('pt-variant-input-' + sectionId);
+  var variantBtns  = container.querySelectorAll('.pt__variant');
+  var calcInput    = document.getElementById('pt-qty-' + sectionId);
+  var calcTotal    = document.getElementById('pt-total-' + sectionId);
+
+  /* ── Variant selection ── */
+  variantBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (btn.getAttribute('aria-disabled') === 'true') return;
+      variantBtns.forEach(function(b) {
+        b.classList.remove('pt__variant--selected');
+        b.setAttribute('aria-checked', 'false');
+      });
+      btn.classList.add('pt__variant--selected');
+      btn.setAttribute('aria-checked', 'true');
+      if (variantInput) variantInput.value = btn.dataset.variantId;
+
+/* Update button label */
+var btnLabel = document.getElementById('pt-btn-label-' + sectionId);
+if (btnLabel) {
+  var btnBase = {{ section.settings.btn_label | default: 'Book Now' | json }};
+  btnLabel.textContent = btnBase + ' — ' + btn.querySelector('.pt__variant-name').textContent + ' — ' + btn.dataset.price;
+}
+
+      /* Update URL without reload */
+      var url = new URL(window.location);
+      url.searchParams.set('variant', btn.dataset.variantId);
+      window.history.replaceState({}, '', url);
+    });
+  });
+
+  /* ── Custom questions calculator ── */
+  if (calcInput && calcTotal) {
+    var baseQty   = parseInt(calcInput.min) || 6;
+    var basePrice = {{ section.settings.calc_base_price | default: 100 }};
+    var discount  = {{ section.settings.calc_discount | default: 50 }};
+    var symbol    = {{ section.settings.calc_currency_symbol | default: '₹' | json }};
+
+    function calcPrice() {
+      var qty = parseInt(calcInput.value) || baseQty;
+      if (qty < baseQty) { calcInput.value = baseQty; qty = baseQty; }
+      var price = qty * basePrice - (qty - (baseQty - 1)) * discount;
+      calcTotal.textContent = 'Estimated total: ' + symbol + price;
+    }
+
+    calcInput.addEventListener('input', calcPrice);
+    calcPrice();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product — Tarot PDP",
+  "tag": "div",
+  "class": "main-product-tarot-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Back Link"
+    },
+    {
+      "type": "text",
+      "id": "back_label",
+      "label": "Back link text",
+      "default": "Back to Services"
+    },
+    {
+      "type": "url",
+      "id": "back_url",
+      "label": "Back link URL"
+    },
+    {
+      "type": "color",
+      "id": "back_color",
+      "label": "Back link colour",
+      "default": "#7b2fa0"
+    },
+    {
+      "type": "header",
+      "content": "Service Tag Pill"
+    },
+    {
+      "type": "text",
+      "id": "service_tag",
+      "label": "Service tag text",
+      "default": "TAROT READING",
+      "info": "Leave blank to use product type"
+    },
+    {
+      "type": "text",
+      "id": "service_tag_emoji",
+      "label": "Service tag emoji",
+      "default": "🔮"
+    },
+    {
+      "type": "color",
+      "id": "tag_bg",
+      "label": "Tag background",
+      "default": "#f5eaff"
+    },
+    {
+      "type": "color",
+      "id": "tag_border",
+      "label": "Tag border colour",
+      "default": "#c084d4"
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Tag text colour",
+      "default": "#6b21a8"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Product title colour",
+      "default": "#7e22ce"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description colour",
+      "default": "#6b21a8"
+    },
+    {
+      "type": "color",
+      "id": "pricing_title_color",
+      "label": "Pricing heading colour",
+      "default": "#7e22ce"
+    },
+    {
+      "type": "color",
+      "id": "pricing_sub_color",
+      "label": "Pricing subtext colour",
+      "default": "#a07abf"
+    },
+    {
+      "type": "header",
+      "content": "Pricing Section"
+    },
+    {
+      "type": "text",
+      "id": "pricing_heading",
+      "label": "Pricing section heading",
+      "default": "Pricing & Questions"
+    },
+    {
+      "type": "text",
+      "id": "pricing_subtext",
+      "label": "Pricing subtext",
+      "default": "Select your package to proceed with booking"
+    },
+    {
+      "type": "header",
+      "content": "Variant Cards"
+    },
+    {
+      "type": "color",
+      "id": "variant_bg",
+      "label": "Variant card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "variant_border",
+      "label": "Variant card border",
+      "default": "#e8e0f8"
+    },
+    {
+      "type": "color",
+      "id": "variant_selected_border",
+      "label": "Selected variant border",
+      "default": "#9b00d0"
+    },
+    {
+      "type": "color",
+      "id": "variant_selected_bg",
+      "label": "Selected variant background",
+      "default": "#f8f0ff"
+    },
+    {
+      "type": "color",
+      "id": "variant_name_color",
+      "label": "Variant name colour",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "variant_price_color",
+      "label": "Variant price colour",
+      "default": "#7e22ce"
+    },
+    {
+      "type": "range",
+      "id": "variant_radius",
+      "label": "Variant card radius",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Custom Questions Calculator"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_custom_calc",
+      "label": "Show custom questions calculator",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "calc_title",
+      "label": "Calculator title",
+      "default": "Custom Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "calc_desc",
+      "label": "Calculator description",
+      "default": "More than 5 questions? Get ₹50 discount per question after 5."
+    },
+    {
+      "type": "text",
+      "id": "calc_label",
+      "label": "Input label",
+      "default": "Questions:"
+    },
+    {
+      "type": "range",
+      "id": "calc_min",
+      "label": "Minimum questions",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "calc_max",
+      "label": "Maximum questions",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "show_calc_total",
+      "label": "Show estimated total",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "calc_currency_symbol",
+      "label": "Currency symbol",
+      "default": "₹"
+    },
+    {
+      "type": "range",
+      "id": "calc_base_price",
+      "label": "Price per question (base)",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "calc_discount",
+      "label": "Discount per question after min",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "calc_bg",
+      "label": "Calculator card background",
+      "default": "#fdf5ff"
+    },
+    {
+      "type": "color",
+      "id": "calc_border",
+      "label": "Calculator card border",
+      "default": "#e0c8f0"
+    },
+    {
+      "type": "color",
+      "id": "calc_title_color",
+      "label": "Calculator title colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "color",
+      "id": "calc_desc_color",
+      "label": "Calculator description colour",
+      "default": "#8b5ab0"
+    },
+    {
+      "type": "color",
+      "id": "calc_input_bg",
+      "label": "Input background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "calc_input_border",
+      "label": "Input border colour",
+      "default": "#d0b8e8"
+    },
+    {
+      "type": "range",
+      "id": "calc_radius",
+      "label": "Calculator card radius",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Book Now Button"
+    },
+    {
+  "type": "text",
+  "id": "helper_text",
+  "label": "Helper text above button",
+  "default": "Package selected! Click \"Book Now\" below to proceed."
+},
+{
+  "type": "color",
+  "id": "helper_color",
+  "label": "Helper text colour",
+  "default": "#7e22ce"
+},
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Button label",
+      "default": "Book Now"
+    },
+    {
+      "type": "text",
+      "id": "btn_emoji",
+      "label": "Button emoji",
+      "default": "✨"
+    },
+    {
+      "type": "color",
+      "id": "btn_from",
+      "label": "Button gradient — start",
+      "default": "#9b00d0"
+    },
+    {
+      "type": "color",
+      "id": "btn_to",
+      "label": "Button gradient — end",
+      "default": "#e000c0"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "btn_radius",
+      "label": "Button border radius",
+      "min": 8,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "img_radius",
+      "label": "Image corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#fdf0f8"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product — Tarot PDP",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

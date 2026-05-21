@@ -1,0 +1,769 @@
+{% comment %}
+  Section : testimonials.liquid
+  Design  : Modern Tarot — "Client Love" testimonials + stats bar
+  Features: All content editable via Theme Editor, up to 6 review blocks
+  Tested  : mobile 375px / tablet 768px / desktop 1280px+
+{% endcomment %}
+
+<div id="tr-{{ section.id }}" class="tr">
+
+  {%- comment %} ── HEADER ── {%- endcomment %}
+  <div class="tr__header">
+    {%- if section.settings.tagline != blank -%}
+      <div class="tr__tagline-wrap">
+        <span class="tr__tagline">
+          {{ section.settings.tagline | escape }}
+          {%- if section.settings.tagline_emoji != blank -%}
+            <span aria-hidden="true"> {{ section.settings.tagline_emoji }}</span>
+          {%- endif -%}
+        </span>
+      </div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="tr__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtext != blank -%}
+      <p class="tr__subtext">
+        {{ section.settings.subtext | escape }}
+        {%- if section.settings.subtext_emoji != blank -%}
+          <span aria-hidden="true"> {{ section.settings.subtext_emoji }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+  </div>
+
+  {%- comment %} ── REVIEW CARDS ── {%- endcomment %}
+  {%- if section.blocks.size > 0 -%}
+    <div class="tr__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <div class="tr__card" {{ block.shopify_attributes }}>
+
+            {%- comment %} Quote icon + stars ── {%- endcomment %}
+            <div class="tr__card-top">
+              <div class="tr__quote-icon" aria-hidden="true">
+                <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
+                  <path d="M0 14V8.4C0 5.6 1.067 3.267 3.2 1.4L5.6 0l1.2 1.4C5.467 2.333 4.533 3.4 4 4.6c-.267.667-.4 1.333-.4 2H6V14H0zm9 0V8.4c0-2.8 1.067-5.133 3.2-7L14.4 0l1.2 1.4c-1.333.933-2.267 2-2.8 3.2-.267.667-.4 1.333-.4 2H15V14H9z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="tr__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+                {%- assign rating = block.settings.rating | default: 5 -%}
+                {%- for i in (1..5) -%}
+                  <svg width="16" height="16" viewBox="0 0 12 12" aria-hidden="true" class="{% if i <= rating %}tr__star--filled{% else %}tr__star--empty{% endif %}">
+                    <path d="M6 .5l1.39 2.82 3.11.45-2.25 2.19.53 3.09L6 7.5l-2.78 1.46.53-3.09L1.5 3.77l3.11-.45L6 .5z" fill="currentColor"/>
+                  </svg>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            {%- comment %} Review text ── {%- endcomment %}
+            {%- if block.settings.review_text != blank -%}
+              <p class="tr__card-text">"{{ block.settings.review_text | escape }}"</p>
+            {%- endif -%}
+
+            {%- comment %} Service tag ── {%- endcomment %}
+            {%- if block.settings.service_tag != blank -%}
+              <div class="tr__tag">{{ block.settings.service_tag | escape }}</div>
+            {%- endif -%}
+
+            {%- comment %} Author ── {%- endcomment %}
+            <div class="tr__author">
+              {%- if block.settings.avatar != blank -%}
+                {{
+                  block.settings.avatar
+                  | image_url: width: 100
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'tr__avatar',
+                    widths: '60, 80, 100',
+                    sizes: '48px',
+                    alt: block.settings.name | escape
+                }}
+              {%- else -%}
+                <div class="tr__avatar tr__avatar--ph" aria-hidden="true">
+                  {{ block.settings.name | slice: 0 | upcase }}
+                </div>
+              {%- endif -%}
+              <div class="tr__author-info">
+                {%- if block.settings.name != blank -%}
+                  <p class="tr__author-name">{{ block.settings.name | escape }}</p>
+                {%- endif -%}
+                <p class="tr__author-verified">
+                  {{ section.settings.verified_label | default: 'Verified Client' | escape }}
+                  <span aria-hidden="true"> ✓</span>
+                </p>
+              </div>
+            </div>
+
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── STATS BAR ── {%- endcomment %}
+  {%- if section.settings.show_stats -%}
+    <div class="tr__stats">
+
+      {%- if section.settings.stat1_number != blank -%}
+        <div class="tr__stat">
+          <span class="tr__stat-num">{{ section.settings.stat1_number | escape }}</span>
+          <span class="tr__stat-label">{{ section.settings.stat1_label | escape }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.stat1_number != blank and section.settings.stat2_number != blank -%}
+        <div class="tr__stat-divider" aria-hidden="true"></div>
+      {%- endif -%}
+
+      {%- if section.settings.stat2_number != blank -%}
+        <div class="tr__stat">
+          <span class="tr__stat-num">
+            {{ section.settings.stat2_number | escape }}
+            {%- if section.settings.stat2_icon != blank -%}
+              <span class="tr__stat-icon" aria-hidden="true"> {{ section.settings.stat2_icon }}</span>
+            {%- endif -%}
+          </span>
+          <span class="tr__stat-label">{{ section.settings.stat2_label | escape }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.stat2_number != blank and section.settings.stat3_number != blank -%}
+        <div class="tr__stat-divider" aria-hidden="true"></div>
+      {%- endif -%}
+
+      {%- if section.settings.stat3_number != blank -%}
+        <div class="tr__stat">
+          <span class="tr__stat-num">{{ section.settings.stat3_number | escape }}</span>
+          <span class="tr__stat-label">{{ section.settings.stat3_label | escape }}</span>
+        </div>
+      {%- endif -%}
+
+    </div>
+  {%- endif -%}
+
+</div>
+
+<style>
+  /* ─────────────────────────────────────────────
+     RESET & SCOPE
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }},
+  #tr-{{ section.id }} * { box-sizing: border-box; }
+  #tr-{{ section.id }} p,
+  #tr-{{ section.id }} h2 { margin: 0; padding: 0; }
+
+  /* ─────────────────────────────────────────────
+     CSS TOKENS
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }} {
+    --col-bg:            {{ section.settings.section_bg }};
+    --col-heading:       {{ section.settings.heading_color }};
+    --col-subtext:       {{ section.settings.subtext_color }};
+    --col-tagline-text:  {{ section.settings.tagline_text_color }};
+    --col-tagline-border:{{ section.settings.tagline_border_color }};
+    --col-card-bg:       {{ section.settings.card_bg }};
+    --col-card-border:   {{ section.settings.card_border_color }};
+    --col-quote-bg:      {{ section.settings.quote_icon_bg }};
+    --col-quote-icon:    {{ section.settings.quote_icon_color }};
+    --col-stars-filled:  {{ section.settings.stars_color }};
+    --col-stars-empty:   {{ section.settings.stars_empty_color }};
+    --col-text:          {{ section.settings.review_text_color }};
+    --col-tag-bg:        {{ section.settings.tag_bg }};
+    --col-tag-border:    {{ section.settings.tag_border }};
+    --col-tag-text:      {{ section.settings.tag_text_color }};
+    --col-name:          {{ section.settings.name_color }};
+    --col-verified:      {{ section.settings.verified_color }};
+    --col-stats-bg:      {{ section.settings.stats_bg }};
+    --col-stats-border:  {{ section.settings.stats_border }};
+    --col-stat-num:      {{ section.settings.stat_num_color }};
+    --col-stat-label:    {{ section.settings.stat_label_color }};
+    --col-stat-divider:  {{ section.settings.stat_divider_color }};
+    --col-stat-icon:     {{ section.settings.stat_icon_color }};
+    --radius-card:       {{ section.settings.card_radius }}px;
+    --radius-stats:      {{ section.settings.stats_radius }}px;
+    --speed:             0.2s;
+    --px:                clamp(1.25rem, 5vw, 4rem);
+    --py:                clamp(3rem, 6vw, 5rem);
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION SHELL
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }} {
+    background: var(--col-bg);
+    padding: var(--py) var(--px);
+    font-family: inherit;
+  }
+
+  /* ─────────────────────────────────────────────
+     HEADER
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }} .tr__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  #tr-{{ section.id }} .tr__tagline-wrap { margin-bottom: 0.2rem; }
+  #tr-{{ section.id }} .tr__tagline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--col-tagline-text);
+    border: 1.5px solid var(--col-tagline-border);
+    border-radius: 100px;
+    padding: 6px 18px;
+    line-height: 1;
+  }
+  #tr-{{ section.id }} .tr__heading {
+    font-size: clamp(1.75rem, 3.2vw, 2.6rem);
+    font-weight: 700;
+    color: var(--col-heading);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  #tr-{{ section.id }} .tr__subtext {
+    font-size: 15px;
+    color: var(--col-subtext);
+    line-height: 1.6;
+    max-width: 48ch;
+  }
+
+  /* ─────────────────────────────────────────────
+     CARDS GRID
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }} .tr__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 1280px;
+    margin: 0 auto clamp(2rem, 4vw, 3rem);
+  }
+
+  /* ─────────────────────────────────────────────
+     REVIEW CARD
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }} .tr__card {
+    background: var(--col-card-bg);
+    border: 1px solid var(--col-card-border);
+    border-radius: var(--radius-card);
+    padding: 1.8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+  }
+  #tr-{{ section.id }} .tr__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 36px rgba(180, 60, 200, 0.1);
+  }
+
+  /* Top row — quote icon + stars */
+  #tr-{{ section.id }} .tr__card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #tr-{{ section.id }} .tr__quote-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--col-quote-bg);
+    color: var(--col-quote-icon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  #tr-{{ section.id }} .tr__stars {
+    display: flex;
+    gap: 3px;
+  }
+  #tr-{{ section.id }} .tr__star--filled { color: var(--col-stars-filled); }
+  #tr-{{ section.id }} .tr__star--empty  { color: var(--col-stars-empty); }
+
+  /* Review text */
+  #tr-{{ section.id }} .tr__card-text {
+    font-size: 14.5px;
+    color: var(--col-text);
+    line-height: 1.75;
+    flex: 1;
+  }
+
+  /* Service tag pill */
+  #tr-{{ section.id }} .tr__tag {
+    display: inline-flex;
+    align-items: center;
+    background: var(--col-tag-bg);
+    border: 1.5px solid var(--col-tag-border);
+    color: var(--col-tag-text);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    width: fit-content;
+  }
+
+  /* Author row */
+  #tr-{{ section.id }} .tr__author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--col-card-border);
+  }
+  #tr-{{ section.id }} .tr__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  #tr-{{ section.id }} .tr__avatar--ph {
+    background: linear-gradient(135deg, #e0c0f8, #f8c0e8);
+    color: #7b2fa0;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #tr-{{ section.id }} .tr__author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  #tr-{{ section.id }} .tr__author-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--col-name);
+    line-height: 1.3;
+  }
+  #tr-{{ section.id }} .tr__author-verified {
+    font-size: 12px;
+    color: var(--col-verified);
+    font-weight: 500;
+  }
+
+  /* ─────────────────────────────────────────────
+     STATS BAR
+  ───────────────────────────────────────────── */
+  #tr-{{ section.id }} .tr__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: var(--col-stats-bg);
+    border: 1.5px solid var(--col-stats-border);
+    border-radius: var(--radius-stats);
+    padding: 1.4rem 2.5rem;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  #tr-{{ section.id }} .tr__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+  #tr-{{ section.id }} .tr__stat-num {
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 700;
+    color: var(--col-stat-num);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  #tr-{{ section.id }} .tr__stat-icon {
+    font-size: 1rem;
+    color: var(--col-stat-icon);
+  }
+  #tr-{{ section.id }} .tr__stat-label {
+    font-size: 12px;
+    color: var(--col-stat-label);
+    font-weight: 500;
+    text-align: center;
+  }
+  #tr-{{ section.id }} .tr__stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--col-stat-divider);
+    flex-shrink: 0;
+    margin: 0 1rem;
+    opacity: 0.4;
+  }
+
+  /* ─────────────────────────────────────────────
+     TABLET  ≤ 768px  →  1 column
+  ───────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    #tr-{{ section.id }} .tr__grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    #tr-{{ section.id }} .tr__stats {
+      max-width: 100%;
+      padding: 1.2rem 1.5rem;
+    }
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE  ≤ 480px
+  ───────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    #tr-{{ section.id }} .tr__card { padding: 1.4rem 1.25rem; }
+    #tr-{{ section.id }} .tr__card-text { font-size: 13.5px; }
+    #tr-{{ section.id }} .tr__heading { font-size: 1.6rem; }
+    #tr-{{ section.id }} .tr__stats { flex-wrap: wrap; gap: 1rem; }
+    #tr-{{ section.id }} .tr__stat-divider { display: none; }
+    #tr-{{ section.id }} .tr__stat { min-width: 30%; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "testimonials-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#fdf0f8"
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline text",
+      "default": "CLIENT LOVE"
+    },
+    {
+      "type": "text",
+      "id": "tagline_emoji",
+      "label": "Tagline emoji",
+      "default": "💕"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Clients Say"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Real stories from souls we've helped find clarity"
+    },
+    {
+      "type": "text",
+      "id": "subtext_emoji",
+      "label": "Subtext emoji",
+      "default": "✨"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "color",
+      "id": "subtext_color",
+      "label": "Subtext colour",
+      "default": "#a07abf"
+    },
+    {
+      "type": "color",
+      "id": "tagline_text_color",
+      "label": "Tagline text colour",
+      "default": "#3d1a6e"
+    },
+    {
+      "type": "color",
+      "id": "tagline_border_color",
+      "label": "Tagline border colour",
+      "default": "#c084d4"
+    },
+    {
+      "type": "header",
+      "content": "Review Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border colour",
+      "default": "#ede8f8"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "quote_icon_bg",
+      "label": "Quote icon background",
+      "default": "#cc00bb"
+    },
+    {
+      "type": "color",
+      "id": "quote_icon_color",
+      "label": "Quote icon colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "stars_color",
+      "label": "Filled stars colour",
+      "default": "#e020c0"
+    },
+    {
+      "type": "color",
+      "id": "stars_empty_color",
+      "label": "Empty stars colour",
+      "default": "#e0d0f0"
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review text colour",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "tag_bg",
+      "label": "Service tag background",
+      "default": "#fdf0ff"
+    },
+    {
+      "type": "color",
+      "id": "tag_border",
+      "label": "Service tag border colour",
+      "default": "#d4a0e8"
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Service tag text colour",
+      "default": "#7b2fa0"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Author name colour",
+      "default": "#1a0a3e"
+    },
+    {
+      "type": "color",
+      "id": "verified_color",
+      "label": "Verified label colour",
+      "default": "#a07abf"
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Verified label text",
+      "default": "Verified Client"
+    },
+    {
+      "type": "header",
+      "content": "Stats Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show stats bar",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "stats_bg",
+      "label": "Stats bar background",
+      "default": "#f5e6ff"
+    },
+    {
+      "type": "color",
+      "id": "stats_border",
+      "label": "Stats bar border colour",
+      "default": "#ddb8f0"
+    },
+    {
+      "type": "range",
+      "id": "stats_radius",
+      "label": "Stats bar corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "stat_num_color",
+      "label": "Stat number colour",
+      "default": "#7e22ce"
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Stat label colour",
+      "default": "#9a60c0"
+    },
+    {
+      "type": "color",
+      "id": "stat_divider_color",
+      "label": "Stat divider colour",
+      "default": "#c084d4"
+    },
+    {
+      "type": "color",
+      "id": "stat_icon_color",
+      "label": "Stat icon colour",
+      "default": "#e020c0"
+    },
+    {
+      "type": "text",
+      "id": "stat1_number",
+      "label": "Stat 1 — number",
+      "default": "500+"
+    },
+    {
+      "type": "text",
+      "id": "stat1_label",
+      "label": "Stat 1 — label",
+      "default": "Happy Clients"
+    },
+    {
+      "type": "text",
+      "id": "stat2_number",
+      "label": "Stat 2 — number",
+      "default": "4.9"
+    },
+    {
+      "type": "text",
+      "id": "stat2_icon",
+      "label": "Stat 2 — icon (emoji)",
+      "default": "⭐",
+      "info": "Shown after the number"
+    },
+    {
+      "type": "text",
+      "id": "stat2_label",
+      "label": "Stat 2 — label",
+      "default": "Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat3_number",
+      "label": "Stat 3 — number",
+      "default": "24h"
+    },
+    {
+      "type": "text",
+      "id": "stat3_label",
+      "label": "Stat 3 — label",
+      "default": "Response Time"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Star rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review text",
+          "default": "The tarot reading was incredibly accurate and gave me the clarity I needed about my career path. The energy was so calming and the insights were profound. Highly recommend!"
+        },
+        {
+          "type": "text",
+          "id": "service_tag",
+          "label": "Service tag",
+          "default": "TAROT READING",
+          "info": "e.g. TAROT READING, HEALING SESSION"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Reviewer photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name",
+          "default": "Sarah Martinez"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "The tarot reading was incredibly accurate and gave me the clarity I needed about my career path. The energy was so calming and the insights were profound. Highly recommend!",
+            "service_tag": "TAROT READING",
+            "name": "Sarah Martinez"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "The spell healing ritual helped me release so much negative energy. I felt lighter and more positive immediately. The guidance was gentle yet powerful. A truly transformative experience!",
+            "service_tag": "HEALING SESSION",
+            "name": "Michael Chen"
+          }
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6
+}
+{% endschema %}

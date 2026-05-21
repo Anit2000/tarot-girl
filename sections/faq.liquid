@@ -1,0 +1,518 @@
+{% comment %}
+  Section : faq.liquid
+  Design  : Modern Tarot — FAQ accordion with footer note
+  Features: Heading, up to 15 FAQ blocks, optional footer note — all Theme Editor editable
+  Tested  : mobile 375px / tablet 768px / desktop 1280px+
+{% endcomment %}
+
+<div id="fq-{{ section.id }}" class="fq">
+  <div class="fq__inner">
+
+    {%- comment %} ── HEADING ── {%- endcomment %}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="fq__heading">
+        {{ section.settings.heading | escape }}
+        {%- if section.settings.heading_emoji != blank -%}
+          <span class="fq__heading-emoji" aria-hidden="true"> {{ section.settings.heading_emoji }}</span>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    {%- comment %} ── FAQ ITEMS ── {%- endcomment %}
+    {%- if section.blocks.size > 0 -%}
+      <div class="fq__list">
+        {%- for block in section.blocks -%}
+          <div class="fq__item" {{ block.shopify_attributes }}>
+            <button
+              class="fq__question"
+              aria-expanded="false"
+              aria-controls="fq-answer-{{ section.id }}-{{ forloop.index }}"
+              id="fq-btn-{{ section.id }}-{{ forloop.index }}"
+              type="button"
+            >
+              <span class="fq__question-text">{{ block.settings.question | escape }}</span>
+              <span class="fq__chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+            <div
+              class="fq__answer"
+              id="fq-answer-{{ section.id }}-{{ forloop.index }}"
+              role="region"
+              aria-labelledby="fq-btn-{{ section.id }}-{{ forloop.index }}"
+              hidden
+            >
+              <p class="fq__answer-text">{{ block.settings.answer | escape }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment %} ── FOOTER NOTE ── {%- endcomment %}
+    {%- if section.settings.show_note and section.settings.note_text != blank -%}
+      <div class="fq__note" role="note">
+        {%- if section.settings.note_emoji != blank -%}
+          <span class="fq__note-emoji" aria-hidden="true">{{ section.settings.note_emoji }}</span>
+        {%- endif -%}
+        <p class="fq__note-text">{{ section.settings.note_text | escape }}</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  /* ─────────────────────────────────────────────
+     RESET & SCOPE
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }},
+  #fq-{{ section.id }} * { box-sizing: border-box; }
+  #fq-{{ section.id }} p,
+  #fq-{{ section.id }} h2 { margin: 0; padding: 0; }
+
+  /* ─────────────────────────────────────────────
+     CSS TOKENS
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} {
+    --col-bg:           {{ section.settings.section_bg }};
+    --col-heading:      {{ section.settings.heading_color }};
+    --col-card-bg:      {{ section.settings.card_bg }};
+    --col-card-border:  {{ section.settings.card_border }};
+    --col-q-text:       {{ section.settings.question_color }};
+    --col-a-text:       {{ section.settings.answer_color }};
+    --col-chevron:      {{ section.settings.chevron_color }};
+    --col-note-text:    {{ section.settings.note_text_color }};
+    --col-note-bg:      {{ section.settings.note_bg }};
+    --col-note-border:  {{ section.settings.note_border }};
+    --radius-card:      {{ section.settings.card_radius }}px;
+    --radius-note:      {{ section.settings.note_radius }}px;
+    --speed:            0.22s;
+    --px:               clamp(1.25rem, 5vw, 4rem);
+    --py:               clamp(3rem, 6vw, 5rem);
+    --max-w:            {{ section.settings.max_width }}px;
+  }
+
+  /* ─────────────────────────────────────────────
+     SECTION SHELL
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} {
+    background: var(--col-bg);
+    padding: var(--py) var(--px);
+    font-family: inherit;
+  }
+
+  #fq-{{ section.id }} .fq__inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  /* ─────────────────────────────────────────────
+     HEADING
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} .fq__heading {
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+    font-weight: 700;
+    color: var(--col-heading);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-align: center;
+  }
+  #fq-{{ section.id }} .fq__heading-emoji {
+    font-style: normal;
+    font-size: 0.85em;
+  }
+
+  /* ─────────────────────────────────────────────
+     FAQ LIST
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} .fq__list {
+    display: flex;
+    flex-direction: column;
+    gap: {{ section.settings.item_gap }}px;
+  }
+
+  /* ─────────────────────────────────────────────
+     FAQ ITEM CARD
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} .fq__item {
+    background: var(--col-card-bg);
+    border: 1px solid var(--col-card-border);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    transition: box-shadow var(--speed) ease;
+  }
+  #fq-{{ section.id }} .fq__item:hover {
+    box-shadow: 0 4px 18px rgba(100, 0, 160, 0.07);
+  }
+  #fq-{{ section.id }} .fq__item.fq__item--open {
+    border-color: {{ section.settings.card_open_border }};
+  }
+
+  /* ─────────────────────────────────────────────
+     QUESTION BUTTON
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} .fq__question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+  }
+  #fq-{{ section.id }} .fq__question-text {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--col-q-text);
+    line-height: 1.4;
+    flex: 1;
+  }
+  #fq-{{ section.id }} .fq__chevron {
+    color: var(--col-chevron);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    transition: transform var(--speed) ease;
+  }
+  #fq-{{ section.id }} .fq__item--open .fq__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ─────────────────────────────────────────────
+     ANSWER
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} .fq__answer {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding var(--speed) ease;
+  }
+  #fq-{{ section.id }} .fq__answer:not([hidden]) {
+    max-height: 400px;
+  }
+  #fq-{{ section.id }} .fq__answer[hidden] {
+    display: block !important;
+    max-height: 0;
+    padding-bottom: 0;
+  }
+  #fq-{{ section.id }} .fq__answer-text {
+    font-size: 13.5px;
+    color: var(--col-a-text);
+    line-height: 1.7;
+    padding: 0 1.5rem 1.2rem;
+    font-weight: 400;
+  }
+
+  /* ─────────────────────────────────────────────
+     FOOTER NOTE
+  ───────────────────────────────────────────── */
+  #fq-{{ section.id }} .fq__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: var(--col-note-bg);
+    border: 1px solid var(--col-note-border);
+    border-radius: var(--radius-note);
+    padding: 1rem 1.5rem;
+    text-align: center;
+  }
+  #fq-{{ section.id }} .fq__note-emoji {
+    font-size: 15px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  #fq-{{ section.id }} .fq__note-text {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--col-note-text);
+    line-height: 1.5;
+  }
+
+  /* ─────────────────────────────────────────────
+     MOBILE  ≤ 480px
+  ───────────────────────────────────────────── */
+  @media (max-width: 480px) {
+    #fq-{{ section.id }} .fq__question { padding: 0.95rem 1.1rem; }
+    #fq-{{ section.id }} .fq__answer-text { padding: 0 1.1rem 1rem; font-size: 13px; }
+    #fq-{{ section.id }} .fq__question-text { font-size: 13.5px; }
+  }
+</style>
+
+<script>
+(function () {
+  var container = document.getElementById('fq-{{ section.id }}');
+  if (!container) return;
+
+  var questions = container.querySelectorAll('.fq__question');
+
+  questions.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item   = btn.closest('.fq__item');
+      var answer = document.getElementById(btn.getAttribute('aria-controls'));
+      var isOpen = item.classList.contains('fq__item--open');
+
+      /* Close all */
+      container.querySelectorAll('.fq__item--open').forEach(function (openItem) {
+        openItem.classList.remove('fq__item--open');
+        openItem.querySelector('.fq__question').setAttribute('aria-expanded', 'false');
+        var a = openItem.querySelector('.fq__answer');
+        a.setAttribute('hidden', '');
+      });
+
+      /* Open clicked (if it was closed) */
+      if (!isOpen) {
+        item.classList.add('fq__item--open');
+        btn.setAttribute('aria-expanded', 'true');
+        answer.removeAttribute('hidden');
+      }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "faq-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#f5eeff"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "heading_emoji",
+      "label": "Heading emoji",
+      "default": "✨"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour",
+      "default": "#2d1460"
+    },
+    {
+      "type": "header",
+      "content": "FAQ Cards"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border colour",
+      "default": "#ede8f8"
+    },
+    {
+      "type": "color",
+      "id": "card_open_border",
+      "label": "Open card border colour",
+      "default": "#c084d4"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Gap between cards",
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question text colour",
+      "default": "#3d1a6e"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer text colour",
+      "default": "#6b3fa0"
+    },
+    {
+      "type": "color",
+      "id": "chevron_color",
+      "label": "Chevron icon colour",
+      "default": "#a855f7"
+    },
+    {
+      "type": "header",
+      "content": "Footer Note"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_note",
+      "label": "Show footer note",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "note_emoji",
+      "label": "Note emoji",
+      "default": "✨"
+    },
+    {
+      "type": "text",
+      "id": "note_text",
+      "label": "Note text",
+      "default": "If you still have questions, feel free to reach out on WhatsApp before booking."
+    },
+    {
+      "type": "color",
+      "id": "note_text_color",
+      "label": "Note text colour",
+      "default": "#6b21a8"
+    },
+    {
+      "type": "color",
+      "id": "note_bg",
+      "label": "Note background",
+      "default": "#f8f0ff"
+    },
+    {
+      "type": "color",
+      "id": "note_border",
+      "label": "Note border colour",
+      "default": "#ddb8f0"
+    },
+    {
+      "type": "range",
+      "id": "note_radius",
+      "label": "Note corner radius",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width",
+      "min": 600,
+      "max": 1200,
+      "step": 40,
+      "unit": "px",
+      "default": 880
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Do I need to be online during the reading?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "No. Since this is a text reading, you don't need to be online. Your reading will be sent to you on WhatsApp once it is ready."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need to be online during the reading?",
+            "answer": "No. Since this is a text reading, you don't need to be online. Your reading will be sent to you on WhatsApp once it is ready."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I ask multiple questions?",
+            "answer": "Yes. You can choose the number of questions while booking and ask them together."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What details do I need to provide?",
+            "answer": "You will receive a WhatsApp message after booking where you can share your name, questions, and any details related to your situation if needed."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I book a reading for someone else?",
+            "answer": "Yes, you can book a reading for another person. Just share the correct details and questions during the process."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What if I don't receive my WhatsApp message?",
+            "answer": "Please make sure you enter the correct WhatsApp number while booking. If you still don't receive a message, you can contact us directly."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Are tarot readings guaranteed to happen exactly as predicted?",
+            "answer": "Tarot readings are meant for guidance and clarity. Your choices and actions always play an important role in the outcome."
+          }
+        }
+      ]
+    }
+  ],
+  "max_blocks": 15
+}
+{% endschema %}
