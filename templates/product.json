@@ -1,1 +1,262 @@
-{"sections":{"main":{"type":"main-product","settings":{"back_label":"Back to Services","back_url":"","back_color":"#7b2fa0","service_tag":"TAROT READING","service_tag_emoji":"🔮","tag_bg":"#f5eaff","tag_border":"#c084d4","tag_text_color":"#6b21a8","title_color":"#7e22ce","desc_color":"#6b21a8","pricing_title_color":"#7e22ce","pricing_sub_color":"#a07abf","pricing_heading":"Pricing & Questions","pricing_subtext":"Select your package to proceed with booking","variant_bg":"#ffffff","variant_border":"#e8e0f8","variant_selected_border":"#9b00d0","variant_selected_bg":"#f8f0ff","variant_name_color":"#333333","variant_price_color":"#7e22ce","variant_radius":12,"show_custom_calc":true,"calc_title":"Custom Questions","calc_desc":"More than 5 questions? Get ₹50 discount per question after 5.","calc_label":"Questions:","calc_min":6,"calc_max":20,"show_calc_total":true,"calc_currency_symbol":"₹","calc_base_price":100,"calc_discount":50,"calc_bg":"#fdf5ff","calc_border":"#e0c8f0","calc_title_color":"#2d1460","calc_desc_color":"#8b5ab0","calc_input_bg":"#ffffff","calc_input_border":"#d0b8e8","calc_radius":14,"helper_text":"Package selected! Click \"Book Now\" below to proceed.","helper_color":"#7e22ce","btn_label":"Book Now","btn_emoji":"✨","btn_from":"#9b00d0","btn_to":"#e000c0","btn_text_color":"#ffffff","btn_radius":50,"img_radius":20,"section_bg":"#fdf0f8"}},"how_to_book_7YGqHG":{"type":"how-to-book","blocks":{"step_qcDxij":{"type":"step","settings":{"text":"Choose the number of questions you want guidance on."}},"step_9TwG78":{"type":"step","settings":{"text":"Book your reading and complete the payment."}},"step_ECUwig":{"type":"step","settings":{"text":"Enter your correct WhatsApp number while booking."}},"step_dzBCjV":{"type":"step","settings":{"text":"You will automatically receive a WhatsApp message to share your details and questions."}},"step_DQLBWh":{"type":"step","settings":{"text":"Your tarot reading will be delivered within 24–48 hours after booking."}}},"block_order":["step_qcDxij","step_9TwG78","step_ECUwig","step_dzBCjV","step_DQLBWh"],"name":"How to Book","settings":{"section_bg":"#f5eeff","heading":"How to Book Your Reading","heading_emoji":"✨","subtext":"Simple, easy, and designed for you","heading_color":"#2d1460","subtext_color":"#a07abf","card_bg":"#ffffff","card_border":"#ede8f8","card_radius":16,"step_gap":12,"step_text_color":"#3d1a6e","num_bg":"#d400c0","num_text":"#ffffff","max_width":880}},"what_you_receive_adB8x9":{"type":"what-you-receive","blocks":{"item_HYfUYk":{"type":"item","settings":{"text":"For question readings, you will receive answers with a full detailed tarot reading for each question."}},"item_qdqqzB":{"type":"item","settings":{"text":"For Yes\/No readings, you will receive only a direct Yes or No answer, not a detailed reading."}}},"block_order":["item_HYfUYk","item_qdqqzB"],"name":"What You'll Receive","settings":{"section_bg":"#f5eeff","heading":"What You'll Receive","heading_emoji":"Heading emoji","heading_color":"#2d1460","card_bg":"#ffffff","card_border":"#ede8f8","card_radius":16,"item_gap":12,"text_color":"#4c1d95","max_width":880}},"related-products":{"type":"related-products","disabled":true,"settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}},"faq_TqPk9c":{"type":"faq","blocks":{"faq_BV7mW9":{"type":"faq","settings":{"question":"Do I need to be online during the reading?","answer":"No. Since this is a text reading, you don't need to be online. Your reading will be sent to you on WhatsApp once it is ready."}},"faq_JrmrRB":{"type":"faq","settings":{"question":"Can I ask multiple questions?","answer":"Yes. You can choose the number of questions while booking and ask them together."}},"faq_kf78CM":{"type":"faq","settings":{"question":"What details do I need to provide?","answer":"You will receive a WhatsApp message after booking where you can share your name, questions, and any details related to your situation if needed."}},"faq_kgbg8r":{"type":"faq","settings":{"question":"Can I book a reading for someone else?","answer":"Yes, you can book a reading for another person. Just share the correct details and questions during the process."}},"faq_jPybxt":{"type":"faq","settings":{"question":"What if I don't receive my WhatsApp message?","answer":"Please make sure you enter the correct WhatsApp number while booking. If you still don't receive a message, you can contact us directly."}},"faq_9YnMeE":{"type":"faq","settings":{"question":"Are tarot readings guaranteed to happen exactly as predicted?","answer":"Tarot readings are meant for guidance and clarity. Your choices and actions always play an important role in the outcome."}}},"block_order":["faq_BV7mW9","faq_JrmrRB","faq_kf78CM","faq_kgbg8r","faq_jPybxt","faq_9YnMeE"],"name":"FAQ","settings":{"section_bg":"#f5eeff","heading":"Frequently Asked Questions","heading_emoji":"✨","heading_color":"#2d1460","card_bg":"#ffffff","card_border":"#ede8f8","card_open_border":"#c084d4","card_radius":16,"item_gap":12,"question_color":"#3d1a6e","answer_color":"#6b3fa0","chevron_color":"#a855f7","show_note":true,"note_emoji":"✨","note_text":"If you still have questions, feel free to reach out on WhatsApp before booking.","note_text_color":"#6b21a8","note_bg":"#f8f0ff","note_border":"#ddb8f0","note_radius":14,"max_width":880}}},"order":["main","how_to_book_7YGqHG","what_you_receive_adB8x9","related-products","faq_TqPk9c"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "back_label": "Back to Services",
+        "back_url": "",
+        "back_color": "#7b2fa0",
+        "service_tag": "TAROT READING",
+        "service_tag_emoji": "🔮",
+        "tag_bg": "#f5eaff",
+        "tag_border": "#c084d4",
+        "tag_text_color": "#6b21a8",
+        "title_color": "#7e22ce",
+        "desc_color": "#6b21a8",
+        "pricing_title_color": "#7e22ce",
+        "pricing_sub_color": "#a07abf",
+        "pricing_heading": "Pricing & Questions",
+        "pricing_subtext": "Select your package to proceed with booking",
+        "variant_bg": "#ffffff",
+        "variant_border": "#e8e0f8",
+        "variant_selected_border": "#9b00d0",
+        "variant_selected_bg": "#f8f0ff",
+        "variant_name_color": "#333333",
+        "variant_price_color": "#7e22ce",
+        "variant_radius": 12,
+        "show_custom_calc": true,
+        "calc_title": "Custom Questions",
+        "calc_desc": "More than 5 questions? Get ₹50 discount per question after 5.",
+        "calc_label": "Questions:",
+        "calc_min": 6,
+        "calc_max": 20,
+        "show_calc_total": true,
+        "calc_currency_symbol": "₹",
+        "calc_base_price": 100,
+        "calc_discount": 50,
+        "calc_bg": "#fdf5ff",
+        "calc_border": "#e0c8f0",
+        "calc_title_color": "#2d1460",
+        "calc_desc_color": "#8b5ab0",
+        "calc_input_bg": "#ffffff",
+        "calc_input_border": "#d0b8e8",
+        "calc_radius": 14,
+        "helper_text": "Package selected! Click \"Book Now\" below to proceed.",
+        "helper_color": "#7e22ce",
+        "btn_label": "Book Now",
+        "btn_emoji": "✨",
+        "btn_from": "#9b00d0",
+        "btn_to": "#e000c0",
+        "btn_text_color": "#ffffff",
+        "btn_radius": 50,
+        "img_radius": 20,
+        "section_bg": "#fdf0f8"
+      }
+    },
+    "how_to_book_7YGqHG": {
+      "type": "how-to-book",
+      "blocks": {
+        "step_qcDxij": {
+          "type": "step",
+          "settings": {
+            "text": "Choose the number of questions you want guidance on."
+          }
+        },
+        "step_9TwG78": {
+          "type": "step",
+          "settings": {
+            "text": "Book your reading and complete the payment."
+          }
+        },
+        "step_ECUwig": {
+          "type": "step",
+          "settings": {
+            "text": "Enter your correct WhatsApp number while booking."
+          }
+        },
+        "step_dzBCjV": {
+          "type": "step",
+          "settings": {
+            "text": "You will automatically receive a WhatsApp message to share your details and questions."
+          }
+        },
+        "step_DQLBWh": {
+          "type": "step",
+          "settings": {
+            "text": "Your tarot reading will be delivered within 24–48 hours after booking."
+          }
+        }
+      },
+      "block_order": [
+        "step_qcDxij",
+        "step_9TwG78",
+        "step_ECUwig",
+        "step_dzBCjV",
+        "step_DQLBWh"
+      ],
+      "name": "How to Book",
+      "settings": {
+        "section_bg": "#f5eeff",
+        "heading": "How to Book Your Reading",
+        "heading_emoji": "✨",
+        "subtext": "Simple, easy, and designed for you",
+        "heading_color": "#2d1460",
+        "subtext_color": "#a07abf",
+        "card_bg": "#ffffff",
+        "card_border": "#ede8f8",
+        "card_radius": 16,
+        "step_gap": 12,
+        "step_text_color": "#3d1a6e",
+        "num_bg": "#d400c0",
+        "num_text": "#ffffff",
+        "max_width": 880
+      }
+    },
+    "what_you_receive_adB8x9": {
+      "type": "what-you-receive",
+      "blocks": {
+        "item_HYfUYk": {
+          "type": "item",
+          "settings": {
+            "text": "For question readings, you will receive answers with a full detailed tarot reading for each question."
+          }
+        },
+        "item_qdqqzB": {
+          "type": "item",
+          "settings": {
+            "text": "For Yes/No readings, you will receive only a direct Yes or No answer, not a detailed reading."
+          }
+        }
+      },
+      "block_order": [
+        "item_HYfUYk",
+        "item_qdqqzB"
+      ],
+      "name": "What You'll Receive",
+      "settings": {
+        "section_bg": "#f5eeff",
+        "heading": "What You'll Receive",
+        "heading_emoji": "Heading emoji",
+        "heading_color": "#2d1460",
+        "card_bg": "#ffffff",
+        "card_border": "#ede8f8",
+        "card_radius": 16,
+        "item_gap": 12,
+        "text_color": "#4c1d95",
+        "max_width": 880
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "faq_TqPk9c": {
+      "type": "faq",
+      "blocks": {
+        "faq_BV7mW9": {
+          "type": "faq",
+          "settings": {
+            "question": "Do I need to be online during the reading?",
+            "answer": "No. Since this is a text reading, you don't need to be online. Your reading will be sent to you on WhatsApp once it is ready."
+          }
+        },
+        "faq_JrmrRB": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I ask multiple questions?",
+            "answer": "Yes. You can choose the number of questions while booking and ask them together."
+          }
+        },
+        "faq_kf78CM": {
+          "type": "faq",
+          "settings": {
+            "question": "What details do I need to provide?",
+            "answer": "You will receive a WhatsApp message after booking where you can share your name, questions, and any details related to your situation if needed."
+          }
+        },
+        "faq_kgbg8r": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I book a reading for someone else?",
+            "answer": "Yes, you can book a reading for another person. Just share the correct details and questions during the process."
+          }
+        },
+        "faq_jPybxt": {
+          "type": "faq",
+          "settings": {
+            "question": "What if I don't receive my WhatsApp message?",
+            "answer": "Please make sure you enter the correct WhatsApp number while booking. If you still don't receive a message, you can contact us directly."
+          }
+        },
+        "faq_9YnMeE": {
+          "type": "faq",
+          "settings": {
+            "question": "Are tarot readings guaranteed to happen exactly as predicted?",
+            "answer": "Tarot readings are meant for guidance and clarity. Your choices and actions always play an important role in the outcome."
+          }
+        }
+      },
+      "block_order": [
+        "faq_BV7mW9",
+        "faq_JrmrRB",
+        "faq_kf78CM",
+        "faq_kgbg8r",
+        "faq_jPybxt",
+        "faq_9YnMeE"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "section_bg": "#f5eeff",
+        "heading": "Frequently Asked Questions",
+        "heading_emoji": "✨",
+        "heading_color": "#2d1460",
+        "card_bg": "#ffffff",
+        "card_border": "#ede8f8",
+        "card_open_border": "#c084d4",
+        "card_radius": 16,
+        "item_gap": 12,
+        "question_color": "#3d1a6e",
+        "answer_color": "#6b3fa0",
+        "chevron_color": "#a855f7",
+        "show_note": true,
+        "note_emoji": "✨",
+        "note_text": "If you still have questions, feel free to reach out on WhatsApp before booking.",
+        "note_text_color": "#6b21a8",
+        "note_bg": "#f8f0ff",
+        "note_border": "#ddb8f0",
+        "note_radius": 14,
+        "max_width": 880
+      }
+    }
+  },
+  "order": [
+    "main",
+    "how_to_book_7YGqHG",
+    "what_you_receive_adB8x9",
+    "related-products",
+    "faq_TqPk9c"
+  ]
+}
