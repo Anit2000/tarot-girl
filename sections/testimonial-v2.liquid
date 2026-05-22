@@ -1,0 +1,399 @@
+
+
+<section class="sw-relative sw-py-8 md:sw-py-14 sw-px-4 sw-overflow-hidden sw-bg-gradient-to-b sw-from-fuchsia-50 sw-via-purple-50/30 sw-to-pink-50">
+
+  <!-- TOP WAVE -->
+
+  <div class="sw-absolute sw-top-0 sw-left-0 sw-right-0 sw-h-10 sw-overflow-hidden">
+
+    <svg
+      class="sw-absolute sw-top-0 sw-w-full sw-h-16 sw-rotate-180"
+      preserveAspectRatio="none"
+      viewBox="0 0 1200 120"
+      xmlns="http://www.w3.org/2000/svg">
+
+      <path
+        d="M0,0 C150,60 350,60 600,30 C850,0 1050,0 1200,30 L1200,120 L0,120 Z"
+        fill="#fae8ff"
+        opacity="0.5"
+      />
+
+      <path
+        d="M0,20 C150,80 350,80 600,50 C850,20 1050,20 1200,50 L1200,120 L0,120 Z"
+        fill="#fdf4ff"
+      />
+
+    </svg>
+
+  </div>
+
+  <!-- FLOATING BLOBS -->
+
+  <div class="sw-absolute sw-inset-0 sw-overflow-hidden sw-opacity-20">
+
+    <div class="sw-absolute sw-top-1/4 sw-left-10 sw-w-24 sw-h-24 sw-bg-purple-400/30 sw-rounded-full sw-blur-3xl sw-animate-[swFloat_8s_ease-in-out_infinite]"></div>
+
+    <div class="sw-absolute sw-bottom-1/4 sw-right-10 sw-w-28 sw-h-28 sw-bg-fuchsia-400/30 sw-rounded-full sw-blur-3xl sw-animate-[swFloat_10s_ease-in-out_infinite]"></div>
+
+    <div class="sw-absolute sw-top-1/2 sw-left-1/2 sw-w-20 sw-h-20 sw-bg-pink-400/25 sw-rounded-full sw-blur-2xl sw-animate-[swFloat_9s_ease-in-out_infinite]"></div>
+
+  </div>
+
+  <div class="sw-max-w-7xl sw-mx-auto sw-relative sw-z-10">
+
+    <!-- BADGE -->
+
+    <div class="sw-text-center sw-mb-3">
+
+      <div class="sw-inline-flex sw-items-center sw-gap-2 sw-px-5 sw-py-2 sw-rounded-full sw-bg-gradient-to-r sw-from-purple-100 sw-to-pink-100 sw-border-2 sw-border-fuchsia-300/50 sw-shadow-md">
+
+        <span class="sw-text-fuchsia-800 sw-text-xs sw-uppercase sw-tracking-[1.5px] sw-font-semibold">
+
+          {{ section.settings.badge_text }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+    <!-- HEADING -->
+
+    <h2 class="sw-text-center sw-text-3xl md:sw-text-5xl sw-leading-tight sw-font-semibold sw-text-purple-900 sw-mb-3">
+
+      {{ section.settings.heading }}
+
+    </h2>
+
+    <p class="sw-text-center sw-text-sm md:sw-text-lg sw-text-fuchsia-800/70 sw-max-w-2xl sw-mx-auto sw-leading-relaxed sw-mb-8">
+
+      {{ section.settings.subheading }}
+
+    </p>
+
+    <!-- TESTIMONIAL GRID -->
+
+    <div class="sw-grid sw-grid-cols-1 md:sw-grid-cols-2 sw-gap-4">
+
+      {% for block in section.blocks %}
+
+        <div class="sw-relative sw-p-5 sw-rounded-[24px] sw-backdrop-blur-md sw-bg-white/90 sw-border-2 sw-border-purple-200/60 sw-shadow-md hover:sw-shadow-xl sw-transition-all sw-duration-500 hover:sw-scale-[1.02]">
+
+          <!-- QUOTE -->
+
+          <div class="sw-absolute -sw-top-3 sw-left-6 sw-w-10 sw-h-10 sw-rounded-full sw-bg-gradient-to-br sw-from-fuchsia-600 sw-to-pink-600 sw-flex sw-items-center sw-justify-center sw-shadow-lg">
+
+            <span class="sw-text-white sw-text-lg">
+              ❞
+            </span>
+
+          </div>
+
+          <!-- STARS -->
+
+          <div class="sw-flex sw-gap-1 sw-mb-3 sw-mt-2">
+
+            {% for i in (1..block.settings.rating) %}
+
+              <span class="sw-text-fuchsia-500 sw-text-lg">
+                ★
+              </span>
+
+            {% endfor %}
+
+          </div>
+
+          <!-- REVIEW -->
+
+          <p class="sw-text-purple-900/80 sw-leading-relaxed sw-text-sm md:sw-text-base sw-mb-4">
+
+            "{{ block.settings.review }}"
+
+          </p>
+
+          <!-- SERVICE -->
+
+          <div class="sw-inline-flex sw-items-center sw-px-4 sw-py-2 sw-rounded-full sw-bg-gradient-to-r sw-from-fuchsia-100 sw-to-pink-100 sw-border sw-border-purple-300/50 sw-mb-5">
+
+            <span class="sw-text-purple-800 sw-text-xs sw-uppercase sw-font-semibold sw-tracking-wide">
+
+              {{ block.settings.service }}
+
+            </span>
+
+          </div>
+
+          <!-- CLIENT -->
+
+          <div class="sw-flex sw-items-center sw-gap-3">
+
+            <div class="sw-w-12 sw-h-12 sw-rounded-full sw-overflow-hidden sw-border-2 sw-border-purple-300/60 sw-shadow-md">
+
+              {% if block.settings.client_image != blank %}
+
+                <img
+                  src="{{ block.settings.client_image | image_url }}"
+                  alt="{{ block.settings.client_name }}"
+                  class="sw-w-full sw-h-full sw-object-cover"
+                >
+
+              {% endif %}
+
+            </div>
+
+            <div>
+
+              <h3 class="sw-text-lg sw-text-purple-900">
+
+                {{ block.settings.client_name }}
+
+              </h3>
+
+              <p class="sw-text-xs sw-text-fuchsia-700/70">
+
+                Verified Client ✓
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+    <!-- STATS -->
+
+    <div class="sw-mt-8 sw-text-center">
+
+      <div class="sw-inline-flex sw-flex-wrap sw-items-center sw-justify-center sw-gap-6 md:sw-gap-10 sw-px-6 md:sw-px-10 sw-py-5 sw-rounded-[24px] sw-bg-gradient-to-r sw-from-fuchsia-100 sw-via-pink-100 sw-to-purple-100 sw-border-2 sw-border-purple-300/50 sw-shadow-lg">
+
+        <!-- STAT 1 -->
+
+        <div class="sw-text-center">
+
+          <div class="sw-text-2xl md:sw-text-4xl sw-text-fuchsia-700">
+
+            {{ section.settings.stat_1_number }}
+
+          </div>
+
+          <div class="sw-text-xs md:sw-text-sm sw-text-purple-800/70">
+
+            {{ section.settings.stat_1_text }}
+
+          </div>
+
+        </div>
+
+        <div class="sw-hidden md:sw-block sw-w-px sw-h-10 sw-bg-purple-300/50"></div>
+
+        <!-- STAT 2 -->
+
+        <div class="sw-text-center">
+
+          <div class="sw-text-2xl md:sw-text-4xl sw-text-fuchsia-700">
+
+            {{ section.settings.stat_2_number }}
+
+          </div>
+
+          <div class="sw-text-xs md:sw-text-sm sw-text-purple-800/70">
+
+            {{ section.settings.stat_2_text }}
+
+          </div>
+
+        </div>
+
+        <div class="sw-hidden md:sw-block sw-w-px sw-h-10 sw-bg-purple-300/50"></div>
+
+        <!-- STAT 3 -->
+
+        <div class="sw-text-center">
+
+          <div class="sw-text-2xl md:sw-text-4xl sw-text-fuchsia-700">
+
+            {{ section.settings.stat_3_number }}
+
+          </div>
+
+          <div class="sw-text-xs md:sw-text-sm sw-text-purple-800/70">
+
+            {{ section.settings.stat_3_text }}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- BOTTOM WAVE -->
+
+  <div class="sw-absolute sw-bottom-0 sw-left-0 sw-right-0 sw-h-10 sw-overflow-hidden">
+
+    <svg
+      class="sw-absolute sw-bottom-0 sw-w-full sw-h-16"
+      preserveAspectRatio="none"
+      viewBox="0 0 1200 120"
+      xmlns="http://www.w3.org/2000/svg">
+
+      <path
+        d="M0,0 C150,60 350,60 600,30 C850,0 1050,0 1200,30 L1200,120 L0,120 Z"
+        fill="#fae8ff"
+        opacity="0.5"
+      />
+
+      <path
+        d="M0,20 C150,80 350,80 600,50 C850,20 1050,20 1200,50 L1200,120 L0,120 Z"
+        fill="#fdf4ff"
+      />
+
+    </svg>
+
+  </div>
+
+</section>
+
+<style>
+
+@keyframes swFloat{
+
+  0%,100%{
+
+    transform:
+      translateY(0px)
+      translateX(0px);
+  }
+
+  50%{
+
+    transform:
+      translateY(-10px)
+      translateX(5px);
+  }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "SW Client Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Client Love 💕"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Clients Say"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Sub Heading",
+      "default": "Real stories from souls we've helped find clarity ✨"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 Number",
+      "default": "500+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_text",
+      "label": "Stat 1 Text",
+      "default": "Happy Clients"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 Number",
+      "default": "4.9 ★"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_text",
+      "label": "Stat 2 Text",
+      "default": "Average Rating"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 Number",
+      "default": "24h"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_text",
+      "label": "Stat 3 Text",
+      "default": "Response Time"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "client_image",
+          "label": "Client Image"
+        },
+        {
+          "type": "text",
+          "id": "client_name",
+          "label": "Client Name",
+          "default": "Sarah Martinez"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "service",
+          "label": "Service",
+          "default": "Tarot Reading"
+        },
+        {
+          "type": "textarea",
+          "id": "review",
+          "label": "Review",
+          "default": "The tarot reading was incredibly accurate and gave me the clarity I needed."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SW Client Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial"
+        },
+        {
+          "type": "testimonial"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

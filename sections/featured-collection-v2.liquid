@@ -60,9 +60,10 @@
         {% render 'vite-tag' with 'featured-collection-slider-v2.js' %}
     {% endif %}
     <section id="{{ section.id }}-featured-collection" data-id="featured-collection-v2">
-        <div class="featured-collection-wrapper {% if section.settings.internal_bg_color != blank %}sw-px-0{% else %}sw-pl-2{% endif %}{% if section.settings.slider %} sw-pl-2{% else %} sw-px-2 {% endif %} sw-py-4 lg:sw-px-[32px] lg:sw-py-8">
-
-
+        <div class="featured-collection-wrapper {% if section.settings.internal_bg_color != blank %}sw-px-0{% else %}sw-pl-2{% endif %}{% if section.settings.slider %} sw-pl-2{% else %} sw-px-2 {% endif %} sw-py-4 lg:sw-px-[32px] lg:sw-py-8
+        sw-relative sw-overflow-hidden sw-px-4 sw-bg-gradient-to-b sw-from-purple-50 sw-via-pink-50/30 sw-to-fuchsia-50
+        
+        ">
 
         <div class="sw-text-center sw-mb-2 sm:sw-mb-3">
             <div class="featured-collection-wrapper sw-max-w-7xl sw-mx-auto sw-relative sw-z-10 lg:sw-px-4">
@@ -190,7 +191,7 @@
             </div>
         </div>
 
-
+</div>
 
     
     </section> 

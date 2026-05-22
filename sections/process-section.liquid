@@ -1,4 +1,11 @@
-<section class="sw-relative sw-overflow-hidden sw-py-8 md:sw-py-14 sw-px-4 sw-bg-gradient-to-b sw-from-purple-50 sw-via-pink-50/30 sw-to-fuchsia-50">
+<section 
+  class="sw-relative sw-overflow-hidden sw-px-4 sw-bg-gradient-to-b sw-from-purple-50 sw-via-pink-50/30 sw-to-fuchsia-50"
+  style="
+    padding-top:{{ section.settings.section_top_spacing }}px;
+    padding-bottom:{{ section.settings.section_bottom_spacing }}px;
+    border-radius:{{ section.settings.border_radius_mob }}px;
+  "
+>
 
   <!-- TOP WAVE -->
 
@@ -13,7 +20,7 @@
         fill="#fae8ff"
         opacity="0.5"
       />
- 
+
       <path
         d="M0,20 C150,80 350,80 600,50 C850,20 1050,20 1200,50 L1200,120 L0,120 Z"
         fill="#fdf4ff"
@@ -34,29 +41,42 @@
 
   </div>
 
-  <div class="sw-max-w-7xl sw-mx-auto sw-relative sw-z-10">
+  <div class="sw-max-w-6xl sw-mx-auto sw-relative sw-z-10 ">
 
     <!-- BADGE -->
 
-    <div class="sw-text-center sw-mb-3">
-
-      <div class="sw-inline-flex sw-items-center sw-gap-2 sw-px-5 sw-py-2 sw-rounded-full sw-bg-gradient-to-r sw-from-pink-100 sw-to-fuchsia-100 sw-border-2 sw-border-purple-300/50 sw-shadow-md">
-
-        <span class="sw-text-fuchsia-800 sw-text-xs sw-font-semibold sw-uppercase sw-tracking-[1.5px]">
+    <div class="sw-text-center sw-mb-2 sm:sw-mb-3">
+      <div
+        class="sw-inline-flex sw-px-4 sm:sw-px-5 sw-py-2 sw-rounded-full sw-border-2 sw-backdrop-blur-sm sw-mb-2 sm:sw-mb-3 sw-shadow-sm"
+        style="
+          background:{{ section.settings.badge_bg }};
+          border-color:{{ section.settings.badge_border_color }};
+        "
+      >
+        <span
+          class="sw-text-xs sw-tracking-wider sw-uppercase sw-font-semibold sw-font-secondary"
+          style="color:{{ section.settings.badge_text_color }};"
+        >
           {{ section.settings.badge_text }}
         </span>
-
       </div>
-
     </div>
 
-    <!-- TITLE -->
+    <!-- HEADING -->
 
-    <h2 class="sw-text-center sw-text-3xl md:sw-text-5xl sw-leading-tight sw-font-semibold sw-text-purple-900 sw-mb-3">
+    <h2
+      class="sw-text-2xl sm:sw-text-3xl md:sw-text-4xl sw-text-center sw-mb-2 sw-px-4"
+      style="color:{{ section.settings.heading_color_new }};"
+    >
       {{ section.settings.heading }}
     </h2>
 
-    <p class="sw-text-center sw-text-sm md:sw-text-lg sw-text-fuchsia-800/70 sw-max-w-2xl sw-mx-auto sw-leading-relaxed sw-mb-8">
+    <!-- SUBHEADING -->
+
+    <p
+      class="sw-text-center sw-mb-4 sm:sw-mb-6 sw-text-sm sw-max-w-2xl sw-mx-auto sw-leading-relaxed sw-px-4"
+      style="color:{{ section.settings.description_color }};"
+    >
       {{ section.settings.subheading }}
     </p>
 
@@ -76,7 +96,7 @@
 
           <!-- CARD -->
 
-          <div class="sw-h-full sw-p-5 sw-rounded-[24px] sw-backdrop-blur-md sw-bg-white/90 sw-border-2 sw-border-purple-200/60 sw-shadow-md hover:sw-shadow-2xl sw-transition-all sw-duration-500 hover:-sw-translate-y-1">
+          <div class="sw-h-full sw-p-4 sw-rounded-[24px] sw-backdrop-blur-md sw-bg-white/90 sw-border-2 sw-border-purple-200/60 sw-shadow-md hover:sw-shadow-2xl sw-transition-all sw-duration-500 hover:-sw-translate-y-1">
 
             <!-- ICON -->
 
@@ -193,73 +213,169 @@
   }
 }
 
-</style>
+@media(min-width:768px){
 
+  #shopify-section-{{ section.id }} section{
+    border-radius:{{ section.settings.border_radius_desk }}px;
+  }
+
+}
+
+</style>
 
 {% schema %}
 {
-  "name": "Easy Process",
+  "name": "Easy Process V2",
   "settings": [
+
     {
       "type": "text",
       "id": "badge_text",
       "label": "Badge Text",
       "default": "Easy Process 💫"
     },
+
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Booking Your Reading is Easy 💜"
     },
+
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Sub Heading",
       "default": "Just 4 simple steps to begin your spiritual journey ✨"
     },
+
     {
       "type": "text",
       "id": "note_heading",
       "label": "Important Note Heading",
       "default": "Important Note"
     },
+
     {
       "type": "textarea",
       "id": "note_text",
       "label": "Important Note Text",
       "default": "Please make sure your correct WhatsApp number is entered during checkout so we can contact you easily regarding your reading. 📱✨"
+    },
+
+    {
+      "type": "color",
+      "id": "heading_color_new",
+      "label": "Heading Color",
+      "default": "#581c87"
+    },
+
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#6b21a8"
+    },
+
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge Text Color",
+      "default": "#581c87"
+    },
+
+    {
+      "type": "color_background",
+      "id": "badge_bg",
+      "label": "Badge Background",
+      "default": "linear-gradient(90deg, #fae8ff 0%, #fce7f3 100%)"
+    },
+
+    {
+      "type": "color",
+      "id": "badge_border_color",
+      "label": "Badge Border Color",
+      "default": "#d8b4fe"
+    },
+
+    {
+      "type": "range",
+      "id": "section_top_spacing",
+      "label": "Top Spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+
+    {
+      "type": "range",
+      "id": "section_bottom_spacing",
+      "label": "Bottom Spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+
+    {
+      "type":"range",
+      "label":"Section border radius mobile in PX",
+      "id":"border_radius_mob",
+      "step":1,
+      "max":100,
+      "min":0,
+      "default":24
+    },
+
+    {
+      "type":"range",
+      "label":"Section border radius desktop in PX",
+      "id":"border_radius_desk",
+      "step":1,
+      "max":100,
+      "min":0,
+      "default":32
     }
+
   ],
+
   "blocks": [
     {
       "type": "step",
       "name": "Step",
       "settings": [
+
         {
           "type": "text",
           "id": "icon",
           "label": "Icon Emoji",
           "default": "✨"
         },
+
         {
           "type": "text",
           "id": "title",
           "label": "Title",
           "default": "Choose Your Service"
         },
+
         {
           "type": "textarea",
           "id": "description",
           "label": "Description",
           "default": "Browse the readings or healing services and pick the one you want."
         }
+
       ]
     }
   ],
+
   "presets": [
     {
-      "name": "SW Easy Process",
+      "name": "Easy Process V2",
       "blocks": [
         {
           "type": "step"
@@ -278,4 +394,3 @@
   ]
 }
 {% endschema %}
-

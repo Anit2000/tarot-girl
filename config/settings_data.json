@@ -76,6 +76,41 @@
     "variant_button_border_width": 1,
     "variant_button_radius": 14,
     "variant_button_width": "equal-width-buttons",
+    "sections": {
+      "announcement-bar-v2": {
+        "type": "announcement-bar-v2",
+        "blocks": {
+          "announcement_kNmgMX": {
+            "type": "announcement",
+            "settings": {
+              "announcement_text": "<p>✨ Get 10% OFF on all services - Limited Time! 💫</p>",
+              "announcement_link": "",
+              "behavior": "redirect",
+              "copy_icon": false,
+              "copy_text_content": ""
+            }
+          }
+        },
+        "block_order": [
+          "announcement_kNmgMX"
+        ],
+        "settings": {
+          "show_sparkles": true,
+          "show_close_icon": true,
+          "display_arrows": false,
+          "autoplay": true,
+          "autoplay_time": 3
+        }
+      },
+      "header-v2": {
+        "type": "header-v2",
+        "settings": {
+          "logo_text_first": "Tarot",
+          "logo_text_second": "Girl",
+          "menu": "main-menu"
+        }
+      }
+    },
     "content_for_index": [],
     "blocks": {
       "3557650678667880288": {

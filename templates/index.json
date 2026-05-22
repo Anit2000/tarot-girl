@@ -1,1 +1,495 @@
-{"sections":{"image_banner":{"type":"image-banner","blocks":{"heading":{"type":"heading","settings":{"heading":"Browse our latest products","heading_size":"h0"}},"button":{"type":"buttons","settings":{"button_label_1":"Shop all","button_link_1":"shopify:\/\/collections\/all","button_style_secondary_1":true,"button_label_2":"","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading","button"],"settings":{"image_overlay_opacity":40,"image_height":"large","image_behavior":"none","desktop_content_position":"bottom-center","desktop_content_alignment":"center","show_text_box":false,"color_scheme":"scheme-3","stack_images_on_mobile":false,"mobile_content_alignment":"center","show_text_below":false}},"featured_collection":{"type":"featured-collection","disabled":true,"settings":{"collection":"all","products_to_show":8,"title":"Featured products","heading_size":"h2","description":"","show_description":false,"description_style":"body","columns_desktop":4,"enable_desktop_slider":false,"full_width":false,"show_view_all":true,"view_all_style":"solid","color_scheme":"scheme-1","image_ratio":"adapt","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"quick_add":"none","columns_mobile":"2","swipe_on_mobile":false,"padding_top":44,"padding_bottom":36}},"our_service_zqQQz3":{"type":"our-service","blocks":{"service_card_eRGQww":{"type":"service_card","settings":{"icon":"🔮","name":"Tarot Reading","description":"Clarity about love, career & life","price":"₹111","button_label":"Book Now","button_url":"","is_popular":true}},"service_card_dhWJP9":{"type":"service_card","settings":{"icon":"🃏","name":"Tarot Spreads","description":"Deep insights & detailed guidance","price":"₹799","button_label":"Book Now","button_url":"","is_popular":false}},"service_card_DEEpBh":{"type":"service_card","settings":{"icon":"✨","name":"Spells","description":"Love, abundance & protection","price":"₹999","button_label":"Book Now","button_url":"","is_popular":false}},"service_card_tdRnfp":{"type":"service_card","settings":{"icon":"🌿","name":"Healing","description":"Restore balance & remove blocks","price":"₹555","button_label":"Book Now","button_url":"","is_popular":false}},"service_card_W6pPWq":{"type":"service_card","settings":{"icon":"🍃","name":"Bay Leaf","description":"Manifest your desires","price":"₹188","button_label":"Book Now","button_url":"","is_popular":false}}},"block_order":["service_card_eRGQww","service_card_dhWJP9","service_card_DEEpBh","service_card_tdRnfp","service_card_W6pPWq"],"name":"Services Grid","settings":{"tagline":"OUR SERVICES","tagline_sparkle":true,"heading":"Choose Your Divine Guidance","subtext":"Crafted with love to bring clarity & magic into your life","subtext_sparkle":true,"section_bg":"#fdf0f8","heading_color":"#3d1a6e","subtext_color":"#a07abf","tagline_text_color":"#3d1a6e","tagline_border_color":"#c084d4","card_bg_color":"#ffffff","card_shadow_color":"#e8c0f021","card_name_color":"#c026a0","card_desc_color":"#888888","card_from_color":"#c026a0","card_price_color":"#c026a0","btn_color_from":"#d61bc0","btn_color_to":"#f040c0","btn_text_color":"#ffffff","btn_radius":50,"badge_bg_color":"#d61bc0","badge_text_color":"#ffffff","card_radius":20}},"booking_process_GAK8Gx":{"type":"booking-process","blocks":{"step_tLdKWQ":{"type":"step","settings":{"icon":"✦","title":"Choose Your Service","description":"Browse the readings or healing services and pick the one you want."}},"step_6ddjJA":{"type":"step","settings":{"icon":"🛒","title":"Add to Cart & Checkout","description":"Click \"Add to Cart\" and proceed to Checkout."}},"step_XV6tkX":{"type":"step","settings":{"icon":"💳","title":"Complete Payment","description":"Enter your details and finish the payment securely."}},"step_8B8xft":{"type":"step","settings":{"icon":"💬","title":"Get Your Reading","description":"You'll receive a WhatsApp message. Share your details and receive your reading."}}},"block_order":["step_tLdKWQ","step_6ddjJA","step_XV6tkX","step_8B8xft"],"name":"Booking Process","settings":{"section_bg":"#fdf0f8","tagline":"EASY PROCESS","tagline_emoji":"🔑","heading":"Booking Your Reading is Easy","heading_emoji":"💜","subtext":"Just 4 simple steps to begin your spiritual journey","subtext_emoji":"✨","heading_color":"#2d1460","subtext_color":"#a07abf","tagline_text_color":"#3d1a6e","tagline_border_color":"#c084d4","card_bg":"#ffffff","card_border_color":"#ede8f8","card_radius":18,"step_num_bg":"#cc00bb","step_num_text":"#ffffff","step_icon_bg":"#f0e6ff","step_icon_color":"#8b30d0","step_title_color":"#1a0a3e","step_desc_color":"#777777","show_note":true,"note_icon":"💜","note_title":"Important Note","note_body":"Please make sure your correct WhatsApp number is entered during checkout so we can contact you easily regarding your reading. 📱 ✨","note_bg_from":"#f8eeff","note_bg_to":"#ffe8f8","note_border_color":"#d4a0e8","note_title_color":"#2d1460","note_body_color":"#6a3a9a","note_radius":20,"show_sparkles":true,"sparkle_color":"#a855f7","services_text":"Tarot • Oracle • Spells • Healing • Bay Leaf","services_emoji":"✨","services_color":"#7e22ce","show_rating":true,"stars_color":"#d946c0","proof_text":"1000+ Happy Souls","proof_emoji":"💜","proof_bg":"#ffffff","proof_border":"#e0d0f0","proof_text_color":"#5b21b6","primary_label":"Book Your Reading","primary_emoji":"✨","primary_url":"","primary_btn_from":"#9b00d0","primary_btn_to":"#e000c0","primary_btn_text":"#ffffff","secondary_label":"Get in Touch","secondary_emoji":"💬","secondary_url":"","ghost_btn_bg":"#ffffff","ghost_btn_border":"#d0c0e8","ghost_btn_text":"#2d1460","btn_radius":50,"urgency_text":"Limited slots available this week","urgency_emoji":"🔔","urgency_color":"#c026a0"}},"testimonials_DEdQyj":{"type":"testimonials","blocks":{"review_Hd6UGa":{"type":"review","settings":{"rating":5,"review_text":"The tarot reading was incredibly accurate and gave me the clarity I needed about my career path. The energy was so calming and the insights were profound. Highly recommend!","service_tag":"TAROT READING","name":"vanni singh"}},"review_KDyDyj":{"type":"review","settings":{"rating":5,"review_text":"The spell  ritual helped me release so much negative energy. I felt lighter and more positive immediately. The guidance was gentle yet powerful. A truly transformative experience!","service_tag":"spells","name":"shubhu"}}},"block_order":["review_Hd6UGa","review_KDyDyj"],"name":"Testimonials","settings":{"section_bg":"#fdf0f8","tagline":"CLIENT LOVE","tagline_emoji":"💕","heading":"What Our Clients Say","subtext":"Real stories from souls we've helped find clarity","subtext_emoji":"✨","heading_color":"#2d1460","subtext_color":"#a07abf","tagline_text_color":"#3d1a6e","tagline_border_color":"#c084d4","card_bg":"#ffffff","card_border_color":"#ede8f8","card_radius":18,"quote_icon_bg":"#cc00bb","quote_icon_color":"#ffffff","stars_color":"#e020c0","stars_empty_color":"#e0d0f0","review_text_color":"#444444","tag_bg":"#fdf0ff","tag_border":"#d4a0e8","tag_text_color":"#7b2fa0","name_color":"#1a0a3e","verified_color":"#a07abf","verified_label":"Verified Client","show_stats":true,"stats_bg":"#f5e6ff","stats_border":"#ddb8f0","stats_radius":20,"stat_num_color":"#7e22ce","stat_label_color":"#9a60c0","stat_divider_color":"#c084d4","stat_icon_color":"#e020c0","stat1_number":"1000+","stat1_label":"Happy Clients","stat2_number":"4.9","stat2_icon":"⭐","stat2_label":"Average Rating","stat3_number":"24h","stat3_label":"Response Time"}}},"order":["image_banner","featured_collection","our_service_zqQQz3","booking_process_GAK8Gx","testimonials_DEdQyj"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_v2_wtHwJn": {
+      "type": "slideshow-v2",
+      "blocks": {
+        "image_JnKJzM": {
+          "type": "image",
+          "settings": {
+            "mobile_image": "shopify://shop_images/photo-1649644712432-8131e96b5085.jpg",
+            "desktop_image": "shopify://shop_images/1383040.png",
+            "banner_redirection": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_JnKJzM"
+      ],
+      "name": "Slideshow v2",
+      "settings": {
+        "arrows": true,
+        "autoplay": false,
+        "autoplay_interval": 3
+      }
+    },
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h0"
+          }
+        },
+        "button": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "disabled": true,
+      "settings": {
+        "image_overlay_opacity": 40,
+        "image_height": "large",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "scheme-3",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": false
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "disabled": true,
+      "settings": {
+        "collection": "all",
+        "products_to_show": 8,
+        "title": "Featured products",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "columns_desktop": 4,
+        "enable_desktop_slider": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "color_scheme": "scheme-1",
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 44,
+        "padding_bottom": 36
+      }
+    },
+    "our_service_zqQQz3": {
+      "type": "our-service",
+      "blocks": {
+        "service_card_eRGQww": {
+          "type": "service_card",
+          "settings": {
+            "icon": "🔮",
+            "name": "Tarot Reading",
+            "description": "Clarity about love, career & life",
+            "price": "₹111",
+            "button_label": "Book Now",
+            "button_url": "",
+            "is_popular": true
+          }
+        },
+        "service_card_dhWJP9": {
+          "type": "service_card",
+          "settings": {
+            "icon": "🃏",
+            "name": "Tarot Spreads",
+            "description": "Deep insights & detailed guidance",
+            "price": "₹799",
+            "button_label": "Book Now",
+            "button_url": "",
+            "is_popular": false
+          }
+        },
+        "service_card_DEEpBh": {
+          "type": "service_card",
+          "settings": {
+            "icon": "✨",
+            "name": "Spells",
+            "description": "Love, abundance & protection",
+            "price": "₹999",
+            "button_label": "Book Now",
+            "button_url": "",
+            "is_popular": false
+          }
+        },
+        "service_card_tdRnfp": {
+          "type": "service_card",
+          "settings": {
+            "icon": "🌿",
+            "name": "Healing",
+            "description": "Restore balance & remove blocks",
+            "price": "₹555",
+            "button_label": "Book Now",
+            "button_url": "",
+            "is_popular": false
+          }
+        },
+        "service_card_W6pPWq": {
+          "type": "service_card",
+          "settings": {
+            "icon": "🍃",
+            "name": "Bay Leaf",
+            "description": "Manifest your desires",
+            "price": "₹188",
+            "button_label": "Book Now",
+            "button_url": "",
+            "is_popular": false
+          }
+        }
+      },
+      "block_order": [
+        "service_card_eRGQww",
+        "service_card_dhWJP9",
+        "service_card_DEEpBh",
+        "service_card_tdRnfp",
+        "service_card_W6pPWq"
+      ],
+      "disabled": true,
+      "name": "Services Grid",
+      "settings": {
+        "tagline": "OUR SERVICES",
+        "tagline_sparkle": true,
+        "heading": "Choose Your Divine Guidance",
+        "subtext": "Crafted with love to bring clarity & magic into your life",
+        "subtext_sparkle": true,
+        "section_bg": "#fdf0f8",
+        "heading_color": "#3d1a6e",
+        "subtext_color": "#a07abf",
+        "tagline_text_color": "#3d1a6e",
+        "tagline_border_color": "#c084d4",
+        "card_bg_color": "#ffffff",
+        "card_shadow_color": "#e8c0f021",
+        "card_name_color": "#c026a0",
+        "card_desc_color": "#888888",
+        "card_from_color": "#c026a0",
+        "card_price_color": "#c026a0",
+        "btn_color_from": "#d61bc0",
+        "btn_color_to": "#f040c0",
+        "btn_text_color": "#ffffff",
+        "btn_radius": 50,
+        "badge_bg_color": "#d61bc0",
+        "badge_text_color": "#ffffff",
+        "card_radius": 20
+      }
+    },
+    "booking_process_GAK8Gx": {
+      "type": "booking-process",
+      "blocks": {
+        "step_tLdKWQ": {
+          "type": "step",
+          "settings": {
+            "icon": "✦",
+            "title": "Choose Your Service",
+            "description": "Browse the readings or healing services and pick the one you want."
+          }
+        },
+        "step_6ddjJA": {
+          "type": "step",
+          "settings": {
+            "icon": "🛒",
+            "title": "Add to Cart & Checkout",
+            "description": "Click \"Add to Cart\" and proceed to Checkout."
+          }
+        },
+        "step_XV6tkX": {
+          "type": "step",
+          "settings": {
+            "icon": "💳",
+            "title": "Complete Payment",
+            "description": "Enter your details and finish the payment securely."
+          }
+        },
+        "step_8B8xft": {
+          "type": "step",
+          "settings": {
+            "icon": "💬",
+            "title": "Get Your Reading",
+            "description": "You'll receive a WhatsApp message. Share your details and receive your reading."
+          }
+        }
+      },
+      "block_order": [
+        "step_tLdKWQ",
+        "step_6ddjJA",
+        "step_XV6tkX",
+        "step_8B8xft"
+      ],
+      "disabled": true,
+      "name": "Booking Process",
+      "settings": {
+        "section_bg": "#fdf0f8",
+        "tagline": "EASY PROCESS",
+        "tagline_emoji": "🔑",
+        "heading": "Booking Your Reading is Easy",
+        "heading_emoji": "💜",
+        "subtext": "Just 4 simple steps to begin your spiritual journey",
+        "subtext_emoji": "✨",
+        "heading_color": "#2d1460",
+        "subtext_color": "#a07abf",
+        "tagline_text_color": "#3d1a6e",
+        "tagline_border_color": "#c084d4",
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede8f8",
+        "card_radius": 18,
+        "step_num_bg": "#cc00bb",
+        "step_num_text": "#ffffff",
+        "step_icon_bg": "#f0e6ff",
+        "step_icon_color": "#8b30d0",
+        "step_title_color": "#1a0a3e",
+        "step_desc_color": "#777777",
+        "show_note": true,
+        "note_icon": "💜",
+        "note_title": "Important Note",
+        "note_body": "Please make sure your correct WhatsApp number is entered during checkout so we can contact you easily regarding your reading. 📱 ✨",
+        "note_bg_from": "#f8eeff",
+        "note_bg_to": "#ffe8f8",
+        "note_border_color": "#d4a0e8",
+        "note_title_color": "#2d1460",
+        "note_body_color": "#6a3a9a",
+        "note_radius": 20,
+        "show_sparkles": true,
+        "sparkle_color": "#a855f7",
+        "services_text": "Tarot • Oracle • Spells • Healing • Bay Leaf",
+        "services_emoji": "✨",
+        "services_color": "#7e22ce",
+        "show_rating": true,
+        "stars_color": "#d946c0",
+        "proof_text": "1000+ Happy Souls",
+        "proof_emoji": "💜",
+        "proof_bg": "#ffffff",
+        "proof_border": "#e0d0f0",
+        "proof_text_color": "#5b21b6",
+        "primary_label": "Book Your Reading",
+        "primary_emoji": "✨",
+        "primary_url": "",
+        "primary_btn_from": "#9b00d0",
+        "primary_btn_to": "#e000c0",
+        "primary_btn_text": "#ffffff",
+        "secondary_label": "Get in Touch",
+        "secondary_emoji": "💬",
+        "secondary_url": "",
+        "ghost_btn_bg": "#ffffff",
+        "ghost_btn_border": "#d0c0e8",
+        "ghost_btn_text": "#2d1460",
+        "btn_radius": 50,
+        "urgency_text": "Limited slots available this week",
+        "urgency_emoji": "🔔",
+        "urgency_color": "#c026a0"
+      }
+    },
+    "testimonials_DEdQyj": {
+      "type": "testimonials",
+      "blocks": {
+        "review_Hd6UGa": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "The tarot reading was incredibly accurate and gave me the clarity I needed about my career path. The energy was so calming and the insights were profound. Highly recommend!",
+            "service_tag": "TAROT READING",
+            "name": "vanni singh"
+          }
+        },
+        "review_KDyDyj": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "The spell  ritual helped me release so much negative energy. I felt lighter and more positive immediately. The guidance was gentle yet powerful. A truly transformative experience!",
+            "service_tag": "spells",
+            "name": "shubhu"
+          }
+        }
+      },
+      "block_order": [
+        "review_Hd6UGa",
+        "review_KDyDyj"
+      ],
+      "disabled": true,
+      "name": "Testimonials",
+      "settings": {
+        "section_bg": "#fdf0f8",
+        "tagline": "CLIENT LOVE",
+        "tagline_emoji": "💕",
+        "heading": "What Our Clients Say",
+        "subtext": "Real stories from souls we've helped find clarity",
+        "subtext_emoji": "✨",
+        "heading_color": "#2d1460",
+        "subtext_color": "#a07abf",
+        "tagline_text_color": "#3d1a6e",
+        "tagline_border_color": "#c084d4",
+        "card_bg": "#ffffff",
+        "card_border_color": "#ede8f8",
+        "card_radius": 18,
+        "quote_icon_bg": "#cc00bb",
+        "quote_icon_color": "#ffffff",
+        "stars_color": "#e020c0",
+        "stars_empty_color": "#e0d0f0",
+        "review_text_color": "#444444",
+        "tag_bg": "#fdf0ff",
+        "tag_border": "#d4a0e8",
+        "tag_text_color": "#7b2fa0",
+        "name_color": "#1a0a3e",
+        "verified_color": "#a07abf",
+        "verified_label": "Verified Client",
+        "show_stats": true,
+        "stats_bg": "#f5e6ff",
+        "stats_border": "#ddb8f0",
+        "stats_radius": 20,
+        "stat_num_color": "#7e22ce",
+        "stat_label_color": "#9a60c0",
+        "stat_divider_color": "#c084d4",
+        "stat_icon_color": "#e020c0",
+        "stat1_number": "1000+",
+        "stat1_label": "Happy Clients",
+        "stat2_number": "4.9",
+        "stat2_icon": "⭐",
+        "stat2_label": "Average Rating",
+        "stat3_number": "24h",
+        "stat3_label": "Response Time"
+      }
+    },
+    "featured_collection_v2_877rdd": {
+      "type": "featured-collection-v2",
+      "name": "Featured collection v2",
+      "settings": {
+        "margin_mobile": 0,
+        "margin_desktop": 0,
+        "bg_style": "parallax",
+        "bg_color": "",
+        "bg_color_external": "",
+        "internal_bg_color": "",
+        "external_border_radius": false,
+        "border_radius_mob": 0,
+        "border_radius_desk": 0,
+        "heading_type": "text",
+        "heading_bg": "",
+        "lightning_counter": false,
+        "badge_text": "Our Services ✨",
+        "heading": "Choose Your Divine Guidance",
+        "description": "Crafted with love to bring clarity & magic into your life ✨",
+        "heading_color": "#581c87",
+        "description_color": "#6b21a8",
+        "badge_text_color": "#581c87",
+        "badge_bg": "linear-gradient(90deg, rgba(250, 232, 255, 1), rgba(252, 231, 243, 1) 100%)",
+        "badge_border_color": "#d8b4fe",
+        "section_top_spacing": 20,
+        "section_bottom_spacing": 24,
+        "section_heading": "",
+        "heading_color_new": "#1d3686",
+        "section_heading_svg": "",
+        "heading_decoration": false,
+        "view_all_btn": false,
+        "view_all_btn_color": "#ff5b6f",
+        "slider_bar": true,
+        "thumb_bg": "#d9d9d9",
+        "thumb_color": "#707070",
+        "collection": "frontpage",
+        "product_limit": 12,
+        "card_bg_color": "",
+        "card_price_color": "#cc007a",
+        "tags_bg": "",
+        "card_button_bg": "",
+        "card_button_color": "",
+        "notify_me_border": "",
+        "notify_me_text_color": "",
+        "slider": false
+      }
+    },
+    "process_section_QR3LRV": {
+      "type": "process-section",
+      "blocks": {
+        "step_T3gxbF": {
+          "type": "step",
+          "settings": {
+            "icon": "✨",
+            "title": "Choose Your Service",
+            "description": "Browse the readings or healing services and pick the one you want."
+          }
+        },
+        "step_wAXKny": {
+          "type": "step",
+          "settings": {
+            "icon": "✨",
+            "title": "Choose Your Service",
+            "description": "Browse the readings or healing services and pick the one you want."
+          }
+        },
+        "step_PLkmq8": {
+          "type": "step",
+          "settings": {
+            "icon": "✨",
+            "title": "Choose Your Service",
+            "description": "Browse the readings or healing services and pick the one you want."
+          }
+        },
+        "step_g7Lwhb": {
+          "type": "step",
+          "settings": {
+            "icon": "✨",
+            "title": "Choose Your Service",
+            "description": "Browse the readings or healing services and pick the one you want."
+          }
+        }
+      },
+      "block_order": [
+        "step_T3gxbF",
+        "step_wAXKny",
+        "step_PLkmq8",
+        "step_g7Lwhb"
+      ],
+      "name": "SW Easy Process",
+      "settings": {
+        "badge_text": "Easy Process 💫",
+        "heading": "Booking Your Reading is Easy 💜",
+        "subheading": "Just 4 simple steps to begin your spiritual journey ✨",
+        "note_heading": "Important Note",
+        "note_text": "Please make sure your correct WhatsApp number is entered during checkout so we can contact you easily regarding your reading. 📱✨",
+        "heading_color_new": "#581c87",
+        "description_color": "#6b21a8",
+        "badge_text_color": "#581c87",
+        "badge_bg": "linear-gradient(90deg, #fae8ff 0%, #fce7f3 100%)",
+        "badge_border_color": "#d8b4fe",
+        "section_top_spacing": 32,
+        "section_bottom_spacing": 32,
+        "border_radius_mob": 24,
+        "border_radius_desk": 32
+      }
+    }
+  },
+  "order": [
+    "slideshow_v2_wtHwJn",
+    "image_banner",
+    "featured_collection",
+    "our_service_zqQQz3",
+    "booking_process_GAK8Gx",
+    "testimonials_DEdQyj",
+    "featured_collection_v2_877rdd",
+    "process_section_QR3LRV"
+  ]
+}
