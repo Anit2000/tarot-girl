@@ -266,7 +266,7 @@
       {{ 'component-price.css' | asset_url | stylesheet_tag }}
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
-
+{% comment %} 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
@@ -276,7 +276,7 @@
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
       <link rel="preload" as="font" href="{{ settings.type_header_font | font_url }}" type="font/woff2" crossorigin>
       {% comment %}theme-check-enable AssetPreload{% endcomment %}
-    {%- endunless -%}
+    {%- endunless -%} {% endcomment %}
 
     {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
       {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
@@ -304,6 +304,7 @@
       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap');
     </style>
     {% render 'vite-tag' with 'base.css' %}
+    {% render 'font-face' %}
 		{% render 'vite-tag' with 'keen-slider.js' %}
   </head>
 
@@ -313,7 +314,7 @@
     </a> {% endcomment %}
 
     {%- if settings.cart_type == 'drawer' -%}
-      {%- render 'cart-drawer' -%}
+      {% comment %} {%- render 'cart-drawer' -%} {% endcomment %}
     {%- endif -%}
 		{%- section 'announcement-bar-v2' -%}
     	{%- section 'header-v2' -%}

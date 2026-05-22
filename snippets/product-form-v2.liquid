@@ -21,8 +21,8 @@
                             {% liquid
                               assign option_title = option.name | downcase | replace : ' ' ,'_'
                             %}
-                            <label class="sw-rounded-full sw-px-5 sw-flex sw-text-[#9333ea] sw-items-center sw-justify-center sw-py-5  sw-border-[1px] sw-border-solid sw-border-[#cd97ff] has-[:checked]:sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(168,_85,_247)_100%)] sw-transition-all has-[:checked]:sw-border-[transparent] has-[:checked]:sw-text-[#fff]" for="{{ product_form_id | append : value | downcase | replace : ' ', '-' }}">
-                                <p class="sw-font-secondary sw-text-[14px] sw-text-[inherit] sw-font-medium">{{ value }}</p>
+                            <label class="sw-rounded-full sw-px-3 sw-flex sw-text-[#9333ea] sw-items-center sw-justify-center sw-py-3  sw-border-[1px] sw-border-solid sw-border-[#cd97ff] has-[:checked]:sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(168,_85,_247)_100%)] sw-transition-all has-[:checked]:sw-border-[transparent] has-[:checked]:sw-text-[#fff]" for="{{ product_form_id | append : value | downcase | replace : ' ', '-' }}">
+                                <p class="sw-font-secondary sw-text-[12px] sw-text-[inherit] sw-font-medium">{{ value }}</p>
                                 <input class="sw-hidden" type="radio" name="{{ product_form_id | append : option_title }}" id="{{ product_form_id | append : value | downcase | replace : ' ', '-' }}" value="{{ value | downcase }}" {% if value == option.selected_value %}checked{% endif %}>
                             </label>
                         {% endfor %}
@@ -40,9 +40,9 @@
                 <div>
                     <p class="sw-font-secondary sw-text-[14px] sw-text-[#9333ea] sw-mb-3">Quantity</p>
                     <qn-input class="sw-flex sw-rounded-full sw-overflow-hidden sw-items-center sw-gap-2 sw-bg-[#a855f714] sw-px-3 sw-py-2 sw-w-max">
-                        <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-3 sw-py-3 sw-shadow-sm" data-role="qn-minus">{% render 'icons-v2', icon: 'qn-minus', classes: 'sw-w-6 sw-stroke-[#fff]' %}</button>
+                        <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-2 sw-py-2 sw-shadow-sm" data-role="qn-minus">{% render 'icons-v2', icon: 'qn-minus', classes: 'sw-w-3 sw-stroke-[#fff]' %}</button>
                         <input name="quantity" type="number" value="1" disabled="true" class="sw-w-[20px] sw-flex sw-items-center sw-justify-center sw-font-primary sw-text-[16px] sw-text-center sw-font-semibold">
-                        <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-3 sw-py-3 sw-shadow-sm" data-role="qn-plus">{% render 'icons-v2', icon: 'qn-plus', classes: 'sw-w-6 sw-stroke-[#fff]' %}</button>
+                        <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-2 sw-py-2 sw-shadow-sm" data-role="qn-plus">{% render 'icons-v2', icon: 'qn-plus', classes: 'sw-w-3 sw-stroke-[#fff]' %}</button>
                     </qn-input>
                 </div>
             </div>

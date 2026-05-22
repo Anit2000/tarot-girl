@@ -17,7 +17,7 @@ module.exports = {
   theme: {
     fontFamily:{
       primary:['Playfair Display'],
-      secondary:['Inter'],
+      secondary:["Roboto"],
     },
     extend: {
       boxShadow: {
