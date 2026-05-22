@@ -1358,31 +1358,6 @@
     ]
   },
   {
-    "name": "t:names.page_layout",
-    "settings": [
-      {
-        "type": "select",
-        "id": "page_width",
-        "label": "t:settings.page_width",
-        "options": [
-          {
-            "value": "narrow",
-            "label": "t:options.narrow"
-          },
-          {
-            "value": "normal",
-            "label": "t:options.normal"
-          },
-          {
-            "value": "wide",
-            "label": "t:options.wide"
-          }
-        ],
-        "default": "narrow"
-      }
-    ]
-  },
-  {
     "name": "t:names.animations",
     "settings": [
       {

@@ -1,0 +1,82 @@
+{% style %}
+   #pt-{{ section.id }}{
+        padding-left: 12px;
+        padding-right: 12px;
+   }
+   @media(min-width:768px){
+        #pt-{{ section.id }}{
+            padding: 50px 50px; 
+        } 
+   }
+{% endstyle %}
+
+<div id="pt-{{ section.id }}" style="background-color: {{  section.settings.bg_color }}">
+    <div>
+        <div>
+            {% if section.settings.breadcrumb and section.settings.breadcrumb_url != blank %}
+                <a href="{{ section.settings.breadcrumb_url }}" class="sw-decoration-none sw-font-secondary sw-text-[14px] sw-text-[#9333ea] sw-flex sw-gap-1 sw-items-center sw-mb-4"><span>{% render 'icons-v2', icon: 'breadcrumb-back-icon' %}</span><span>{{ section.settings.breadcrumb_text }}</span></a>
+            {% endif %}
+            <div class="lg:sw-hidden">
+                <h1 class="sw-font-primary sw-text-[30px] sw-font-semibold sw-text-[#7e22ce] sw-mb-6">{{ product.title }}</h1>
+                {% if product.metafields.custom.short_description != blank %}
+                    <p class="sw-font-secondary sw-text-[14px] sw-text-[#6b21a8c7] sw-mb-6">{{ product.metafields.custom.short_description }}</p>
+                {% endif %}
+                <p></p>
+            </div>
+            <div class="lg:sw-grid lg:sw-grid-cols-2">
+                {% render 'product-gallery-v2', product: product %}
+                <div class="lg:sw-pl-[40px]">
+                    <div class="sw-hidden lg:sw-block">
+                        <div class="">
+                            <h1 class="sw-font-primary sw-text-[30px] sw-font-semibold sw-text-[#7e22ce] sw-mb-6">{{ product.title }}</h1>
+                            {% if product.metafields.custom.short_description != blank %}
+                                <p class="sw-font-secondary sw-text-[14px] sw-text-[#6b21a8c7] sw-mb-6">{{ product.metafields.custom.short_description }}</p>
+                            {% endif %}
+                            <p></p>
+                        </div>
+                    </div>
+                    {% render 'product-form-v2' , product: product %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% render 'vite-tag' with 'product-v2.js' %}
+
+{% schema %}
+    {
+        "name":"main-product-v2",
+        "settings": [
+            {
+                "type":"color",
+                "label":"Choose background color",
+                "id":"bg_color",
+                "default":"#f2f2f7"
+            },
+            {
+                "type":"checkbox",
+                "label":"Show breadcrumb",
+                "id":"breadcrumb",
+                "default": true
+            },
+            {
+                "type":"text",
+                "label":"Breadcrumb text",
+                "id":"breadcrumb_text",
+                "default":"Back to services",
+                "visible_if": "{{ section.settings.breadcrumb }}"
+            },
+            {
+                "type":"url",
+                "label":"Bradcrumb url",
+                "id":"breadcrumb_url",
+                "visible_if": "{{ section.settings.breadcrumb }}"
+            }
+        ],
+        "presets": [
+            {
+                "name":"main-product-v2"
+            }
+        ]
+    }
+{% endschema %}
