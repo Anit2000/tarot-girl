@@ -1,0 +1,55 @@
+{% liquid
+  assign product_form_id = 'product_form_' | append : product.id
+%}
+<product-form class="sw-group {% if product.selected_or_first_available_variant.available %}available{% endif %}">
+    <script type="applicationId/json" data-role="product-data">{{ product | json }}</script>
+    <script type="applicationId/json" data-role="product-metadata">
+        {
+            "variants":[{%- for variant in product.variants -%}{
+                "id": {{ variant.id }},
+                "short_description": "{{- variant.metafields.custom.short_description -}}"
+            }{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+        }
+    </script>
+    <form>
+        <div class="sw-bg-[#fff] sw-mb-8 sw-shadow-md sw-shadow-[#e9d2ff] sw-rounded-3xl sw-px-6 sw-py-6">
+            {% for option in product.options_with_values %}
+                <div class="sw-mb-5">
+                    <p class="sw-font-secondary sw-text-[14px] sw-text-[#9333ea] sw-mb-6">{{ option.name }}</p>
+                    <div class="sw-flex sw-gap-5 sw-gap-x-3 sw-flex-wrap">
+                        {% for value in option.values %}
+                            {% liquid
+                              assign option_title = option.name | downcase | replace : ' ' ,'_'
+                            %}
+                            <label class="sw-rounded-full sw-px-5 sw-flex sw-text-[#9333ea] sw-items-center sw-justify-center sw-py-5  sw-border-[1px] sw-border-solid sw-border-[#cd97ff] has-[:checked]:sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(168,_85,_247)_100%)] sw-transition-all has-[:checked]:sw-border-[transparent] has-[:checked]:sw-text-[#fff]" for="{{ product_form_id | append : value | downcase | replace : ' ', '-' }}">
+                                <p class="sw-font-secondary sw-text-[14px] sw-text-[inherit] sw-font-medium">{{ value }}</p>
+                                <input class="sw-hidden" type="radio" name="{{ product_form_id | append : option_title }}" id="{{ product_form_id | append : value | downcase | replace : ' ', '-' }}" value="{{ value | downcase }}" {% if value == option.selected_value %}checked{% endif %}>
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="sw-bg-[linear-gradient(rgba(252,_231,_243,_0.5)_0%,_rgba(243,_232,_255,_0.5)_100%)] sw-mb-8 sw-rounded-[18px] sw-px-[14px] sw-py-[16px]">
+                <div class="sw-flex sw-items-center sw-justify-between sw-mb-3">
+                    <p class="sw-font-primary sw-text-[14px] sw-text-[#581c87]" data-role="variant-title">{{ product.selected_or_first_available_variant.title }}</p>
+                    <p class="sw-font-secondary sw-text-[14px] sw-text-[#581c87]" data-role="variant-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+                </div>
+                    <p data-role="variant-short" class="{%  if product.selected_or_first_available_variant.metafields.custom.short_description  %} active {% endif %}sw-hidden [&.active]:sw-flex sw-font-secondary sw-text-[12px] sw-text-[#6b21a8c7]">{{ product.selected_or_first_available_variant.metafields.custom.short_description }}</p>
+            </div>
+            <div>
+                <div>
+                    <p class="sw-font-secondary sw-text-[14px] sw-text-[#9333ea] sw-mb-3">Quantity</p>
+                    <qn-input class="sw-flex sw-rounded-full sw-overflow-hidden sw-items-center sw-gap-2 sw-bg-[#a855f714] sw-px-3 sw-py-2 sw-w-max">
+                        <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-3 sw-py-3 sw-shadow-sm" data-role="qn-minus">{% render 'icons-v2', icon: 'qn-minus', classes: 'sw-w-6 sw-stroke-[#fff]' %}</button>
+                        <input name="quantity" type="number" value="1" disabled="true" class="sw-w-[20px] sw-flex sw-items-center sw-justify-center sw-font-primary sw-text-[16px] sw-text-center sw-font-semibold">
+                        <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-3 sw-py-3 sw-shadow-sm" data-role="qn-plus">{% render 'icons-v2', icon: 'qn-plus', classes: 'sw-w-6 sw-stroke-[#fff]' %}</button>
+                    </qn-input>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button data-role="atc" class="group-[&.available]:sw-flex sw-hidden sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(192,_38,_211)_50%,_rgb(147,_51,_234)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md hover:sw-scale-[0.95] sw-transition-all sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]"><span class="">Book Now</span><span>{% render 'icons-v2', icon: 'star' %}</span></button>
+            <button disabled="true" class="group-[&.available]:sw-hidden sw-bg-[linear-gradient(135deg,_rgb(243_223_233)_0%,_rgb(130_109_132)_50%,_rgb(104_83_123)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]">Service not available</button>
+        </div>
+    </form>
+</product-form>

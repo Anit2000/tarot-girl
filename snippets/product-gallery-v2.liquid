@@ -1,0 +1,31 @@
+<product-gallery>
+    <div class="sw-flex sw-overflow-hidden sw-mb-8" {% if product.media.size > 1 %} data-role="slider" {% endif %}>
+        {% for media in product.media %}
+            {% liquid
+                assign product_image = media.preview_image
+                assign image_loading = 'eager'
+                if forloop.index > 1
+                    assign image_loading = 'lazy'
+                endif
+            %}
+            {% if product_image != balnk %}
+                <div class="sw-flex-[0_0_100%]" {% if product.media.size > 1 %} data-role="slider_slider" {% endif %} >
+                    <div class="sw-relative my-auto sw-overflow-hidden sw-rounded-3xl" style="padding-bottom:{{ 1 | divided_by : product_image.aspect_ratio | times : 100 }}%">
+                        {{
+                            product_image
+                            | image_url: width: 900
+                            | image_tag:
+                            loading: image_loading,
+                            class:'sw-absolute sw-top-1/2 sw-left-1/2 -sw-translate-x-1/2 -sw-translate-y-1/2 sw-w-full sw-h-auto',
+                            widths: '400, 600, 900',
+                            sizes: '(max-width: 767px) 100vw, 45vw',
+                            alt: product_image.alt | default: product.title | escape
+                        }}
+                    </div>
+                </div>
+            {% else %}
+
+            {% endif %}
+        {% endfor %}
+    </div>
+</product-gallery>
