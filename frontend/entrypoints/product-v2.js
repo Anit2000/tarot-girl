@@ -31,6 +31,7 @@ class ProductForm extends HTMLElement {
     super();
     this.form = this.querySelector("form");
     this.optionsList = Array.from(this.querySelectorAll('input[type="radio"]'));
+    this.varantIdInput = this.querySelector('input[name="id"]');
     this.productData = JSON.parse(
       this.querySelector(
         'script[type="applicationId/json"][data-role="product-data"]',
@@ -84,7 +85,6 @@ class ProductForm extends HTMLElement {
     let currentlySelectedValues = this.optionsList
       .filter((el) => el.checked)
       .map((el) => el.value);
-    console.log(currentlySelectedValues);
     let correpondingVariant = this.productData.variants.find(
       (el) =>
         el.options.length == currentlySelectedValues.length &&
@@ -95,10 +95,10 @@ class ProductForm extends HTMLElement {
     let correspondingVariantMetaData = this.productMetaData.variants.find(
       (el) => el.id == correpondingVariant.id,
     );
+    this.varantIdInput ? this.varantIdInput.value = correpondingVariant.id : "";
     !correpondingVariant.available
       ? this.classList.remove("available")
       : this.classList.add("available");
-    console.log(correpondingVariant);
     if (
       correspondingVariantMetaData &&
       correspondingVariantMetaData?.short_description.trim().length > 0

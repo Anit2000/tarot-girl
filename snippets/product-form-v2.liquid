@@ -1,7 +1,21 @@
 {% liquid
   assign product_form_id = 'product_form_' | append : product.id
 %}
-<product-form class="sw-group {% if product.selected_or_first_available_variant.available %}available{% endif %}">
+{% style %}
+   shopify-accelerated-checkout .shopify-payment-button__button.shopify-payment-button__button--unbranded{
+        display:flex;
+        background: linear-gradient(135deg,rgb(236,72,153)0%,rgb(192, 38, 211)50%,rgb(147,51,234) 100%);
+        font-size:18px;
+        font-family: 'Inter';
+        width: 100%;
+        border-radius: 18px;
+        padding: 8px 12px;
+        text-align:center;
+        justify-content:center;
+        align-items:center;
+    }
+{% endstyle %}
+<product-form class="sw-group {% if product.selected_or_first_available_variant.available %}available{% endif %}" >
     <script type="applicationId/json" data-role="product-data">{{ product | json }}</script>
     <script type="applicationId/json" data-role="product-metadata">
         {
@@ -11,7 +25,14 @@
             }{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
         }
     </script>
-    <form>
+    {%- form 'product',
+        product,
+        id: product_form_id,
+        class: 'form',
+        novalidate: 'novalidate',
+        data-type: 'add-to-cart-form'
+      -%}
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         <div class="sw-bg-[#fff] sw-mb-8 sw-shadow-md sw-shadow-[#e9d2ff] sw-rounded-3xl sw-px-6 sw-py-6">
             {% for option in product.options_with_values %}
                 <div class="sw-mb-5">
@@ -48,8 +69,11 @@
             </div>
         </div>
         <div>
-            <button data-role="atc" class="group-[&.available]:sw-flex sw-hidden sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(192,_38,_211)_50%,_rgb(147,_51,_234)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md hover:sw-scale-[0.95] sw-transition-all sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]"><span class="">Book Now</span><span>{% render 'icons-v2', icon: 'star' %}</span></button>
+            {% comment %} <button data-role="atc" class="group-[&.available]:sw-flex sw-hidden sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(192,_38,_211)_50%,_rgb(147,_51,_234)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md hover:sw-scale-[0.95] sw-transition-all sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]"><span class="">Book Now</span><span>{% render 'icons-v2', icon: 'star' %}</span></button>
+            <div class=""> {% endcomment %}
+                {{ form | payment_button }}
+            {% comment %} </div> {% endcomment %}
             <button disabled="true" class="group-[&.available]:sw-hidden sw-bg-[linear-gradient(135deg,_rgb(243_223_233)_0%,_rgb(130_109_132)_50%,_rgb(104_83_123)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]">Service not available</button>
         </div>
-    </form>
+    {% endform %}
 </product-form>
