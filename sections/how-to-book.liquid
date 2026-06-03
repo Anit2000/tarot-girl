@@ -5,31 +5,50 @@
   Tested  : mobile 375px / tablet 768px / desktop 1280px+
 {% endcomment %}
 
+{% liquid
+  assign section_visibility = true
+  assign how_to_defination = blank
+  for defination in metaobjects['how_to'].values
+    assign defination_product = defination.choose_product | replace : 'gid://shopify/Product/' , '' | times : 1
+    if product.id == defination_product
+      assign how_to_defination = defination
+    endif
+  endfor
+  if how_to_defination == blank
+    assign section_visibility = false
+  endif
+  assign section_heading = how_to_defination.heading
+  assign section_sub_heading = how_to_defination.section_sub_heading
+  assign section_steps = how_to_defination.step.value
+
+  if section_steps.size == 0
+    assign section_visibility = false
+  endif
+%}
+
+{% if section_visibility %}
 <div id="hb-{{ section.id }}" class="hb">
   <div class="hb__inner">
 
     {%- comment %} ── HEADER ── {%- endcomment %}
     <div class="hb__header">
-      {%- if section.settings.heading != blank -%}
+      {%- if section_heading != blank -%}
         <h2 class="hb__heading">
-          {{ section.settings.heading | escape }}
-          {%- if section.settings.heading_emoji != blank -%}
-            <span class="hb__heading-emoji" aria-hidden="true"> {{ section.settings.heading_emoji }}</span>
-          {%- endif -%}
+          {{ section_heading | escape }}
         </h2>
       {%- endif -%}
-      {%- if section.settings.subtext != blank -%}
-        <p class="hb__subtext">{{ section.settings.subtext | escape }}</p>
+      {%- if section_sub_heading != blank -%}
+        <p class="hb__subtext">{{ section_sub_heading | escape }}</p>
       {%- endif -%}
     </div>
 
     {%- comment %} ── STEPS LIST ── {%- endcomment %}
-    {%- if section.blocks.size > 0 -%}
+    {%- if section_steps.size > 0 -%}
       <ol class="hb__steps" role="list">
-        {%- for block in section.blocks -%}
-          <li class="hb__step" {{ block.shopify_attributes }}>
+        {%- for step in section_steps -%}
+          <li class="hb__step">
             <span class="hb__num" aria-label="Step {{ forloop.index }}">{{ forloop.index }}</span>
-            <p class="hb__step-text">{{ block.settings.text | escape }}</p>
+            <p class="hb__step-text">{{ step | escape }}</p>
           </li>
         {%- endfor -%}
       </ol>
@@ -179,6 +198,7 @@
   }
 </style>
 
+{% endif %}
 {% schema %}
 {
   "name": "How to Book",
@@ -198,24 +218,6 @@
     {
       "type": "header",
       "content": "Header"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading",
-      "default": "How to Book Your Reading"
-    },
-    {
-      "type": "text",
-      "id": "heading_emoji",
-      "label": "Heading emoji",
-      "default": "✨"
-    },
-    {
-      "type": "text",
-      "id": "subtext",
-      "label": "Subtext",
-      "default": "Simple, easy, and designed for you"
     },
     {
       "type": "color",
@@ -302,46 +304,12 @@
       "default": 880
     }
   ],
-  "blocks": [
-    {
-      "type": "step",
-      "name": "Step",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Step text",
-          "default": "Choose the number of questions you want guidance on."
-        }
-      ]
-    }
-  ],
+  "blocks": [],
   "presets": [
     {
       "name": "How to Book",
       "category": "Custom",
-      "blocks": [
-        {
-          "type": "step",
-          "settings": { "text": "Choose the number of questions you want guidance on." }
-        },
-        {
-          "type": "step",
-          "settings": { "text": "Book your reading and complete the payment." }
-        },
-        {
-          "type": "step",
-          "settings": { "text": "Enter your correct WhatsApp number while booking." }
-        },
-        {
-          "type": "step",
-          "settings": { "text": "You will automatically receive a WhatsApp message to share your details and questions." }
-        },
-        {
-          "type": "step",
-          "settings": { "text": "Your tarot reading will be delivered within 24–48 hours after booking." }
-        }
-      ]
+      "blocks": []
     }
   ],
   "max_blocks": 10

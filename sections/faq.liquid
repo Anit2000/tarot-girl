@@ -4,25 +4,41 @@
   Features: Heading, up to 15 FAQ blocks, optional footer note — all Theme Editor editable
   Tested  : mobile 375px / tablet 768px / desktop 1280px+
 {% endcomment %}
+{% liquid
+  assign section_visibility = true
+  assign faq_defination = blank
+  for defination in metaobjects['faq'].values
+    assign defination_product = defination.product | replace : 'gid://shopify/Product/' , '' | times : 1
+    if product.id == defination_product
+      assign faq_defination = defination
+    endif
+  endfor
+  if faq_defination == blank
+    assign section_visibility = false
+  endif
+  assign section_heading = faq_defination.heading
+  assign section_questionare = faq_defination.questionare.value
 
+  if section_questionare.size == 0
+    assign section_visibility = false
+  endif
+%}
+{% if section_visibility %}
 <div id="fq-{{ section.id }}" class="fq">
   <div class="fq__inner">
 
     {%- comment %} ── HEADING ── {%- endcomment %}
-    {%- if section.settings.heading != blank -%}
+    {%- if section_heading != blank -%}
       <h2 class="fq__heading">
-        {{ section.settings.heading | escape }}
-        {%- if section.settings.heading_emoji != blank -%}
-          <span class="fq__heading-emoji" aria-hidden="true"> {{ section.settings.heading_emoji }}</span>
-        {%- endif -%}
+        {{ section_heading | escape }}
       </h2>
     {%- endif -%}
 
     {%- comment %} ── FAQ ITEMS ── {%- endcomment %}
-    {%- if section.blocks.size > 0 -%}
+    {%- if section_questionare.size > 0 -%}
       <div class="fq__list">
-        {%- for block in section.blocks -%}
-          <div class="fq__item" {{ block.shopify_attributes }}>
+        {%- for block in section_questionare -%}
+          <div class="fq__item" >
             <button
               class="fq__question"
               aria-expanded="false"
@@ -30,7 +46,7 @@
               id="fq-btn-{{ section.id }}-{{ forloop.index }}"
               type="button"
             >
-              <span class="fq__question-text">{{ block.settings.question | escape }}</span>
+              <span class="fq__question-text">{{ block.question | escape }}</span>
               <span class="fq__chevron" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                   <path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -44,7 +60,7 @@
               aria-labelledby="fq-btn-{{ section.id }}-{{ forloop.index }}"
               hidden
             >
-              <p class="fq__answer-text">{{ block.settings.answer | escape }}</p>
+              <p class="fq__answer-text">{{ block.answer | escape }}</p>
             </div>
           </div>
         {%- endfor -%}
@@ -251,16 +267,17 @@
 <script>
 (function () {
   var container = document.getElementById('fq-{{ section.id }}');
+  console.log(container,'this')
   if (!container) return;
 
   var questions = container.querySelectorAll('.fq__question');
-
+  console.log(questions,'here --->')
   questions.forEach(function (btn) {
     btn.addEventListener('click', function () {
       var item   = btn.closest('.fq__item');
       var answer = document.getElementById(btn.getAttribute('aria-controls'));
       var isOpen = item.classList.contains('fq__item--open');
-
+      console.log('clicked')
       /* Close all */
       container.querySelectorAll('.fq__item--open').forEach(function (openItem) {
         openItem.classList.remove('fq__item--open');
@@ -279,7 +296,7 @@
   });
 })();
 </script>
-
+{% endif %}
 {% schema %}
 {
   "name": "FAQ",
@@ -444,75 +461,13 @@
     }
   ],
   "blocks": [
-    {
-      "type": "faq",
-      "name": "FAQ Item",
-      "settings": [
-        {
-          "type": "text",
-          "id": "question",
-          "label": "Question",
-          "default": "Do I need to be online during the reading?"
-        },
-        {
-          "type": "textarea",
-          "id": "answer",
-          "label": "Answer",
-          "default": "No. Since this is a text reading, you don't need to be online. Your reading will be sent to you on WhatsApp once it is ready."
-        }
-      ]
-    }
   ],
   "presets": [
     {
       "name": "FAQ",
       "category": "Custom",
-      "blocks": [
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Do I need to be online during the reading?",
-            "answer": "No. Since this is a text reading, you don't need to be online. Your reading will be sent to you on WhatsApp once it is ready."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Can I ask multiple questions?",
-            "answer": "Yes. You can choose the number of questions while booking and ask them together."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "What details do I need to provide?",
-            "answer": "You will receive a WhatsApp message after booking where you can share your name, questions, and any details related to your situation if needed."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Can I book a reading for someone else?",
-            "answer": "Yes, you can book a reading for another person. Just share the correct details and questions during the process."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "What if I don't receive my WhatsApp message?",
-            "answer": "Please make sure you enter the correct WhatsApp number while booking. If you still don't receive a message, you can contact us directly."
-          }
-        },
-        {
-          "type": "faq",
-          "settings": {
-            "question": "Are tarot readings guaranteed to happen exactly as predicted?",
-            "answer": "Tarot readings are meant for guidance and clarity. Your choices and actions always play an important role in the outcome."
-          }
-        }
-      ]
+      "blocks": []
     }
-  ],
-  "max_blocks": 15
+  ]
 }
 {% endschema %}

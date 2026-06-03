@@ -4,24 +4,40 @@
   Features: Heading, up to 10 item blocks — all Theme Editor editable
   Tested  : mobile 375px / tablet 768px / desktop 1280px+
 {% endcomment %}
+{% liquid
+  assign section_visibility = true
+  assign recieving_defination = blank
+  for defination in metaobjects['recieving'].values
+    assign defination_product = defination.product | replace : 'gid://shopify/Product/' , '' | times : 1
+    if product.id == defination_product
+      assign recieving_defination = defination
+    endif
+  endfor
+  if recieving_defination == blank
+    assign section_visibility = false
+  endif
+  assign section_heading = recieving_defination.heading
+  assign section_steps = recieving_defination.steps.value
 
+  if section_steps.size == 0
+    assign section_visibility = false
+  endif
+%}
+{% if section_visibility %}
 <div id="wr-{{ section.id }}" class="wr">
   <div class="wr__inner">
 
-    {%- if section.settings.heading != blank -%}
+    {%- if section_heading != blank -%}
       <h2 class="wr__heading">
-        {{ section.settings.heading | escape }}
-        {%- if section.settings.heading_emoji != blank -%}
-          <span aria-hidden="true"> {{ section.settings.heading_emoji }}</span>
-        {%- endif -%}
+        {{ section_heading | escape }}
       </h2>
     {%- endif -%}
 
-    {%- if section.blocks.size > 0 -%}
+    {%- if section_steps.size > 0 -%}
       <ul class="wr__list" role="list">
-        {%- for block in section.blocks -%}
-          <li class="wr__item" {{ block.shopify_attributes }}>
-            <p class="wr__item-text">{{ block.settings.text | escape }}</p>
+        {%- for block in section_steps -%}
+          <li class="wr__item" >
+            <p class="wr__item-text">{{ block | escape }}</p>
           </li>
         {%- endfor -%}
       </ul>
@@ -111,7 +127,7 @@
     #wr-{{ section.id }} .wr__item-text { font-size: 13.5px; }
   }
 </style>
-
+{% endif %}
 {% schema %}
 {
   "name": "What You'll Receive",
@@ -209,39 +225,14 @@
     }
   ],
   "blocks": [
-    {
-      "type": "item",
-      "name": "Item",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "label": "Item text",
-          "default": "For question readings, you will receive answers with a full detailed tarot reading for each question."
-        }
-      ]
-    }
   ],
   "presets": [
     {
       "name": "What You'll Receive",
       "category": "Custom",
       "blocks": [
-        {
-          "type": "item",
-          "settings": {
-            "text": "For question readings, you will receive answers with a full detailed tarot reading for each question."
-          }
-        },
-        {
-          "type": "item",
-          "settings": {
-            "text": "For Yes/No readings, you will receive only a direct Yes or No answer, not a detailed reading."
-          }
-        }
       ]
     }
-  ],
-  "max_blocks": 10
+  ]
 }
 {% endschema %}
