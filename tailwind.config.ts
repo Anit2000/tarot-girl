@@ -16,7 +16,7 @@ module.exports = {
   ],
   theme: {
     fontFamily:{
-      primary:['Playfair Display'],
+      primary:["Cormorant Garamond"],
       secondary:["Roboto"],
     },
     extend: {

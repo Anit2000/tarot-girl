@@ -1,0 +1,35 @@
+{% liquid
+  assign line_item = line_item
+%}
+
+<cart-item class="sw-group/cartItem sw-overflow-hidden sw-flex-[0_0_100%]" data-key="{{ line_item.key }}">
+    <div class="sw-bg-[#fff] sw-relative sw-gap-3 sw-p-[14px] sw-border-[rgba(168,85,247,0.12)] sw-border-[1px] sw-border-solid sw-shadow-[rgba(168,_85,_247,_0.25)_0px_6px_18px_-10px] sw-rounded-[22px] sw-overflow-hidden sw-flex sw-justify-between">
+        <div class="group-[&.loading]/cartItem:sw-block sw-hidden sw-w-full sw-h-full sw-absolute sw-left-0 sw-top-0 sw-bg-[rgba(255,255,255,0.8)] sw-z-[10]"></div>
+        <div class="sw-flex sw-items-center">
+            {% if line_item.image != blank %}
+                <div class="sw-relative sw-overflow-hidden sw-shadow-[rgba(88,_28,_135,_0.4)_0px_6px_14px_-4px] sw-bg-[linear-gradient(135deg,_rgb(192,_38,_211)_0%,_rgb(126,_34,_206)_100%)] sw-w-[70px] sw-h-[70px] sw-rounded-[16px]">
+                    {{ line_item.image | image_url: width: 100, height: 100  | image_tag : loading : 'lazy', class  }}
+                </div>
+            {% else %}
+                <div class="sw-shadow-[rgba(88,_28,_135,_0.4)_0px_6px_14px_-4px] sw-bg-[linear-gradient(135deg,_rgb(192,_38,_211)_0%,_rgb(126,_34,_206)_100%)] sw-w-[70px] sw-h-[70px] sw-rounded-[16px]"></div>
+            {% endif %}
+        </div>
+        <div class="sw-flex sw-gap-5 sw-w-full">
+            <div class="sw-flex sw-flex-col sw-gap-2 sw-justify-between">
+                <p class="sw-font-primary sw-font-semibold sw-text-[16px] sw-text-[rgb(88,_28,_135)] sw-line-clamp-2">{{ line_item.title }}</p>
+
+                <qn-input class="sw-flex sw-rounded-full sw-overflow-hidden sw-items-center sw-gap-2 sw-bg-[#a855f714] sw-px-3 sw-py-2 sw-w-max">
+                    <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-2 sw-py-2 sw-shadow-sm" data-role="qn-minus">{% render 'icons-v2', icon: 'qn-minus', classes: 'sw-w-3 sw-stroke-[#fff]' %}</button>
+                    <input name="quantity" value="{{ line_item.quantity }}" type="number" value="1" disabled="true" class="sw-w-[20px] sw-flex sw-items-center sw-justify-center sw-font-primary sw-text-[16px] sw-text-center sw-font-semibold">
+                    <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-2 sw-py-2 sw-shadow-sm" data-role="qn-plus">{% render 'icons-v2', icon: 'qn-plus', classes: 'sw-w-3 sw-stroke-[#fff]' %}</button>
+                </qn-input>
+            </div>
+            <div class="sw-flex-[0_0_25%] sw-flex sw-flex-col sw-gap-2 sw-items-end sw-justify-between sw-ml-auto">
+                <button data-role="item-remove" class="sw-w-max">
+                    {% render 'icons-v2', icon: 'cart-remove', classes: 'sw-w-[20px] sw-text-[#9333ea]' %}
+                </button>
+                <p class="sw-font-primary sw-leading-tight sw-text-[22px] sw-font-semibold sw-text-[rgb(88,28,135)]">{{ line_item.final_price | money }}</p>
+            </div>
+        </div>
+    </div>
+</cart-item>

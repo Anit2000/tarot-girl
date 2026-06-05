@@ -1,0 +1,31 @@
+{% comment %}
+    state classes
+        - applying "to show coupon is being applied state"
+        - applied "to show coupon is applied"
+        - invalid "in case coupon applied is invalid"
+{% endcomment %}
+
+<discount-form class="sw-group/discount">
+    <div class="sw-p-[4px_18px_8px]">
+        <form>
+            <div class="sw-bg-[#fff] sw-border-solid sw-border-[1px] sw-border-[rgba(168,85,247,0.14)] sw-p-[6px_6px_6px_16px] sw-flex sw-w-full sw-rounded-[16px] sw-gap-2">
+                <label for="cart-discount" class="sw-flex sw-items-center sw-gap-2 sw-w-full">
+                    <span>{% render 'icons-v2', icon: 'cart-discount' %}</span>
+                    <input class="sw-font-secondary sw-w-full !sw-outline-none !sw-border-none sw-text-[14px] sw-text-[rgb(88,28,135)]" type="text" placeholder="Promo code" id="cart-discount" name="discount">
+                </label>
+                <button class="sw-font-secondary sw-min-w-[70px] sw-text-[rgb(107,33,168)] sw-rounded-[12px] sw-p-[9px_16px] sw-text-[14px] sw-bg-[rgba(168,85,247,0.12)] sw-font-semibold sw-flex sw-justify-center"><span class="group-[&.applying]/discount:sw-hidden">Apply</span><span class="group-[&.applying]/discount:sw-block sw-hidden">{% render 'loader-v2', classes: 'sw-w-5 sw-h-5 sw-text-[rgba(168,85,247,0.12)] sw-fill-[rgb(107,33,168)]' %}</span></button>    
+            </div>
+            <p class="sw-font-secondary sw-text-[12px] sw-text-[#cf0a0a] sw-mt-2 sw-hidden group-[&.invalid]/discount:sw-block">Failed to apply coupon</p>
+            {% if cart.cart_level_discount_applications.size > 0 %}
+                <div class="sw-mt-2">
+                    {% for discount in cart.cart_level_discount_applications %}
+                        <button class="sw-font-secondary sw-min-w-[70px] sw-text-[rgb(107,33,168)] sw-rounded-[12px] sw-p-[9px_16px] sw-text-[12px] sw-items-center sw-bg-[rgba(168,85,247,0.12)] sw-font-semibold sw-flex sw-justify-center" data-value="{{ discount.value }}" data-role="discount-btn">
+                            <span>{{ discount.title }}</span>
+                            <span>{% render 'icons-v2', icon: 'discount-cancel', classes:'sw-w-4 sw-h-4' %}</span>
+                        </button>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</discount-form>

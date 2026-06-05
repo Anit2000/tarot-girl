@@ -58,9 +58,9 @@ class ProductForm extends HTMLElement {
       this.handleOptionSelectionChange.bind(this),
     );
   }
-  handleFormSubmission(e) {
+  async handleFormSubmission(e) {
     e.preventDefault();
-    try{
+    try {
       let currentlySelectedValues = this.optionsList
         .filter((el) => el.checked)
         .map((el) => el.value);
@@ -73,12 +73,51 @@ class ProductForm extends HTMLElement {
       );
       let quantity = this.querySelector('input[name="quantity"]').value || 1;
       const payload = {
-        id: correpondingVariant.id,
-        quantity: Number(quantity)
+        items: [
+          {
+            id: correpondingVariant.id,
+            quantity: Number(quantity),
+          },
+        ],
+        sections: window.cartId,
       };
-      window.location = `/cart/${payload.id}:${payload.quantity}`;
-    }catch(err){
+      this.classList.add("adding");
+      const request = await fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (request.status != 200) {
+        throw new Error("Failed to add to cart");
+      }
+      const res = await request.json();
+      document.dispatchEvent(
+        new CustomEvent("custom:CartUpdate", {
+          detail: res,
+        }),
+      );
+      document.dispatchEvent(
+        new CustomEvent("custom:showAtcPopup", {
+          detail: {
+            success: true,
+            failed: false,
+          },
+        }),
+      );
+    } catch (err) {
       console.log("Failed to add items to cart reason -->" + err.message);
+      document.dispatchEvent(
+        new CustomEvent("custom:showAtcPopup", {
+          detail: {
+            success: false,
+            failed: true,
+          },
+        }),
+      );
+    } finally {
+      this.classList.remove("adding");
     }
   }
   handleOptionSelectionChange() {
@@ -95,7 +134,9 @@ class ProductForm extends HTMLElement {
     let correspondingVariantMetaData = this.productMetaData.variants.find(
       (el) => el.id == correpondingVariant.id,
     );
-    this.varantIdInput ? this.varantIdInput.value = correpondingVariant.id : "";
+    this.varantIdInput
+      ? (this.varantIdInput.value = correpondingVariant.id)
+      : "";
     !correpondingVariant.available
       ? this.classList.remove("available")
       : this.classList.add("available");
@@ -113,48 +154,20 @@ class ProductForm extends HTMLElement {
       this.variantTitle.innerHTML = correpondingVariant.title;
     }
     if (this.variantPrice) {
-      this.variantPrice.innerHTML = this.moneyFormatter.call(this,correpondingVariant.price/100);
+      this.variantPrice.innerHTML = this.moneyFormatter.call(
+        this,
+        correpondingVariant.price / 100,
+      );
     }
   }
   moneyFormatter(amount) {
-    const formatter = 
-      new Intl.NumberFormat("en-IN", {
-        style: "currency",
-        currency: "INR",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
+    const formatter = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
     return formatter.format(amount);
   }
 }
 customElements.define("product-form", ProductForm);
-
-class QuantityInput extends HTMLElement {
-  constructor() {
-    super();
-
-    this.quantityInput = this.querySelector('input[name="quantity"]');
-    this.qnMinusBtn = this.querySelector('button[data-role="qn-minus"]');
-    this.qnPlusBtn = this.querySelector('button[data-role="qn-plus"]');
-
-    [this.qnMinusBtn, this.qnPlusBtn].forEach((el) =>
-      el.addEventListener("click", this.handleQuantityButtons.bind(this)),
-    );
-  }
-  handleQuantityButtons(e) {
-    e.preventDefault();
-    console.log(e.target);
-    let typeInc =
-      e.target.dataset.role == "qn-plus" ||
-      e.target.closest('[data-role="qn-plus"]')
-        ? true
-        : false;
-    let currentInputValue = Number(this.quantityInput.value);
-    typeInc
-      ? (this.quantityInput.value = ++currentInputValue)
-      : currentInputValue > 1
-      ? (this.quantityInput.value = --currentInputValue)
-      : null;
-  }
-}
-customElements.define("qn-input", QuantityInput);

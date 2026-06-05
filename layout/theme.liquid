@@ -379,9 +379,8 @@ ssss        display: grid;
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
-    {%- if settings.cart_type == 'drawer' -%}
-      <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
-    {%- endif -%}
+    {% section 'mini-cart-v2' %}
+
     {% render 'razorpay-magic-checkout' %}
   </body>
 </html>

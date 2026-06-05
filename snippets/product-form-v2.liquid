@@ -70,11 +70,8 @@
             </div>
         </div>
         <div>
-            {% comment %} <button data-role="atc" class="group-[&.available]:sw-flex sw-hidden sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(192,_38,_211)_50%,_rgb(147,_51,_234)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md hover:sw-scale-[0.95] sw-transition-all sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]"><span class="">Book Now</span><span>{% render 'icons-v2', icon: 'star' %}</span></button>
-            <div class=""> {% endcomment %}
-                {{ form | payment_button }}
-            {% comment %} </div> {% endcomment %}
-            <button disabled="true" class="group-[&.available]:sw-hidden sw-bg-[linear-gradient(135deg,_rgb(243_223_233)_0%,_rgb(130_109_132)_50%,_rgb(104_83_123)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]">Service not available</button>
+             <button data-role="atc" class="group-[&.available]:sw-flex sw-hidden sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153)_0%,_rgb(192,_38,_211)_50%,_rgb(147,_51,_234)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md hover:sw-scale-[0.95] sw-transition-all sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]"><span class="group-[&.adding]:sw-hidden"><span>Book Now</span><span>{% render 'icons-v2', icon: 'star' %}</span></span><span class="sw-hidden group-[&.adding]:sw-block">{% render 'loader-v2', classes: 'sw-w-5 sw-h-5  sw-text-[#fff] sw-fill-[rgb(107,33,168)]' %}</span></button>
+             <button disabled="true" class="group-[&.available]:sw-hidden sw-bg-[linear-gradient(135deg,_rgb(243_223_233)_0%,_rgb(130_109_132)_50%,_rgb(104_83_123)_100%)] sw-text-[18px] sw-font-secondary sw-w-full sw-rounded-full sw-shadow-md sw-px-2 sw-py-3 sw-text-center sw-items-center sw-justify-center sw-gap-2 sw-text-[#fff]">Service not available</button>
         </div>
     {% endform %}
 </product-form>
