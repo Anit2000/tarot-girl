@@ -10,7 +10,7 @@
                 <h3 class="sw-flex sw-gap-2 sw-items-center"><span>{% render 'icons-v2', icon: 'cart-star'. classes: 'sw-w-[26px]' %}</span><span class="sw-font-primary sw-text-[28px] sw-text-[rgb(88,28,135)] sw-font-bold">Your Cart</span></h3>
                 <div class="sw-relative">
                     <span>{% render 'icons-v2', icon: 'cart', classes: 'sw-w-[26px]' %}</span>
-                    <span class="{% if cart.item_count > 0 %}active {% endif %}sw-absolute sw-font-secondary sw-top-0 sw-right-0 sw-text-[10px] sw-text-[#fff] -sw-translate-y-1/2 sw-translate-x-1 sw-aspect-square sw-rounded-full sw-px-2 sw-py-1 sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-hidden [&.active]:sw-flex" data-role="cart-count">{{ cart.item_count }}</span>
+                    <span class="{% if cart.item_count > 0 %}active {% endif %}sw-min-h-[23px] sw-minw-[23px] sw-absolute sw-font-secondary sw-top-0 sw-right-0 sw-text-[10px] sw-text-[#fff] -sw-translate-y-1/2 sw-translate-x-1 sw-aspect-square sw-rounded-full sw-px-2 sw-py-1 sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-hidden [&.active]:sw-flex" data-role="cart-count">{{ cart.item_count }}</span>
                 </div>
             </div>
             <div class="sw-hidden group-[&.empty]/cart:sw-block">
