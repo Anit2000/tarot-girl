@@ -1,6 +1,6 @@
 <mini-cart data-id="{{ section.id }}" class="sw-group/cart sw-hidden {% if cart.item_count == 0 %} empty {% endif %}">
     <script type="applicationId/json" data-id="cart">{{ cart | json }}</script>
-    <div data-role="wrapper" class="sw-fixed sw-overflow-hidden sw-z-[1000] sw-top-0 sw-right-0  sw-w-full sw-h-full sw-bg-[linear-gradient(rgb(252,_245,_255)_0%,_rgb(253,_242,_248)_100%)]">
+    <div data-role="wrapper" class="sw-fixed sw-overflow-hidden sw-z-[1000] sw-top-0 sw-right-0 lg:sw-max-w-[400px] sw-w-full sw-h-full sw-bg-[linear-gradient(rgb(252,_245,_255)_0%,_rgb(253,_242,_248)_100%)]">
         <div class="sw-relative sw-h-[100vh]">
             <div class="sw-absolute sw-top-0 sw-left-0 sw-w-full sw-h-full sw-z-[100] sw-bg-[rgba(255,255,255,0.8)] sw-hidden group-[&.animating]/cart:sw-block"></div>
             <div class="sw-flex sw-justify-between sw-p-[8px_20px_14px] sw-pt-8 sw-items-center">
@@ -19,9 +19,9 @@
                 </div>
             </div>
             <div class="group-[&.empty]/cart:sw-hidden">
-                <div class="sw-p-[0px_18px_12px] sw-flex sw-flex-col sw-gap-[10px] sw-max-h-[40vh] sw-overflow-auto">
+                <div class="sw-p-[0px_18px_12px] sw-flex sw-flex-col sw-gap-[10px] sw-max-h-[38vh] sw-overflow-auto">
                     {% for item in cart.items %}
-                        {% render 'cart-item-v2', line_item: item %}
+                        {% render 'cart-item-v2', line_item: item, index: forloop.index %}
                     {% endfor %}
                 </div>
                 {% if section.settings.discount_application %}

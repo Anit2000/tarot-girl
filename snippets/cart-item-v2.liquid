@@ -1,8 +1,9 @@
 {% liquid
   assign line_item = line_item
+  assign index = index
 %}
 
-<cart-item class="sw-group/cartItem sw-overflow-hidden sw-flex-[0_0_100%]" data-key="{{ line_item.key }}">
+<cart-item class="sw-group/cartItem sw-overflow-hidden sw-flex-[0_0_100%]" data-key="{{ index }}">
     <div class="sw-bg-[#fff] sw-relative sw-gap-3 sw-p-[14px] sw-border-[rgba(168,85,247,0.12)] sw-border-[1px] sw-border-solid sw-shadow-[rgba(168,_85,_247,_0.25)_0px_6px_18px_-10px] sw-rounded-[22px] sw-overflow-hidden sw-flex sw-justify-between">
         <div class="group-[&.loading]/cartItem:sw-block sw-hidden sw-w-full sw-h-full sw-absolute sw-left-0 sw-top-0 sw-bg-[rgba(255,255,255,0.8)] sw-z-[10]"></div>
         <div class="sw-flex sw-items-center">

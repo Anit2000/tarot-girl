@@ -43,7 +43,7 @@ class MiniCart extends HTMLElement {
         this.style.display = "block";
         this.classList.add("animating");
         this.displayAnimation = this.wrapper.animate(
-            [{ maxWidth: 0 }, { maxWidth: "100%" }],
+            [{ maxWidth: 0 }, { maxWidth: window.innerWidth <= 768 ? "100%" : '400px' }],
             { duration: 300, easing: "ease-out" },
         );
         this.displayAnimation.onfinish = () => this.classList.remove("animating");
@@ -53,7 +53,7 @@ class MiniCart extends HTMLElement {
             this.displayAnimation.cancel();
         }
         this.displayAnimation = this.wrapper.animate(
-            [{ maxWidth: "100%" }, { maxWidth: "0%" }],
+            [{ maxWidth: window.innerWidth <= 768 ? "100%" : '400px'  }, { maxWidth: "0%" }],
             { duration: 300, easing: "ease-out" },
         );
         this.displayAnimation.onfinish = () => {
@@ -130,7 +130,7 @@ class CartItem extends HTMLElement {
             this.classList.add("loading");
             let currentQuantity = this.quantityInput.value;
             let payload = {
-                id: this.key,
+                line: this.key,
                 quantity: currentQuantity,
                 sections: window.cartId,
             };
@@ -170,7 +170,7 @@ class CartItem extends HTMLElement {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        id: this.key,
+                        line: this.key,
                         quantity: 0,
                         sections: window.cartId,
                     }),
@@ -282,8 +282,11 @@ class DiscountForm extends HTMLElement {
     constructor() {
         super();
         this.form = this.querySelector("form");
+        this.submissionButton = this.form.querySelector('button');
+
 
         this.form.addEventListener("submit", this.handleFormSubmission.bind(this));
+        this.submissionButton?.addEventListener('click', this.handleFormSubmission.bind(this));
         this.input = this.querySelector('input[name="discount"]');
 
         this.addEventListener("click", async (e) => {
@@ -329,6 +332,7 @@ class DiscountForm extends HTMLElement {
     }
     async handleFormSubmission(e) {
         e.preventDefault();
+        e.stopPropagation();
         try {
             this.classList.add("applying");
             let discountCode = this.input.value;
