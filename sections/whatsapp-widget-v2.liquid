@@ -1,6 +1,6 @@
 {% if section.settings.whatsapp_widget %}
     <whatsapp-widget class="sw-fixed sw-bottom-[50px] sw-right-[50px] sw-z-[1000] sw-p-[10px] sw-rounded-full" style="background: {{ section.settings.bg_color }}">
-        <a href="https://wa.me/{{section.settings.phone_number}}?text={{ section.settings.whatsapp_text }}" target="_blank">
+        <a href="https://wa.me/{{section.settings.phone_number}}{%- if section.settings.whatsapp_text != blank -%}?text={{ section.settings.whatsapp_text }}{%- endif -%}" target="_blank">
             {% render 'icons-v2', icon: 'whatsapp', classes: 'sw-w-6 sw-h-6 sw-fill-[#fff]' %}
         </a>
     </whatsapp-widget>
