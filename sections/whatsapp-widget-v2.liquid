@@ -1,0 +1,43 @@
+{% if section.settings.whatsapp_widget %}
+    <whatsapp-widget class="sw-fixed sw-bottom-[50px] sw-right-[50px] sw-z-[1000] sw-p-[10px] sw-rounded-full" style="background: {{ section.settings.bg_color }}">
+        <a href="https://wa.me/{{section.settings.phone_number}}?text={{ section.settings.whatsapp_text }}" target="_blank">
+            {% render 'icons-v2', icon: 'whatsapp', classes: 'sw-w-6 sw-h-6 sw-fill-[#fff]' %}
+        </a>
+    </whatsapp-widget>
+{% endif %}
+{% schema %}
+    {
+        "name":"Whatsapp widget",
+        "settings":[
+            {
+                "type": "checkbox",
+                "label":"Show whatsapp widget",
+                "id":"whatsapp_widget",
+                "default": true
+            },
+            {
+                "type":"color",
+                "label":"Choose background color",
+                "id":"bg_color",
+                "default":"#25d366"
+            },
+            {
+                "type":"text",
+                "label":"Enter phone number",
+                "id":"phone_number"
+            },
+            {
+                "type":"text",
+                "label":"Enter whatsapp text",
+                "id":"whatsapp_text",
+                "default":"8796278929"
+            }
+        ],
+        "blocks":[],
+        "presets": [
+            {
+                "name":"Whatsapp widget"
+            }
+        ]
+    }
+{% endschema %}

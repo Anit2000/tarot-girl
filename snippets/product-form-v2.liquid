@@ -37,7 +37,7 @@
         <div class="sw-bg-[#fff] sw-mb-8 sw-shadow-md sw-shadow-[#e9d2ff] sw-rounded-3xl sw-px-6 sw-py-6">
             {% for option in product.options_with_values %}
                 <div class="sw-mb-5">
-                    <p class="sw-font-secondary sw-text-[14px] sw-text-[#9333ea] sw-mb-6">{{ option.name }}</p>
+                    <p class="sw-font-secondary sw-text-[16px] sw-font-semibold sw-text-[#9333ea] sw-mb-4">{{ option.name }}</p>
                     <div class="sw-flex sw-gap-5 sw-gap-x-3 sw-flex-wrap">
                         {% for value in option.values %}
                             {% liquid
@@ -60,7 +60,7 @@
             </div>
             <div>
                 <div>
-                    <p class="sw-font-secondary sw-text-[14px] sw-text-[#9333ea] sw-mb-3">Quantity</p>
+                    <p class="sw-font-secondary sw-text-[16px] sw-font-semibold sw-text-[#9333ea] sw-mb-3">Quantity</p>
                     <qn-input class="sw-flex sw-rounded-full sw-overflow-hidden sw-items-center sw-gap-2 sw-bg-[#a855f714] sw-px-3 sw-py-2 sw-w-max">
                         <button class="sw-rounded-full  hover:sw-scale-[0.95] sw-transition-all sw-bg-[linear-gradient(135deg,_rgb(236,_72,_153),_rgb(168,_85,_247))] sw-px-2 sw-py-2 sw-shadow-sm" data-role="qn-minus">{% render 'icons-v2', icon: 'qn-minus', classes: 'sw-w-3 sw-stroke-[#fff]' %}</button>
                         <input name="quantity" type="number" value="1" disabled="true" class="sw-w-[20px] sw-flex sw-items-center sw-justify-center sw-font-primary sw-text-[16px] sw-text-center sw-font-semibold">
