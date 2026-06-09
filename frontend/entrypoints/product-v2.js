@@ -106,6 +106,7 @@ class ProductForm extends HTMLElement {
           },
         }),
       );
+      document.dispatchEvent(new Event("custom:MiniCartShow"))
     } catch (err) {
       console.log("Failed to add items to cart reason -->" + err.message);
       document.dispatchEvent(
