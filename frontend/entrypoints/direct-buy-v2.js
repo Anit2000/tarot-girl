@@ -5,29 +5,46 @@ class DirectBuy extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.checkIfADirectBuy()) this.showPopup();
+    if (this.checkIfADirectBuy()) this.showPopup.call(this);
   }
 
   async getBuyNowButton() {
-    try {
-      const query = new URLSearchParams(window.location.search);
-      const productHandle = query.get("handle");
-      const variantId = query.get("variantId");
+  try {
+    const query = new URLSearchParams(window.location.search);
+    const variantIdsString = query.get("variants");
 
-      const request = await fetch(`/products/${productHandle}?view=buyNow&variantId=${variantId}`);
-      this.formWrapper.innerHTML = await request.text();
+    if (!variantIdsString) throw new Error("No variants in URL");
 
-      const btn = await this.waitForButton();
-      await this.waitForRazorpay();
+    const variants = variantIdsString.split(",").map((el) => {
+      const [id, quantity] = el.split(":");
+      return { id, quantity: Number(quantity) };
+    });
 
-      if (!btn) throw new Error("no button found here");
+    const cartClear = await fetch("/cart/clear.js", { method: "POST" });
+    if (!cartClear.ok) throw new Error("Failed to clear cart");
 
-      btn.click();
-      this.hidePopup();
-    } catch (err) {
-      console.warn("Failed to get buy now button reason --> " + err.message);
-    }
+    const cartAdd = await fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: variants, sections: "mini-cart-v2" }),
+    });
+    if (!cartAdd.ok) throw new Error("Failed to add to cart");
+
+    const cartAddRes = await cartAdd.json();
+    const miniCartHtml = cartAddRes.sections["mini-cart-v2"];
+    this.formWrapper.innerHTML = miniCartHtml;
+
+    const checkoutBtn = this.formWrapper?.querySelector('a[href="/checkout"]');
+    if (!checkoutBtn) throw new Error("No checkout btn found");
+
+    await this.waitForRazorpay();
+    checkoutBtn.click();
+    this.hidePopup.call(this)
+  } catch (err) {
+    console.warn("Failed to get buy now button reason --> " + err.message);
+    this.hidePopup.call(this)
   }
+}
 
   waitForRazorpay() {
     if (this.razorpayPoll) clearInterval(this.razorpayPoll);
@@ -46,42 +63,15 @@ class DirectBuy extends HTMLElement {
       }, 5000);
     });
   }
-
-  waitForButton() {
-    return new Promise((resolve, reject) => {
-      const existing = this.formWrapper.querySelector("shopify-buy-it-now-button button");
-      if (existing) return resolve(existing);
-
-      const observer = new MutationObserver(() => {
-        const btn = this.formWrapper.querySelector("shopify-buy-it-now-button button");
-        if (btn) {
-          observer.disconnect();
-          resolve(btn);
-        }
-      });
-
-      observer.observe(this.formWrapper, { childList: true, subtree: true });
-
-      setTimeout(() => {
-        observer.disconnect();
-        reject(new Error("Buy now button never appeared"));
-      }, 5000);
-    });
-  }
-
   checkIfADirectBuy() {
     const query = new URLSearchParams(window.location.search);
     const isDirectBuy = query.get("direct_buy");
-    const variantId = query.get("variantId");
-    const productHandle = query.get("handle");
-    const quantity = query.get("quantity");
-
-    if (!isDirectBuy || !variantId || !quantity || !productHandle) return false;
+    if (!isDirectBuy) return false;
 
     const previousSession = sessionStorage.getItem("direct_buy");
-    if (previousSession === variantId) return false;
+    if (previousSession) return false;
 
-    sessionStorage.setItem("direct_buy", variantId);
+    sessionStorage.setItem("direct_buy", "true");
     return true;
   }
 
