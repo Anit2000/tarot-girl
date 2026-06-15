@@ -302,6 +302,7 @@ ssss        display: grid;
       }
       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap');
     </style>
+    {% render 'vite-tag' with 'direct-buy-v2.js' %}
     {% render 'vite-tag' with 'base.css' %}
     {% render 'font-face' %}
 		{% render 'vite-tag' with 'keen-slider.js' %}
@@ -382,5 +383,8 @@ ssss        display: grid;
     {% section 'mini-cart-v2' %}
     {% section 'whatsapp-widget-v2' %}
     {% render 'razorpay-magic-checkout' %}
+    {% if settings.direct_buy %}
+      {% render 'direct-buy-v2' %}
+    {% endif %}
   </body>
 </html>
