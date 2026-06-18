@@ -2,7 +2,7 @@
   assign card_product = card_product
   assign tag_value = blank
 
-  if product.metafields.custom.tag != blank
+  if card_product.metafields.custom.tag != blank
     assign tag_value = product.metafields.custom.tag 
   endif
   assign icon_image = card_product.metafields.custom.icon
