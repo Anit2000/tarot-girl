@@ -47,10 +47,18 @@ class ProductForm extends HTMLElement {
     this.variantDescriptionField = this.querySelector(
       '[data-role="variant-short"]',
     );
-    this.variantPrice = this.querySelector('[data-role="variant-price"]');
+    this.variantPrice = Array.from(
+      this.querySelectorAll('[data-role="variant-price"]'),
+    );
+    this.stickyWrapper = this.querySelector(
+      '[data-role="sticky-action-wrapper"]',
+    );
+    this.actionsWrapper = this.querySelector('[data-role="action-wrapper"]');
 
-    console.log(this.productData, this.productMetaData);
-
+    if (this.stickyWrapper) {
+      console.log("sticky wrapper found let run the intersection");
+      this.initStickyObserver.call(this);
+    }
     this.form?.addEventListener("submit", this.handleFormSubmission.bind(this));
 
     this.form?.addEventListener(
@@ -106,7 +114,7 @@ class ProductForm extends HTMLElement {
           },
         }),
       );
-      document.dispatchEvent(new Event("custom:MiniCartShow"))
+      document.dispatchEvent(new Event("custom:MiniCartShow"));
     } catch (err) {
       console.log("Failed to add items to cart reason -->" + err.message);
       document.dispatchEvent(
@@ -154,10 +162,13 @@ class ProductForm extends HTMLElement {
     if (this.variantTitle) {
       this.variantTitle.innerHTML = correpondingVariant.title;
     }
-    if (this.variantPrice) {
-      this.variantPrice.innerHTML = this.moneyFormatter.call(
-        this,
-        correpondingVariant.price / 100,
+    if (this.variantPrice.length > 0) {
+      this.variantPrice.forEach(
+        (el) =>
+          (el.innerHTML = this.moneyFormatter.call(
+            this,
+            correpondingVariant.price / 100,
+          )),
       );
     }
   }
@@ -169,6 +180,31 @@ class ProductForm extends HTMLElement {
       maximumFractionDigits: 2,
     });
     return formatter.format(amount);
+  }
+  initStickyObserver() {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const intersecting = entry.isIntersecting;
+          if (intersecting) {
+            if (this.stickyDisplayAnimation)
+              this.stickyDisplayAnimation.cancel();
+            this.stickyWrapper.style.display = "none";
+          } else {
+            if (this.stickyDisplayAnimation)
+              this.stickyDisplayAnimation.cancel();
+            this.stickyWrapper.style.display = "flex";
+            this.stickyDisplayAnimation = this.stickyWrapper.animate(
+              [{ opacity: 0 }, { opacity: 1 }],
+              { easing: "ease-out", duration: 300 },
+            );
+          }
+        });
+      },
+      { root: null, threshold: 0 },
+    );
+
+    observer.observe(this.actionsWrapper); // <-- observe the normal actions area, not the sticky
   }
 }
 customElements.define("product-form", ProductForm);

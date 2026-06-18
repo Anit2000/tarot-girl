@@ -99,6 +99,9 @@ class MiniCart extends HTMLElement {
       const miniCartHtml = parsedCartHtml.querySelector("mini-cart");
       const summaryHtml = miniCartHtml?.querySelector('[data-role="summary"]');
       const discountHtml = miniCartHtml?.querySelector("discount-form");
+      const checkoutBtnHtml = miniCartHtml?.querySelector(
+        '[data-role="checkout-btn"]',
+      );
 
       if (data.item_count <= 0) {
         this.classList.add("empty");
@@ -107,6 +110,8 @@ class MiniCart extends HTMLElement {
       }
       this.querySelector('[data-role="summary"]').innerHTML =
         summaryHtml.innerHTML;
+      this.querySelector('[data-role="checkout-btn"]').innerHTML =
+        checkoutBtnHtml.innerHTML;
       this.querySelector("discount-form").innerHTML = discountHtml.innerHTML;
       this.updateCartCountEverywhere.call(this, data.item_count);
       Array.from(this.querySelectorAll("cart-item")).forEach(
