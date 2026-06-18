@@ -3,7 +3,7 @@
   assign tag_value = blank
 
   if card_product.metafields.custom.tag != blank
-    assign tag_value = product.metafields.custom.tag 
+    assign tag_value = card_product.metafields.custom.tag 
   endif
   assign icon_image = card_product.metafields.custom.icon
   assign subtitle = card_product.metafields.custom.one_line_description
