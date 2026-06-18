@@ -1,12 +1,10 @@
 {% liquid
   assign card_product = card_product
-  assign has_popular_tag = false
+  assign tag_value = blank
 
-  for tag in card_product.tags
-    if tag == 'popular' or tag == 'Popular'
-      assign has_popular_tag = true
-    endif
-  endfor
+  if product.metafields.custom.tag != blank
+    assign tag_value = product.metafields.custom.tag 
+  endif
   assign icon_image = card_product.metafields.custom.icon
   assign subtitle = card_product.metafields.custom.one_line_description
 %}
@@ -88,7 +86,7 @@
 
       <!-- POPULAR TAG -->
 
-      {% if has_popular_tag %}
+      {% if tag_value != blank %}
 
         <div
           class="
@@ -108,9 +106,7 @@
             sw-shadow-md
           "
         >
-
-          Popular ⭐
-
+          {{ tag_value }}
         </div>
 
       {% endif %}
