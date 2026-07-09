@@ -33,6 +33,7 @@
         novalidate: 'novalidate',
         data-type: 'add-to-cart-form'
       -%}
+      
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         <div class="sw-bg-[#fff] sw-mb-8 sw-shadow-md sw-shadow-[#e9d2ff] sw-rounded-3xl sw-px-6 sw-py-6">
             {% unless product.has_only_default_variant %}
