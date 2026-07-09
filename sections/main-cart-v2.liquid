@@ -1,0 +1,67 @@
+<mini-cart data-id="{{ section.id }}" class="sw-group/cart {% if cart.item_count == 0 %} empty {% endif %}">
+    <script type="applicationId/json" data-id="cart">{{ cart | json }}</script>
+    <div data-role="wrapper" class="sw-bg-[linear-gradient(rgb(252,_245,_255)_0%,_rgb(253,_242,_248)_100%)] sw-py-10">
+        <div class="sw-relative ">
+            <div class="sw-absolute sw-top-0 sw-left-0 sw-w-full sw-h-full sw-z-[100] sw-bg-[rgba(255,255,255,0.8)] sw-hidden group-[&.animating]/cart:sw-block"></div>
+            <div class="sw-hidden group-[&.empty]/cart:sw-block">
+                <div class="sw-flex sw-justify-center sw-items-center sw-h-[300px] lg:sw-justify-center">
+                    <p class="sw-font-primary sw-text-[28px] sw-text-[rgb(88,28,135)] sw-font-bold">No item in the cart</p>
+                </div>
+            </div>
+            <div class="group-[&.empty]/cart:sw-hidden lg:sw-flex lg:sw-relative lg:sw-justify-center">
+                <div class="sw-p-[0px_18px_12px] sw-flex sw-flex-col sw-gap-[10px] lg:sw-sticky sw-max-h-[38vh] lg:sw-max-h-none sw-overflow-auto">
+                    {% for item in cart.items %}
+                        {% render 'cart-item-v2', line_item: item, index: forloop.index, classes: "lg:sw-flex-[unset]" %}
+                    {% endfor %}
+                </div>
+                <div class=" lg:sw-sticky lg:sw-top-0 lg:sw-h-max lg:sw-flex-[0_0_40%]">
+                    {% if section.settings.discount_application %}
+                        {% render 'discount-form-v2' %}
+                    {% endif %}
+                    <div data-role="summary" class="sw-border-[rgba(168,85,247,0.12)] sw-border-solid sw-border-[1px] sw-bg-[#fff] sw-rounded-[22px] sw-p-[16px_18px] sw-m-[4px_18px_12px]">
+                        <div class="sw-flex sw-justify-between sw-mb-2">
+                            <p class="sw-font-secondary sw-text-[14px] sw-text-[rgba(107,_33,_168,_0.78)] sw-leading-tight">Subtotal</p>
+                            <p class="sw-font-secondary sw-text-[14px] sw-text-[rgba(107,_33,_168,_0.78)] sw-leading-tight">{{ cart.items_subtotal_price | money }}</p>
+                        </div>
+                        <div class="sw-flex sw-justify-between sw-mb-2">
+                            <p class="sw-font-secondary sw-text-[14px] sw-text-[rgba(107,_33,_168,_0.78)] sw-leading-tight">Discount</p>
+                            <p class="sw-font-secondary sw-text-[14px] sw-text-[rgb(5,150,105)] sw-leading-tight">{{ cart.total_discount | money }}</p>
+                        </div>
+                        <div class="sw-border-[rgba(168,_85,_247,_0.14)] sw-border-t-[1px] sw-border-solid sw-pt-3 sw-flex sw-justify-between">
+                            <p class="sw-font-primary sw-text-[20px] sw-font-bold sw-text-[rgb(88,28,135)]">Total</p>
+                            <p class="sw-font-primary sw-text-[20px] sw-font-bold sw-text-[rgb(88,28,135)]">{{ cart.checkout_charge_amount | money }}</p>
+                        </div>
+                    </div>
+                    <div data-role="checkout-btn" class="sw-p-[14px_18px] sw-sticky sw-top-full">
+                        <a class="sw-bg-[linear-gradient(135deg,rgb(236,_72,_153)_0%,rgb(192,38,211)_50%,rgb(147,51,234)_100%)] sw-text-[16px] sw-font-semibold sw-text-[#fff] sw-shadow-[rgba(168,_85,_247,_0.55)_0px_12px_30px_-6px] sw-font-secondary sw-p-[17px_20px] sw-w-full sw-flex sw-gap-2 sw-items-center sw-rounded-full sw-justify-center" href="/checkout"><span>Checkout</span><span>{{ cart.checkout_charge_amount | money }}</span><span>{% render 'icons-v2', icon: 'checkout-star' %}</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+</mini-cart>
+
+{% schema %}
+    {
+        "name":"Main cart v2",
+        "settings": [
+            {
+                "type":"checkbox",
+                "label":"Enable discount application",
+                "id":"discount_application",
+                "default": true
+            },
+            {
+                "type":"checkbox",
+                "label":"Display Add to cart popup",
+                "id":"atc_popup",
+                "default": true
+            }
+        ],
+        "presets":[
+            {
+                "name":"Main cart v2"
+            }
+        ]
+    }
+{% endschema %}

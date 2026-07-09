@@ -37,6 +37,7 @@ class MiniCart extends HTMLElement {
     });
   }
   showMiniCart() {
+    if (window.location.pathname == "/cart") return;
     if (this.displayAnimation) {
       this.displayAnimation.cancel();
     }
