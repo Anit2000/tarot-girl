@@ -36,9 +36,9 @@
       
       <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         <div class="sw-bg-[#fff] sw-mb-8 sw-shadow-md sw-shadow-[#e9d2ff] sw-rounded-3xl sw-px-6 sw-py-6">
-            {% unless product.has_only_default_variant %}
+
                 {% for option in product.options_with_values %}
-                    <div class="sw-mb-5">
+                    <div class="sw-mb-5 {% if product.has_only_default_variant %} sw-hidden {% endif %}">
                         <p class="sw-font-secondary sw-text-[16px] sw-font-semibold sw-text-[#9333ea] sw-mb-4">{{ option.name }}</p>
                         <div class="sw-flex sw-gap-5 sw-gap-x-3 sw-flex-wrap">
                             {% for value in option.values %}
@@ -53,7 +53,6 @@
                         </div>
                     </div>
                 {% endfor %}
-            {% endunless %}
             <div class="sw-bg-[linear-gradient(rgba(252,_231,_243,_0.5)_0%,_rgba(243,_232,_255,_0.5)_100%)] sw-mb-8 sw-rounded-[18px] sw-px-[14px] sw-py-[16px]">
                 <div class="sw-flex sw-items-center sw-justify-between sw-mb-3">
                     <p class="sw-font-primary sw-text-[14px] sw-text-[#581c87]" data-role="variant-title">{{ product.selected_or_first_available_variant.title }}</p>

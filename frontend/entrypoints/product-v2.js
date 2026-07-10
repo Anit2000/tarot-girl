@@ -72,6 +72,7 @@ class ProductForm extends HTMLElement {
       let currentlySelectedValues = this.optionsList
         .filter((el) => el.checked)
         .map((el) => el.value);
+      console.log(this.productData,'hetette');
       let correpondingVariant = this.productData.variants.find(
         (el) =>
           el.options.length == currentlySelectedValues.length &&
@@ -79,6 +80,7 @@ class ProductForm extends HTMLElement {
             (opt) => currentlySelectedValues.indexOf(opt.toLowerCase()) != -1,
           ),
       );
+      console.log(correpondingVariant);
       let quantity = this.querySelector('input[name="quantity"]').value || 1;
       const payload = {
         items: [
