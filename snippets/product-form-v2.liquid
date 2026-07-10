@@ -55,7 +55,7 @@
                 {% endfor %}
             <div class="sw-bg-[linear-gradient(rgba(252,_231,_243,_0.5)_0%,_rgba(243,_232,_255,_0.5)_100%)] sw-mb-8 sw-rounded-[18px] sw-px-[14px] sw-py-[16px]">
                 <div class="sw-flex sw-items-center sw-justify-between sw-mb-3">
-                    <p class="sw-font-primary sw-text-[14px] sw-text-[#581c87]" data-role="variant-title">{{ product.selected_or_first_available_variant.title }}</p>
+                    <p class="sw-font-primary sw-text-[14px] sw-text-[#581c87] {% if product.has_only_default_variant %} sw-hidden{% endif %}" data-role="variant-title">{{ product.selected_or_first_available_variant.title }}</p>
                     <p class="sw-font-secondary sw-text-[14px] sw-text-[#581c87]" data-role="variant-price">{{ product.selected_or_first_available_variant.price | money }}</p>
                 </div>
                     <p data-role="variant-short" class="{%  if product.selected_or_first_available_variant.metafields.custom.short_description  %} active {% endif %}sw-hidden [&.active]:sw-flex sw-font-secondary sw-text-[12px] sw-text-[#6b21a8c7]">{{ product.selected_or_first_available_variant.metafields.custom.short_description }}</p>
