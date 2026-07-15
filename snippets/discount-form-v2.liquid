@@ -16,9 +16,9 @@
                 <button class="sw-font-secondary sw-min-w-[70px] sw-text-[rgb(107,33,168)] sw-rounded-[12px] sw-p-[9px_16px] sw-text-[14px] sw-bg-[rgba(168,85,247,0.12)] sw-font-semibold sw-flex sw-justify-center"><span class="group-[&.applying]/discount:sw-hidden">Apply</span><span class="group-[&.applying]/discount:sw-block sw-hidden">{% render 'loader-v2', classes: 'sw-w-5 sw-h-5 sw-text-[rgba(168,85,247,0.12)] sw-fill-[rgb(107,33,168)]' %}</span></button>    
             </div>
             <p class="sw-font-secondary sw-text-[12px] sw-text-[#cf0a0a] sw-mt-2 sw-hidden group-[&.invalid]/discount:sw-block">Failed to apply coupon</p>
-            {% if cart.cart_level_discount_applications.size > 0 %}
+            {% if cart.discount_applications.size > 0 %}
                 <div class="sw-mt-2">
-                    {% for discount in cart.cart_level_discount_applications %}
+                    {% for discount in cart.discount_applications %}
                         <button class="sw-font-secondary sw-min-w-[70px] sw-text-[rgb(107,33,168)] sw-rounded-[12px] sw-p-[9px_16px] sw-text-[12px] sw-items-center sw-bg-[rgba(168,85,247,0.12)] sw-font-semibold sw-flex sw-justify-center" data-value="{{ discount.value }}" data-role="discount-btn">
                             <span>{{ discount.title }}</span>
                             <span>{% render 'icons-v2', icon: 'discount-cancel', classes:'sw-w-4 sw-h-4' %}</span>

@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="group-[&.empty]/cart:sw-hidden">
-                <div class="sw-p-[0px_18px_12px] sw-flex sw-flex-col sw-gap-[10px] sw-max-h-[38vh] sw-overflow-auto">
+                <div data-role="items-wrapper" class="sw-p-[0px_18px_12px] sw-flex sw-flex-col sw-gap-[10px] sw-max-h-[38vh] sw-overflow-auto">
                     {% for item in cart.items %}
                         {% render 'cart-item-v2', line_item: item, index: forloop.index %}
                     {% endfor %}

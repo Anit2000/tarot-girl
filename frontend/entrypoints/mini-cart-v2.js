@@ -115,9 +115,12 @@ class MiniCart extends HTMLElement {
         checkoutBtnHtml.innerHTML;
       this.querySelector("discount-form").innerHTML = discountHtml.innerHTML;
       this.updateCartCountEverywhere.call(this, data.item_count);
-      Array.from(this.querySelectorAll("cart-item")).forEach(
-        (el, ind) => (el.dataset.key = ++ind),
-      );
+      this.querySelector('[data-role="items-wrapper"]')
+        ? (this.querySelector('[data-role="items-wrapper"]').innerHTML =
+            miniCartHtml?.querySelector(
+              '[data-role="items-wrapper"]',
+            )?.innerHTML)
+        : "";
     } catch (err) {
       console.warn("Failed to hydrate internal cart");
     }
@@ -303,7 +306,7 @@ class DiscountForm extends HTMLElement {
     this.form = this.querySelector("form");
     this.submissionButton = this.form.querySelector("button");
 
-    this.form.addEventListener("submit", this.handleFormSubmission.bind(this));
+    this.addEventListener("submit", this.handleFormSubmission.bind(this));
     this.submissionButton?.addEventListener(
       "click",
       this.handleFormSubmission.bind(this),
@@ -353,10 +356,9 @@ class DiscountForm extends HTMLElement {
   }
   async handleFormSubmission(e) {
     e.preventDefault();
-    e.stopPropagation();
     try {
       this.classList.add("applying");
-      let discountCode = this.input.value;
+      let discountCode = this.querySelector('input[name="discount"]').value;
       if (discountCode.trim().length == 0) {
         return;
       }
