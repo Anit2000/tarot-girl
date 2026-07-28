@@ -1,7 +1,24 @@
+
+{% liquid
+    capture empty_cart_fbt
+        for block in section.blocks
+            if block.type == 'fbt' and block.settings.display_value == 'empty_cart'
+                render 'cart-fbt-v2', block_settings: block.settings, block_id: block.id
+            endif
+        endfor
+    endcapture
+    capture non_empty_cart_fbt
+        for block in section.blocks
+            if block.type == 'fbt' and block.settings.display_value == 'non_empty_cart'
+                render 'cart-fbt-v2', block_settings: block.settings, block_id: block.id
+            endif
+        endfor
+    endcapture
+%}
 <mini-cart data-id="{{ section.id }}" class="sw-group/cart sw-hidden {% if cart.item_count == 0 %} empty {% endif %}">
     <script type="applicationId/json" data-id="cart">{{ cart | json }}</script>
     <div data-role="wrapper" class="sw-fixed sw-overflow-hidden sw-z-[1000] sw-top-0 sw-right-0 lg:sw-max-w-[400px] sw-w-full sw-h-full sw-bg-[linear-gradient(rgb(252,_245,_255)_0%,_rgb(253,_242,_248)_100%)]">
-        <div class="sw-relative sw-h-[100vh]">
+        <div class="sw-relative sw-h-[100vh] sw-overflow-y-auto">
             <div class="sw-absolute sw-top-0 sw-left-0 sw-w-full sw-h-full sw-z-[100] sw-bg-[rgba(255,255,255,0.8)] sw-hidden group-[&.animating]/cart:sw-block"></div>
             <div class="sw-flex sw-justify-between sw-p-[8px_20px_14px] sw-pt-8 sw-items-center">
                 <button data-role="cart-close" class="sw-border-[rgba(168,_85,_247,_0.18)] sw-border-solid sw-border-[1px] sw-bg-[rgba(255,255,255,0.7)] sw-rounded-[12px] sw-w-[38px] sw-h-[38px] sw-flex sw-justify-center sw-items-center">
@@ -17,6 +34,7 @@
                 <div class="sw-flex sw-justify-center sw-items-center sw-h-[300px]">
                     <p class="sw-font-primary sw-text-[28px] sw-text-[rgb(88,28,135)] sw-font-bold">No item in the cart</p>
                 </div>
+                {{ empty_cart_fbt }}
             </div>
             <div class="group-[&.empty]/cart:sw-hidden">
                 <div data-role="items-wrapper" class="sw-p-[0px_18px_12px] sw-flex sw-flex-col sw-gap-[10px] sw-max-h-[38vh] sw-overflow-auto">
@@ -27,6 +45,7 @@
                 {% if section.settings.discount_application %}
                     {% render 'discount-form-v2' %}
                 {% endif %}
+                {{ non_empty_cart_fbt }}
                 <div data-role="summary" class="sw-border-[rgba(168,85,247,0.12)] sw-border-solid sw-border-[1px] sw-bg-[#fff] sw-rounded-[22px] sw-p-[16px_18px] sw-m-[4px_18px_12px]">
                     <div class="sw-flex sw-justify-between sw-mb-2">
                         <p class="sw-font-secondary sw-text-[14px] sw-text-[rgba(107,_33,_168,_0.78)] sw-leading-tight">Subtotal</p>
@@ -70,7 +89,57 @@
                 "default": true
             }
         ],
-        "blocks":[],
+        "blocks":[
+            {
+                "type":"fbt",
+                "name":"FBT",
+                "settings": [
+                    {
+                        "type": "select",
+                        "label":"Choose fbt display option",
+                        "id":"display_value",
+                        "options": [
+                            {
+                                "label": "Display on empty cart only",
+                                "value": "empty_cart"
+                            },
+                            {
+                                "label":"Display with items only",
+                                "value":"non_empty_cart"
+                            }
+                        ]
+                    },
+                    {
+                        "type":"text",
+                        "label":"Enter heading",
+                        "id":"heading"
+                    },
+                    {
+                        "type":"collection",
+                        "label":"Choose collection",
+                        "id":"fbt_collection"
+                    },
+                    {
+                        "type":"number",
+                        "label":"Number of products to show",
+                        "id":"products_count",
+                        "default": 4
+                    },
+                    {
+                        "type":"number",
+                        "label":"Set margin top",
+                        "id":"margin_top",
+                        "default":20
+                    },
+                    {
+                        "type":"number",
+                        "label":"Set margin bottom",
+                        "id":"margin_bottom",
+                        "default":20
+                    }
+                ]
+            }
+        ],
         "presets": []
     }
 {% endschema %}

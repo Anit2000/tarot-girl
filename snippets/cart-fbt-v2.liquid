@@ -1,0 +1,45 @@
+{% liquid
+  assign fbt_display = true
+  assign fbt_collection = block_settings.fbt_collection
+  assign products_to_display_count = 0
+  for product in fbt_collection.products
+    assign is_product_in_cart = false
+    for item in cart.items
+        if item.product.id != product.id 
+            assign is_product_in_cart = true
+        endif
+    endfor
+    unless is_product_in_cart
+        if product.selected_or_first_available_variant.available
+            assign products_to_display_count = products_to_display_count | plus: 1
+        endif
+    endunless
+  endfor
+  if products_to_display_count == 0
+    assign fbt_display = false
+  endif
+%}
+
+    <cart-fbt data-id="{{ block_id }}" style="display:{% if fbt_display %}block;{% else %}none;{% endif %}">
+        <div class="sw-px-[10px]" style="margin-top:{{ block_settings.margin_top }}px;margin-bottom:{{ block_settings.margin_bottom }}px">
+            {% if block_settings.heading != blank %}<div><p class="sw-font-primary sw-text-[20px] sw-mb-2 sw-font-semibold sw-text-[#581c87]">{{ block_settings.heading }}</p></div>{% endif %}
+            <div class="sw-flex sw-gap-3 sw-overflow-y-auto">
+                {% assign product_render_count = 0 %}
+                {% for product in fbt_collection.products %}
+                    {% assign product_display = true %}
+                    {% if product_render_count >= block_settings.products_count %}
+                        {% break %}
+                    {% endif %}
+                    {% for item in cart.items %}
+                        {% if item.product.id == product.id %}
+                            {% assign product_display = false %}
+                        {% endif %}
+                    {% endfor %}
+                    {% if product_display == true and product.selected_or_first_available_variant.available %}
+                        {% assign product_render_count = product_render_count | plus : 1 %}
+                        {% render 'fbt-item-v2', product: product %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </cart-fbt>

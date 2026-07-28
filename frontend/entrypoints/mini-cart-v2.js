@@ -43,6 +43,7 @@ class MiniCart extends HTMLElement {
     }
     this.style.display = "block";
     this.classList.add("animating");
+    window.innerWidth < 768 ? (document.body.style.overflowY = "hidden") : "";
     this.displayAnimation = this.wrapper.animate(
       [
         { maxWidth: 0 },
@@ -66,6 +67,7 @@ class MiniCart extends HTMLElement {
     this.displayAnimation.onfinish = () => {
       this.classList.remove("animating");
       this.style.display = "none";
+      window.innerWidth < 768 ? (document.body.style.overflowY = "") : "";
     };
   }
   updateCart(e) {
@@ -103,7 +105,7 @@ class MiniCart extends HTMLElement {
       const checkoutBtnHtml = miniCartHtml?.querySelector(
         '[data-role="checkout-btn"]',
       );
-
+      const cartFbts = Array.from(miniCartHtml?.querySelectorAll("cart-fbt"));
       if (data.item_count <= 0) {
         this.classList.add("empty");
       } else {
@@ -121,6 +123,16 @@ class MiniCart extends HTMLElement {
               '[data-role="items-wrapper"]',
             )?.innerHTML)
         : "";
+      Array.from(this.querySelectorAll("cart-fbt")).forEach((el) => {
+        let dataId = el.dataset.id;
+        let correspondingBlock = cartFbts.find((el) => el.dataset.id == dataId);
+        if (correspondingBlock) {
+          el.style.display = "block";
+          el.innerHTML = correspondingBlock.innerHTML;
+        } else {
+          el.style.display = "none";
+        }
+      });
     } catch (err) {
       console.warn("Failed to hydrate internal cart");
     }
@@ -397,3 +409,52 @@ class DiscountForm extends HTMLElement {
 }
 
 customElements.define("discount-form", DiscountForm);
+
+class FbtItem extends HTMLElement {
+  constructor() {
+    super();
+    this.productData = JSON.parse(
+      this.querySelector('script[data-id="fbt-product"]')?.innerHTML || "{}",
+    );
+    this.defaultVariant = this.productData?.variants.find((el) => el.available);
+
+    this.addEventListener("submit", this.handleFormSubmission.bind(this));
+  }
+
+  async handleFormSubmission(e) {
+    try {
+      e.preventDefault();
+      this.classList.add("loading");
+      const url = "/cart/add.js";
+      const request = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: [
+            {
+              id: this.defaultVariant.id,
+              quantity: 1,
+            },
+          ],
+          sections: window.cartId,
+        }),
+      });
+      if (request.status != 200) {
+        throw new Error("Failed to add item to cart");
+      }
+      const res = await request.json();
+      document.dispatchEvent(
+        new CustomEvent("custom:CartInternalUpdate", {
+          detail: res,
+        }),
+      );
+    } catch (err) {
+      console.warn("Failed to handle form submission reason -->" + err.message);
+    } finally {
+      this.classList.remove("loading");
+    }
+  }
+}
+customElements.define("fbt-item", FbtItem);
