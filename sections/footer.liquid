@@ -64,16 +64,32 @@
 
   {%- comment %} ── CTA BUTTON ── {%- endcomment %}
   {%- if section.settings.cta_label != blank -%}
-    <a
-      href="{{ section.settings.cta_url | default: '#' }}"
-      class="ft__cta"
-      {% if section.settings.cta_url == blank %}aria-disabled="true"{% endif %}
-    >
-      {{ section.settings.cta_label | escape }}
-      {%- if section.settings.cta_emoji != blank -%}
-        <span aria-hidden="true"> {{ section.settings.cta_emoji }}</span>
-      {%- endif -%}
-    </a>
+    {% if template contains 'product' %}
+      {% assign product_form_id = 'product_form_' | append : product.id %}
+     <button
+        class="ft__cta"
+        type="submit"
+        form="{{ product_form_id }}"
+        {% if section.settings.cta_url == blank %}aria-disabled="true"{% endif %}
+      >
+        {{ section.settings.cta_label | escape }}
+        {%- if section.settings.cta_emoji != blank -%}
+          <span aria-hidden="true"> {{ section.settings.cta_emoji }}</span>
+        {%- endif -%}
+      </button> 
+    {% else %}
+      <a
+        href="{{ section.settings.cta_url | default: '#' }}"
+        class="ft__cta"
+        {% if section.settings.cta_url == blank %}aria-disabled="true"{% endif %}
+      >
+        {{ section.settings.cta_label | escape }}
+        {%- if section.settings.cta_emoji != blank -%}
+          <span aria-hidden="true"> {{ section.settings.cta_emoji }}</span>
+        {%- endif -%}
+      </a>
+    {% endif %}
+
   {%- endif -%}
 
   {%- comment %} ── COPYRIGHT ── {%- endcomment %}
@@ -231,10 +247,6 @@
     transform: translateY(-2px);
   }
   #ft-{{ section.id }} .ft__cta:active { transform: translateY(0); }
-  #ft-{{ section.id }} .ft__cta[aria-disabled="true"] {
-    {% comment %} opacity: 0.4; {% endcomment %}
-    pointer-events: none;
-  }
 
   /* ─────────────────────────────────────────────
      COPYRIGHT

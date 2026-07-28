@@ -493,10 +493,6 @@
     transform: translateY(-2px);
   }
   #bp-{{ section.id }} .bp__cta-btn:active { transform: translateY(0); }
-  #bp-{{ section.id }} .bp__cta-btn[aria-disabled="true"] {
-    {% comment %} opacity: 0.4; {% endcomment %}
-    pointer-events: none;
-  }
   #bp-{{ section.id }} .bp__cta-btn--primary {
     background: linear-gradient(90deg, var(--col-btn-p-from), var(--col-btn-p-to));
     color: var(--col-btn-p-text);
