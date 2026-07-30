@@ -7,7 +7,7 @@
             {% render 'icons-v2', icon: 'whatsapp', classes: 'sw-w-6 sw-h-6 sw-fill-[#fff]' %}
         </a>
         {% if section.settings.helper_text and section.settings.helper_text_content != blank %}
-            <p class="sw-absolute sw-top-0 sw-left-0 sw-shadow-sm sw-bg-[linear-gradient(rgb(252,245,255)_0%,rgb(253,242,248)_100%)] sw-rounded-[4px] sw-text-[10px] sw-p-1 sw-min-w-[120px] sw-text-center -sw-translate-y-full -sw-translate-x-full">{{ section.settings.helper_text }}</p>
+            <p class="sw-absolute sw-top-0 sw-left-0 sw-shadow-sm sw-bg-[linear-gradient(rgb(252,245,255)_0%,rgb(253,242,248)_100%)] sw-rounded-[4px] sw-text-[10px] sw-p-1 sw-min-w-[120px] sw-text-center -sw-translate-y-full -sw-translate-x-full">{{ section.settings.helper_text_content }}</p>
         {% endif %}
         </div>
     </whatsapp-widget>
