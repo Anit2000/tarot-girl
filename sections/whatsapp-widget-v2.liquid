@@ -1,8 +1,15 @@
 {% if section.settings.whatsapp_widget %}
-    <whatsapp-widget class="sw-fixed sw-bottom-[90px] sw-right-[30px] sw-z-[1000] sw-p-[10px] sw-rounded-full" style="background: {{ section.settings.bg_color }}">
+    <style>        @keyframes wa-pulse { 0%{box-shadow:0 0 0 0 rgba(37,211,102,0.45)} 100%{box-shadow:0 0 0 14px rgba(37,211,102,0)} }</style>
+    <whatsapp-widget class="sw-fixed sw-bottom-[90px] sw-right-[30px] sw-z-[1000] sw-p-[10px] sw-rounded-full" style="background: {{ section.settings.bg_color }};animation:2.2s ease-out 0s infinite normal none running wa-pulse;">
+        <div class="sw-relative">
+
         <a href="https://wa.me/{{section.settings.phone_number}}{%- if section.settings.whatsapp_text != blank -%}?text={{ section.settings.whatsapp_text }}{%- endif -%}" target="_blank">
             {% render 'icons-v2', icon: 'whatsapp', classes: 'sw-w-6 sw-h-6 sw-fill-[#fff]' %}
         </a>
+        {% if section.settings.helper_text and section.settings.helper_text_content != blank %}
+            <p class="sw-absolute sw-top-0 sw-left-0 sw-shadow-sm sw-bg-[linear-gradient(rgb(252,245,255)_0%,rgb(253,242,248)_100%)] sw-rounded-[4px] sw-text-[10px] sw-p-1 sw-min-w-[120px] sw-text-center -sw-translate-y-full -sw-translate-x-full">{{ section.settings.helper_text }}</p>
+        {% endif %}
+        </div>
     </whatsapp-widget>
 {% endif %}
 {% schema %}
@@ -14,6 +21,19 @@
                 "label":"Show whatsapp widget",
                 "id":"whatsapp_widget",
                 "default": true
+            },
+            {
+                "type":"checkbox",
+                "label":"Show helper text",
+                "id":"helper_text",
+                "default":true,
+            },
+            {
+                "type":"text",
+                "label":"Helper text content",
+                "id":"helper_text_content",
+                "default":"Chat if confused",
+                "visible_if": "{{ section.settings.helper_text == true }}"
             },
             {
                 "type":"color",
