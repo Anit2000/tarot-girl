@@ -80,7 +80,6 @@ class ProductForm extends HTMLElement {
             (opt) => currentlySelectedValues.indexOf(opt.toLowerCase()) != -1,
           ),
       );
-      console.log(correpondingVariant);
       let quantity = this.querySelector('input[name="quantity"]').value || 1;
       const payload = {
         items: [

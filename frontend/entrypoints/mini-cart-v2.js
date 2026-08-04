@@ -116,6 +116,7 @@ class MiniCart extends HTMLElement {
       this.querySelector('[data-role="checkout-btn"]').innerHTML =
         checkoutBtnHtml.innerHTML;
       this.querySelector("discount-form").innerHTML = discountHtml.innerHTML;
+      console.log(data,'here is the data for use')
       this.updateCartCountEverywhere.call(this, data.item_count);
       this.querySelector('[data-role="items-wrapper"]')
         ? (this.querySelector('[data-role="items-wrapper"]').innerHTML =
@@ -445,8 +446,9 @@ class FbtItem extends HTMLElement {
         throw new Error("Failed to add item to cart");
       }
       const res = await request.json();
+      
       document.dispatchEvent(
-        new CustomEvent("custom:CartInternalUpdate", {
+        new CustomEvent("custom:CartUpdate", {
           detail: res,
         }),
       );
