@@ -1,0 +1,49 @@
+<search-popup>
+    <div class="sw-fixed sw-top-0 sw-left-0 sw-w-full sw-h-full sw-bg-[#fff] sw-hidden">
+        <div>
+            <form>
+                <div class="sw-flex sw-gap-2 sw-bg-[linear-gradient(rgb(252,245,255)_0%,rgb(253,242,248)_100%)] sw-p-[8px_20px_12px]">
+                    <div class="sw-w-full sw-border-solid sw-border-[1px] sw-border-[rgba(168,85,247,0.22)] sw-p-[10px_12px] sw-rounded-[14px] sw-flex sw-gap-1 sw-items-center sw-bg-[#fff]">
+                        <label for="search-popup-input">{% render 'icons-v2', icon: 'icon-search' %}</label>
+                        <input name="search" id="search-popup-input" class="sw-flex sw-w-full sw-outline-none sw-p-0 sw-border-0 sw-text-[14px] sw-font-secondary sw-text-[#581c87]">
+                    </div>
+                    <button>{% render 'icons-v2', icon: 'icon-close', classes: 'sw-w-4 sw-h-4 sw-text-[#9333ea]' %}</button>
+                </div>
+            </form>
+            <div class="sw-p-[4px_20px_24px]">
+                <div>
+                {% if section.settings.trending_searches %}
+                    <div>
+                        {% if section.settings.search_keyword_title != blank %}
+                            <p class="sw-text-[14px] sw-m-[14px_0px_10px] sw-mb-[10px] sw-font-secondary sw-text-[#9333ea] sw-font-semibold sw-uppercase">{{ section.settings.search_keyword_title }}</p>
+                        {% endif %}
+                        {% assign search_keywords = section.settings.search_keywords | split : ',' %}
+                        <div class="sw-flex sw-flex-wrap sw-gap-2">
+                            {% for keyword in search_keywords %}
+                                <div>
+                                    <input name="search-keyword" value="{{ keyword | downcase }}" type="radio" class="sw-hidden sw-peer/checkbox" id="keyword_{{ keyword | downcase | replace : '' , '_' }}">
+                                    <label class="sw-font-secondary sw-p-[8px_14px] sw-text-[12px] sw-text-[#6b21a8] sw-font-medium sw-bg-[rgba(255,255,255,0.7)] sw-border-solid sw-border-[1px] sw-border-[rgba(168,85,247,0.25)] sw-rounded-full peer-[:checked]/checkbox:sw-bg-[linear-gradient(135deg,rgb(236,72,153),rgb(168,85,247))] peer-[:checked]/checkbox:sw-text-[#fff]" for="keyword_{{ keyword | downcase | replace : '' , '_' }}">{{ keyword }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if section.settings.recommended_collection and section.settings.recommended_collection.products.size > 0 %}
+                    <div>
+                        {% if section.settings.recommended_products_title != blank %}
+                            <p>{{ section.settings.recommended_products_title }}</p>
+                        {% endif %}
+                        <div>
+                            {% for product in section.settings.recommended_collection.products %}
+                                {% if product.available %}
+                                    {%  render 'search-product-card-v2', card_product: product %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</search-popup>

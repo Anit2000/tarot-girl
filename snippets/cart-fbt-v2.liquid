@@ -5,7 +5,7 @@
   for product in fbt_collection.products
     assign is_product_in_cart = false
     for item in cart.items
-        if item.product.id != product.id 
+        if item.product.id == product.id 
             assign is_product_in_cart = true
         endif
     endfor
@@ -19,7 +19,6 @@
     assign fbt_display = false
   endif
 %}
-
     <cart-fbt data-id="{{ block_id }}" style="display:{% if fbt_display %}block;{% else %}none;{% endif %}">
         <div class="sw-px-[10px]" style="margin-top:{{ block_settings.margin_top }}px;margin-bottom:{{ block_settings.margin_bottom }}px">
             {% if block_settings.heading != blank %}<div><p class="sw-font-primary sw-text-[20px] sw-mb-2 sw-font-semibold sw-text-[#581c87]">{{ block_settings.heading }}</p></div>{% endif %}

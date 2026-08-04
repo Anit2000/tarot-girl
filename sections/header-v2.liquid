@@ -97,7 +97,46 @@
       </div>
 
     </div>
+    {% if section.settings.search_input %}
+    <search-form>
+      {%- liquid
+        assign total_search_animation = 0
+        assign current_rendering_count = 0
+        for block in section.blocks
+          if block.type == 'search_animated_text' 
+            assign total_search_animation = total_search_animation | plus: 1
+          endif
+        endfor
+      -%}
+      <script type="applicationId/json" data-id="searh-configs">
+        {
+          "search_animation":{{ section.settings.search_type_animation }},
+          "search_animation_text":[
+            {%- for block in section.blocks  -%}
+              {%- if block.type == 'search_animated_text' -%}
+                {%- assign current_rendering_count = current_rendering_count | plus : 1 -%}
+                {
+                  "text":"{{ block.settings.text }}"
+                }{%- if current_rendering_count < total_search_animation -%},
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          ]
+        }
+      </script>
+      <form>
+        <div class="sw-bg-[linear-gradient(rgb(252,245,255)_0%,_rgb(253,242,248)_100%)]">
+          <div class="sw-px-3 sw-pb-2">
+            <div class="sw-flex sw-gap-[3px] sw-bg-[#fff] sw-items-center sw-px-2 sw-rounded-[12px]">
+               <label for="search-input">{% render 'icons-v2', icon:'icon-search' %}</label>
+               <input name="search" id="search-input" data-role="search-input" class="sw-w-full sw-text-[14px] sw-font-secondary sw-text-[#581c87] sw-outline-none sw-border-0 sw-border-[1px_solid_rgba(168,85,247,0.1)] sw-rounded-[16px] sw-p-[10px_12px]">
+            </div>
+          </div>
+        </div>
+      </form>
 
+    </search-form>
+  {% endif %}
   </header>
 
   <!-- MOBILE PANEL -->
@@ -179,9 +218,11 @@ section[id]{
 }
 
 </style>
-
  {% render 'vite-tag' with 'header-v2.js' %}
-
+ {% if section.settings.search_input %}
+    {% render 'vite-tag' with 'search-v2.js' %}
+    {% render 'search-popup-v2', section: section %}
+ {% endif %}
 {% schema %}
 {
   "name": "Tarot Header",
@@ -202,6 +243,79 @@ section[id]{
       "type": "link_list",
       "id": "menu",
       "label": "Navigation Menu"
+    },
+    {
+      "type":"header",
+      "content":"Search configuration",
+    },
+    {
+      "type":"checkbox",
+      "label":"Display search input on header",
+      "id":"search_input",
+      "default": true
+    },
+    {
+      "type":"checkbox",
+      "label":"Enable text typing animation",
+      "id":"search_type_animation",
+      "default":true
+    },
+    {
+      "type":"checkbox",
+      "label":"Show trending searches",
+      "id":"trending_searches",
+      "default": true
+    },
+    {
+      "type":"text",
+      "label":"Search keyword title",
+      "id":"search_keyword_title",
+      "default":"Treding searches",
+      "visible_if":"{{ section.settings.trending_searches == true }}"
+    },
+    {
+      "type":"textarea",
+      "label":"Search keywords",
+      "id":"search_keywords",
+      "info": "Coma seperated search keywords Ex - All,Love,Career",
+      "visible_if":"{{ section.settings.trending_searches == true }}"
+    },
+    {
+      "type":"checkbox",
+      "label":"Show recommended products",
+      "id":"recommended_products",
+      "default":true
+    },
+    {
+      "type":"text",
+      "label":"Recommended products title",
+      "id":"recommended_products_title",
+      "default":"Recommended Products",
+      "visible_if": "{{ section.settings.recommended_products == true }}"
+    },
+    {
+      "type":"collection",
+      "label":"Choose recommended products collection",
+      "id":"recommended_collection",
+    },
+    {
+      "type":"number",
+      "label":"Number of products to show",
+      "id":"recommended_products_count",
+      "default":4
+    }
+  ],
+  "blocks": [
+    {
+      "type":"search_animated_text",
+      "name":"Animated search text",
+      "settings": [
+        {
+          "type":"text",
+          "label":"Enter animation text",
+          "id":"text"
+        }
+      ]
     }
   ],
   "presets": [
