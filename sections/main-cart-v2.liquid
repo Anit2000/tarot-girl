@@ -32,7 +32,7 @@
                             <p class="sw-font-primary sw-text-[20px] sw-font-bold sw-text-[rgb(88,28,135)]">{{ cart.checkout_charge_amount | money }}</p>
                         </div>
                     </div>
-                    <div data-role="checkout-btn" class="sw-p-[14px_18px] sw-sticky sw-top-full">
+                    <div data-role="checkout-btn" class="sw-p-[14px_18px] sw-sticky sw-bottom-0">
                         <a class="sw-bg-[linear-gradient(135deg,rgb(236,_72,_153)_0%,rgb(192,38,211)_50%,rgb(147,51,234)_100%)] sw-text-[16px] sw-font-semibold sw-text-[#fff] sw-shadow-[rgba(168,_85,_247,_0.55)_0px_12px_30px_-6px] sw-font-secondary sw-p-[17px_20px] sw-w-full sw-flex sw-gap-2 sw-items-center sw-rounded-full sw-justify-center" href="/checkout"><span>Checkout</span><span>{{ cart.checkout_charge_amount | money }}</span><span>{% render 'icons-v2', icon: 'checkout-star' %}</span></a>
                     </div>
                 </div>

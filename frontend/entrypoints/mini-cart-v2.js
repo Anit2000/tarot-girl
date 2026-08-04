@@ -41,6 +41,7 @@ class MiniCart extends HTMLElement {
     if (this.displayAnimation) {
       this.displayAnimation.cancel();
     }
+    document.body.style.overflow = 'hidden';
     this.style.display = "block";
     this.classList.add("animating");
     window.innerWidth < 768 ? (document.body.style.overflowY = "hidden") : "";
@@ -57,6 +58,7 @@ class MiniCart extends HTMLElement {
     if (this.displayAnimation) {
       this.displayAnimation.cancel();
     }
+    document.body.style.overflow = '';
     this.displayAnimation = this.wrapper.animate(
       [
         { maxWidth: window.innerWidth <= 768 ? "100%" : "400px" },
