@@ -1,0 +1,176 @@
+{% render 'vite-tag' with 'counter-v2.js' %}
+
+<section id="{{ section.id }}">
+    <div class="sw-px-[30px] sw-mb-10">
+        <div>
+            {% if section.settings.heading != blank %}
+                <div class="sw-flex sw-justify-center sw-gap-2 sw-items-center sw-rounded-full">
+                    {% if section.settings.heading_style %}
+                        <span class="sw-w-full sw-bg-[#FC2679] sw-h-[2px] !sw-block sw-relative before:sw-block before:sw-w-[10px] before:sw-h-[10px] before:sw-absolute before:sw-left-0 before:sw-top-[50%] before:sw-translate-y-[-50%] before:sw-rotate-45 before:sw-bg-[#FC2679]"></span>
+                    {% endif %}
+                    <h3 style="color:{{ section.settings.heading_color }}" class="sw-text-[24px] lg:sw-text-[56px] sw-text-center sw-font-medium sw-font-primary">{{ section.settings.heading }}</h3>
+                    {% if section.settings.heading_style %}
+                        <span class="sw-w-full sw-bg-[#FC2679] sw-h-[2px] !sw-block sw-relative before:sw-block before:sw-w-[10px] before:sw-h-[10px] before:sw-absolute before:sw-right-0 before:sw-top-[50%] before:sw-translate-y-[-50%] before:sw-rotate-45 before:sw-bg-[#FC2679]"></span>
+                    {% endif %}
+                </div>
+            {% endif %}
+            {% if section.settings.subheading != blank %}
+                <p style="color:{{ section.settings.subheading_color }}" class="sw-text-center sw-font-medium sw-text-[18px] lg:sw-text-[32px] sw-mt-3 sw-font-primary">{{ section.settings.subheading }}</p>
+            {% endif %}
+            <div class="sw-mt-6">
+                <sale-counter>
+                    <script type="applicationId/json">
+                        {
+                            "config":{
+                                "behavior":"{{ section.settings.counter_behavior }}",
+                                "start_date":"{{ section.settings.start_date }}",
+                                "end_date":"{{ section.settings.end_date }}",
+                                "looping_hours":"{{ section.settings.looping_hours }}"
+                            }
+                        }
+                    </script>
+                    <div class="sw-flex sw-gap-[14px] lg:sw-gap-[56px] sw-justify-center">
+                        {% if section.settings.days %}
+                            <div style="--progress-day:50deg" class="sw-flex sw-items-center sw-flex-col sw-bg-[#FDDBD2] sw-border-[#FC2679] sw-border-[1px] sw-rounded-full sw-w-[72px] sw-h-[72px]  lg:sw-h-[144px] lg:sw-w-[144px] sw-justify-center sw-aspect-square  sw-relative sw-z-[1]" data-role="days">
+                                <p data-role="day-text" class="sw-text-[24px] lg:sw-text-[64px] sw-leading-6 lg:sw-leading-[60px] sw-font-heading sw-font-bold">00</p>
+                                <p class="sw-text-[12px] sw-font-heading lg:sw-text-[24px] sw-font-bold">Days</p>
+                                <svg style="--progress-day:0px" data-role="progress-bar" class="sw-absolute sw-w-[calc(105%_+_2px)] lg:sw-w-[105%] sw-h-[calc(105%_+_2px)] lg:sw-h-[105%] sw-top-[50%] sw-left-[50%] sw-translate-x-[-50%] sw-translate-y-[-50%] sw-stroke-[5px] lg:sw-stroke-[6px] sw-rotate-[-90deg] [stroke-dasharray:calc(2_*_calc(22/7)_*_50%)] [stroke-dashoffset:calc(calc(2_*_calc(22/7)_*_50%)_+_var(--progress-second))]">
+                                    <circle  fill="none" stroke="#FC2679" stroke-linecap="round" class="[stroke-dashoffset:var(--progress-day)]" stroke-dasharray="inherit" stroke-dashoffset="inherit" stroke-width="inherit" cx="50%" cy="50%" r="47%"></circle>
+                                </svg>
+                            </div>
+                        {% endif %}
+                        {% if section.settings.hours %}
+                            <div style="--progress-hour:50deg" class="sw-flex sw-items-center sw-flex-col sw-bg-[#FDDBD2] sw-border-[#FC2679] sw-border-[1px] sw-rounded-full sw-w-[72px] sw-h-[72px] lg:sw-h-[144px] lg:sw-w-[144px] sw-justify-center sw-aspect-square  sw-relative sw-z-[1]" data-role="hours">
+                                <p data-role="hours-text" class="sw-text-[24px] lg:sw-text-[64px] sw-leading-6 lg:sw-leading-[60px] sw-font-heading sw-font-bold">00</p>
+                                <p class="sw-text-[12px] lg:sw-text-[24px] sw-font-heading sw-font-bold">Hours</p>
+                                <svg style="--progress-hour:0px" data-role="progress-bar" class="sw-absolute sw-w-[calc(105%_+_2px)] lg:sw-w-[105%] sw-h-[calc(105%_+_2px)] lg:sw-h-[105%] sw-top-[50%] sw-left-[50%] sw-translate-x-[-50%] sw-stroke-[5px] lg:sw-stroke-[6px] sw-translate-y-[-50%] sw-rotate-[-90deg] [stroke-dasharray:calc(2_*_calc(22/7)_*_50%)] [stroke-dashoffset:calc(calc(2_*_calc(22/7)_*_50%)_+_var(--progress-second))]">
+                                    <circle fill="none" stroke="#FC2679" stroke-linecap="round" class="[stroke-dashoffset:var(--progress-hour)]" stroke-dasharray="inherit" stroke-dashoffset="inherit" stroke-width="inherit" cx="50%" cy="50%" r="47%"></circle>
+                                </svg>
+                            </div>
+                        {% endif %}
+                        {% if section.settings.minutes %}
+                            <div style="--progress-minute:50deg" class="sw-flex sw-items-center sw-flex-col sw-bg-[#FDDBD2] sw-border-[#FC2679] sw-border-[1px] sw-rounded-full sw-w-[72px] sw-h-[72px]  lg:sw-h-[144px] lg:sw-w-[144px] sw-justify-center sw-aspect-square  sw-relative sw-z-[1] " data-role="minutes">
+                                <p data-role="minutes-text" class="sw-text-[24px] lg:sw-text-[64px] sw-leading-6 lg:sw-leading-[60px] sw-font-heading sw-font-bold">00</p>
+                                <p class="sw-text-[12px] lg:sw-text-[24px] sw-font-heading sw-font-bold">Minutes</p>
+                                <svg style="--progress-minute:0px" data-role="progress-bar" class="sw-absolute sw-w-[calc(105%_+_2px)] lg:sw-w-[105%] sw-h-[calc(105%_+_2px)] lg:sw-h-[105%] sw-top-[50%] sw-left-[50%] sw-translate-x-[-50%] sw-translate-y-[-50%] sw-rotate-[-90deg] sw-stroke-[5px] lg:sw-stroke-[6px] [stroke-dasharray:calc(2_*_calc(22/7)_*_50%)] [stroke-dashoffset:calc(calc(2_*_calc(22/7)_*_50%)_+_var(--progress-second))]">
+                                    <circle fill="none" stroke="#FC2679" stroke-linecap="round" class="[stroke-dashoffset:var(--progress-minute)]" stroke-dasharray="inherit" stroke-dashoffset="inherit" stroke-width="inherit" cx="50%" cy="50%" r="47%"></circle>
+                                </svg>
+                            </div>
+                        {% endif %}
+                        {% if section.settings.seconds %}
+                            <div style="--progress-second:50px" class="sw-flex sw-items-center sw-flex-col sw-bg-[#FDDBD2] sw-border-[#FC2679] sw-border-[1px] sw-rounded-full sw-w-[72px] sw-h-[72px]  lg:sw-h-[144px] lg:sw-w-[144px] sw-justify-center sw-aspect-square  sw-relative sw-z-[1]" data-role="seconds">
+                                <p data-role="seconds-text" class="sw-text-[24px]  lg:sw-text-[64px] sw-leading-6 lg:sw-leading-[60px] sw-font-heading sw-font-bold">00</p>
+                                <p class="sw-text-[12px] lg:sw-text-[24px] sw-font-heading sw-font-bold">Seconds</p>
+                                <svg style="--progress-second:0px" data-role="progress-bar" class="sw-absolute sw-w-[calc(105%_+_2px)] lg:sw-w-[105%] sw-h-[calc(105%_+_2px)] sw-overflow-visible lg:sw-h-[105%] sw-top-[50%] sw-left-[50%] sw-translate-x-[-50%] sw-translate-y-[-50%] sw-rotate-[-90deg] sw-stroke-[5px] lg:sw-stroke-[6px] [stroke-dasharray:calc(2_*_calc(22/7)_*_50%)] [stroke-dashoffset:calc(calc(2_*_calc(22/7)_*_50%)_+_var(--progress-second))]">
+                                    <circle fill="none" stroke="#FC2679" stroke-linecap="round" class="[stroke-dashoffset:var(--progress-second)]" stroke-dasharray="inherit" stroke-dashoffset="inherit" style="---secondCircle-radius:48%" stroke-width="inherit" cx="50%" cy="50%" r="47%"></circle>
+                                </svg>
+                            </div>
+                        {% endif %}
+                    </div>
+                </sale-counter>
+            </div>
+        </div>
+    </div>
+</section>
+{% schema %}
+    {
+        "name":"Counter v2",
+        "settings":[
+            {
+                "type":"text",
+                "label":"Heading",
+                "id":"heading",
+                "default":"HURRY!"
+            },
+            {
+                "type":"color",
+                "label":"Heading color",
+                "id":"heading_color",
+                "default":"#FC2679"
+            },
+            {
+                "type":"checkbox",
+                "label":"Display heading styling",
+                "id":"heading_style"
+            },
+            {
+                "type":"color",
+                "label":"Subheading color",
+                "id":"subheading_color",
+                "default":"#000000"
+            },
+            {
+                "type":"text",
+                "label":"Subheading",
+                "default":"OFFER EXPIRES IN",
+                "id":"subheading"
+            },
+            {
+                "type":"select",
+                "label":"Counter behavior",
+                "id":"counter_behavior",
+                "default":"loop",
+                "options": [
+                    {
+                        "value":"loop",
+                        "label": "Loop"
+                    },
+                    {
+                        "value": "default",
+                        "label":"Default"
+                    }
+                ]
+            },
+            {
+                "type":"text",
+                "label":"Start Date",
+                "id":"start_date",
+                "info":"Format: yyyy-mm-dd hh:mm:ss"
+            },
+            {
+                "type":"text",
+                "label":"End Date",
+                "id":"end_date",
+                "info":"Format: yyyy-mm-dd hh:mm:ss"
+            },
+            {
+                "type":"range",
+                "label":"Looping hours",
+                "id":"looping_hours",
+                "min":1,
+                "max":24,
+                "step": 1,
+                "default":24
+            },
+            {
+                "type":"checkbox",
+                "label": "Display Days",
+                "id":"days",
+                "default":true
+            },
+            {
+                "type":"checkbox",
+                "label": "Display Hours",
+                "id":"hours",
+                "default":true
+            },
+            {
+                "type":"checkbox",
+                "label": "Display Minutes",
+                "id":"minutes",
+                "default":true
+            },
+            {
+                "type":"checkbox",
+                "label": "Display Seconds",
+                "id":"seconds",
+                "default":true
+            },
+        ],
+        "presets": [
+            {
+                "name":"Counter v2"
+            }
+        ]
+    }
+{% endschema %}

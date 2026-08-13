@@ -1,0 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero_slider_v2_QmTgGm": {
+      "type": "hero-slider-v2",
+      "blocks": {
+        "image_meWcgW": {
+          "type": "image",
+          "settings": {
+            "mobile_image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_04_44_09_PM.png",
+            "desktop_image": "shopify://shop_images/ChatGPT_Image_Aug_13_2026_04_46_43_PM.png",
+            "banner_redirection": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_meWcgW"
+      ],
+      "name": "Hero Slider V2",
+      "settings": {
+        "arrows": true,
+        "autoplay": false,
+        "autoplay_interval": 3
+      }
+    },
+    "featured_collection_v2_EzWq6z": {
+      "type": "featured-collection-v2",
+      "name": "Featured collection v2",
+      "settings": {
+        "margin_mobile": 0,
+        "margin_desktop": 0,
+        "bg_style": "default",
+        "bg_color": "",
+        "bg_color_external": "",
+        "internal_bg_color": "",
+        "external_border_radius": false,
+        "border_radius_mob": 0,
+        "border_radius_desk": 0,
+        "heading_type": "text",
+        "heading_bg": "",
+        "lightning_counter": false,
+        "badge_text": "Our Services ✨",
+        "heading": "Choose Your Divine Guidance",
+        "description": "Crafted with love to bring clarity & magic into your life ✨",
+        "heading_color": "#581c87",
+        "description_color": "#6b21a8",
+        "badge_text_color": "#581c87",
+        "badge_bg": "linear-gradient(90deg, rgba(250, 232, 255, 1), rgba(252, 231, 243, 1) 100%)",
+        "badge_border_color": "#d8b4fe",
+        "section_top_spacing": 20,
+        "section_bottom_spacing": 24,
+        "section_heading": "",
+        "heading_color_new": "#000",
+        "section_heading_svg": "",
+        "heading_decoration": false,
+        "view_all_btn": false,
+        "view_all_btn_color": "#ff5b6f",
+        "slider_bar": true,
+        "thumb_bg": "#d9d9d9",
+        "thumb_color": "#707070",
+        "collection": "b1g1-spells",
+        "product_limit": 12,
+        "card_bg_color": "",
+        "card_price_color": "#cc007a",
+        "tags_bg": "",
+        "card_button_bg": "",
+        "card_button_color": "",
+        "notify_me_border": "",
+        "notify_me_text_color": "",
+        "slider": false
+      }
+    }
+  },
+  "order": [
+    "hero_slider_v2_QmTgGm",
+    "featured_collection_v2_EzWq6z"
+  ]
+}

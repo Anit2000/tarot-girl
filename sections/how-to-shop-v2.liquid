@@ -1,0 +1,355 @@
+{% liquid
+  assign sale_allowed = false
+
+  if collection
+    assign current_template_suffix = collection.template_suffix | downcase | strip
+    if current_template_suffix == blank
+      assign current_template_suffix = 'default'
+    endif
+
+    assign selected_template_suffixes = settings.sale_collection_templates | downcase | replace: ' ', '' | split: ','
+
+    for tpl in selected_template_suffixes
+      assign tpl_value = tpl | strip
+      if tpl_value == current_template_suffix
+        assign sale_allowed = true
+        break
+      endif
+    endfor
+  endif
+
+  assign use_global_sale = false
+  if settings.sale_layout and settings.use_global_sale_content and sale_allowed
+    assign use_global_sale = true
+  endif
+
+  assign block_to_render = 'instruction'
+  if settings.sale_layout
+    assign block_to_render = 'sale-instruction'
+  endif
+%}  
+
+
+{% render 'vite-tag' with 'toggle-v2.js' %}
+
+{% liquid
+  assign bg_type = section.settings.background_type
+  assign bg_color = section.settings.bg_color
+  assign bg_image = section.settings.bg_image
+
+  assign heading_text = section.settings.heading
+  assign heading_color = section.settings.heading_color
+
+  assign terms_title = section.settings.terms_title
+  assign terms_border = section.settings.terms_border
+
+  assign terms_text_to_show = section.settings.terms_text
+  if settings.sale_layout
+    assign terms_text_to_show = section.settings.sales_terms_text
+  endif
+
+  if use_global_sale
+    assign bg_type = settings.sale_how_bg_type
+    assign bg_color = settings.sale_how_bg_color
+    assign bg_image = settings.sale_how_bg_image
+ 
+    assign heading_text = settings.sale_how_heading
+    assign heading_color = settings.sale_how_heading_color
+
+    assign terms_title = settings.sale_terms_title
+    assign terms_border = settings.sale_terms_border
+    assign terms_text_to_show = settings.sale_terms_text
+  endif
+%}
+
+{% style %}
+    {% if section.settings.background_type == 'image' %}
+        #{{ section.id }} .how-to-shop-wrapper{
+            background:url('{{ section.settings.bg_image | image_url: width: 400, height: 400 }}') lightgray 0px 0px / 100% 100% no-repeat;
+        }
+    {% else %}
+        #{{ section.id }} .how-to-shop-wrapper{
+            background:{{ section.settings.bg_color }};
+        }        
+    {% endif %}
+{% endstyle %}
+
+{% if use_global_sale %}
+
+{% style %}
+
+{% if bg_type == 'image' %}
+    #{{ section.id }} .how-to-shop-wrapper{
+    background:url('{{ bg_image | image_url: width: 400, height: 400 }}') lightgray 0px 0px / 100% 100% no-repeat;
+    }
+{% else %}
+    #{{ section.id }} .how-to-shop-wrapper{
+    background:{{ bg_color }};
+    }
+{% endif %}
+{% endstyle %}
+{% endif %}
+
+
+<section id="{{ section.id }}" data-id="{{ section.id }}">
+    <div class="how-to-shop-wrapper sw-mb-[32px] sw-mx-2 sw-mt-2 sw-rounded-2xl lg:sw-rounded-[46px] sw-py-4 lg:sw-py-6 lg:sw-px-[128px] lg:sw-mb-[56px] sw-px-3">
+        <div class="lg:sw-max-w-[1120px] lg:sw-mx-auto sw-flex sw-flex-col sw-items-center">
+            {% if section.settings.heading != blank %}
+                <h3 style="color:{{ section.settings.heading_color }}" class="sw-font-primary sw-mb-3 sw-text-[18px] sw-font-semibold sw-text-center lg:sw-text-[40px] lg:sw-mb-6" >{{ section.settings.heading }}</h3>
+            {% endif %}
+            <div class="how-to-shop-content lg:sw-px-[140px]">
+                {% if use_global_sale %}
+                {% liquid
+                    assign step1_icon_svg = settings.sale_how_step_1_icon_svg
+                    assign step1_icon_bg  = settings.sale_how_step_1_icon_bg
+                    assign step1_text     = settings.sale_how_step_1_text
+
+                    assign step2_icon_svg = settings.sale_how_step_2_icon_svg
+                    assign step2_icon_bg  = settings.sale_how_step_2_icon_bg
+                    assign step2_text     = settings.sale_how_step_2_text
+
+                    assign step3_icon_svg = settings.sale_how_step_3_icon_svg
+                    assign step3_icon_bg  = settings.sale_how_step_3_icon_bg
+                    assign step3_text     = settings.sale_how_step_3_text
+
+                    assign step4_icon_svg = settings.sale_how_step_4_icon_svg
+                    assign step4_icon_bg  = settings.sale_how_step_4_icon_bg
+                    assign step4_text     = settings.sale_how_step_4_text
+                    %}
+
+                   
+                      
+
+
+                    {%- comment -%} STEP 1 {%- endcomment -%}
+                    {% if step1_text != blank %}
+                    <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
+                        {% if step1_icon_svg != blank %}
+                        <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ step1_icon_bg }}">
+                            {{ step1_icon_svg }}
+                        </div>
+                        {% endif %}
+                        <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold">{{ step1_text }}</p></div>
+                    </div>
+                    {% endif %}
+
+                    {%- comment -%} STEP 2 {%- endcomment -%}
+                    {% if step2_text != blank %}
+                    <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
+                        {% if step2_icon_svg != blank %}
+                        <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ step2_icon_bg }}">
+                            {{ step2_icon_svg }}
+                        </div>
+                        {% endif %}
+                        <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold">{{ step2_text }}</p></div>
+                    </div>
+                    {% endif %}
+
+                    {%- comment -%} STEP 3 {%- endcomment -%}
+                    {% if step3_text != blank %}
+                    <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
+                        {% if step3_icon_svg != blank %}
+                        <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ step3_icon_bg }}">
+                            {{ step3_icon_svg }}
+                        </div>
+                        {% endif %}
+                        <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold">{{ step3_text }}</p></div>
+                    </div>
+                    {% endif %}
+
+                    {%- comment -%} STEP 4 {%- endcomment -%}
+                    {% if step4_text != blank %}
+                    <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
+                        {% if step4_icon_svg != blank %}
+                        <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ step4_icon_bg }}">
+                            {{ step4_icon_svg }}
+                        </div>
+                        {% endif %}
+                        <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold">{{ step4_text }}</p></div>
+                    </div>
+                    {% endif %}
+
+                {% else %}
+                {% for block in section.blocks %}
+                    {% if block.type == block_to_render %}
+                        <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
+                            {% if block.settings.icon_svg != blank %}
+                                <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ block.settings.icon_bg }}">
+                                    {{ block.settings.icon_svg }}
+                                </div>
+                            {% endif %}
+                            {% if block.settings.instruction != blank %}
+                                <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold">{{ block.settings.instruction }}</p></div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %} 
+            </div>
+
+            {% if use_global_sale %}
+                <toggle-details style="border:solid 1px {{ terms_border }}" class="sw-px-4 sw-group sw-w-full lg:!sw-border-[2px] sw-rounded-[6px] lg:sw-rounded-[30px] lg:sw-px-[64px] lg:sw-mt-2">
+                        {% if terms_title != blank %}
+                            <div data-role="toggle-btn" class="sw-flex sw-py-[6px] lg:sw-py-[10px] sw-cursor-pointer">
+                                <p class="sw-text-[10px] sw-font-primary sw-font-medium sw-text-center sw-ml-auto lg:sw-text-[24px]">{{ terms_title }}</p>
+                                <button style="stroke:{{ terms_border }}" class="sw-ml-auto">{% render 'icons-v2', icon:'icon-caret-down', class:'sw-w-[14px] sw-h-[14px] lg:sw-w-[24px] lg:sw-h-[24px] sw-stroke-inherit group-[&.active]:sw-rotate-[180deg] sw-transition-all sw-transition-400' %}</button>
+                            </div>
+                        {% endif %}
+                        {% if terms_text_to_show != blank %}
+                            <div data-role="content" class="sw-max-h-0 sw-hidden sw-overflow-hidden">
+                                <div class="sw-pl-4 sw-pt-2 lg:sw-pl-[128px] lg:sw-pt-4 lg:!sw-border-t-[2px] sw-flex sw-flex-col sw-items-center" style="border-top:dashed 1px {{ terms_border }}">
+                                    <div class="*:sw-text-[10px] *:*:sw-text-[10px] *:lg:sw-text-[24px] *:*:lg:sw-text-[24px] *:sw-font-normal *:*:sw-font-normal *:sw-font-primary *:*:sw-font-primary *:sw-list-disc lg:sw-mb-6">{{ terms_text_to_show }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                </toggle-details> 
+            {% else %}
+                <toggle-details style="border:solid 1px {{ section.settings.terms_border }}" class="sw-px-4 sw-group sw-w-full lg:!sw-border-[2px] sw-rounded-[6px] lg:sw-rounded-[30px] lg:sw-px-[64px] lg:sw-mt-2">
+                    {% if section.settings.terms_title != blank %}
+                        <div data-role="toggle-btn" class="sw-flex sw-py-[6px] lg:sw-py-[10px] sw-cursor-pointer">
+                            <p class="sw-text-[10px] sw-font-primary sw-font-medium sw-text-center sw-ml-auto lg:sw-text-[24px]">{{ section.settings.terms_title }}</p>
+                            <button style="stroke:{{ section.settings.terms_border }}" class="sw-ml-auto">{% render 'icons-v2', icon:'icon-caret-down', class:'sw-w-[14px] sw-h-[14px] lg:sw-w-[24px] lg:sw-h-[24px] sw-stroke-inherit group-[&.active]:sw-rotate-[180deg] sw-transition-all sw-transition-400' %}</button>
+                        </div>
+                    {% endif %}
+                    {% if settings.sale_layout %}
+                        {% if section.settings.sales_terms_text != blank %}
+                            <div data-role="content" class="sw-max-h-0 sw-hidden sw-overflow-hidden">
+                                <div class="sw-pl-4 sw-pt-2 lg:sw-pl-[128px] lg:sw-pt-4 lg:!sw-border-t-[2px] sw-flex sw-flex-col sw-items-center" style="border-top:dashed 1px {{ section.settings.terms_border }}">
+                                    <div class="*:sw-text-[10px] *:*:sw-text-[10px] *:lg:sw-text-[24px] *:*:lg:sw-text-[24px] *:sw-font-normal *:*:sw-font-normal *:sw-font-primary *:*:sw-font-primary *:sw-list-disc lg:sw-mb-6">{{ section.settings.sales_terms_text }}</div>
+                                </div>
+                            </div>
+                        {% endif %}   
+                    {% else %}
+                        {% if section.settings.terms_text != blank %}
+                            <div data-role="content" class="sw-max-h-0 sw-hidden sw-overflow-hidden">
+                                <div class="sw-pl-4 sw-pt-2 lg:sw-pl-[128px] lg:sw-pt-4 lg:!sw-border-t-[2px] sw-flex sw-flex-col sw-items-center" style="border-top:dashed 1px {{ section.settings.terms_border }}">
+                                    <div class="*:sw-text-[10px] *:*:sw-text-[10px] *:lg:sw-text-[24px] *:*:lg:sw-text-[24px] *:sw-font-normal *:*:sw-font-normal *:sw-font-primary *:*:sw-font-primary *:sw-list-disc lg:sw-mb-6">{{ section.settings.terms_text }}</div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </toggle-details>
+            {% endif %} 
+        </div>
+    </div>
+</section>
+
+
+
+{% schema %}
+    {
+        "name":"How to shop v2",
+        "settings":[
+            {
+                "type":"select",
+                "label":"Background type",
+                "id":"background_type",
+                "default":"image",
+                "options":[
+                    {
+                        "value":"image",
+                        "label":"Image"
+                    },
+                    {
+                        "value":"color",
+                        "label":"color"
+                    }
+                ]
+            },
+            {
+                "type":"color_background",
+                "label":"Background color",
+                "id":"bg_color"
+            },
+            {
+                "type":"image_picker",
+                "label":"Choose background image",
+                "id":"bg_image"
+            },
+            {
+                "type":"text",
+                "label":"Heading text",
+                "id":"heading",
+                "default":"How to Shop"
+            },
+            {
+                "type":"color",
+                "label":"Heading color",
+                "id":"heading_color",
+                "default":"#8A103F"
+            },
+            {
+                "type":"text",
+                "label":"Terms and conditions title",
+                "id":"terms_title"
+            },
+            {
+                "type":"color",
+                "label":"Terms and conditions border color",
+                "id":"terms_border",
+                "default":"#8A103F"
+            },
+            {
+                "type":"richtext",
+                "label":"Term and conditions text",
+                "id":"terms_text"
+            },
+            {
+                "type":"richtext",
+                "label":"Sales Term and conditions text",
+                "id":"sales_terms_text"
+            }
+        ],
+        "blocks":[
+            {
+                "type":"instruction",
+                "name":"Instruction",
+                "settings": [
+                    {
+                        "type":"html",
+                        "label":"Icon Svg",
+                        "id":"icon_svg"
+                    },
+                    {
+                        "type":"color",
+                        "label":"Icon Background",
+                        "id":"icon_bg"
+                    },
+                    {
+                        "type":"textarea",
+                        "label":"Instruction Text",
+                        "id":"instruction",
+                        "default":"Add 4 products of your choice to the cart"
+                    }
+                ]
+            },
+            {
+                "type":"sale-instruction",
+                "name":"Sale Instruction",
+                "settings": [
+                    {
+                        "type":"html",
+                        "label":"Icon Svg",
+                        "id":"icon_svg"
+                    },
+                    {
+                        "type":"color",
+                        "label":"Icon Background",
+                        "id":"icon_bg"
+                    },
+                    {
+                        "type":"textarea",
+                        "label":"Instruction Text",
+                        "id":"instruction",
+                        "default":"Add 4 products of your choice to the cart"
+                    }
+                ]
+            },
+        ],
+        "presets":[
+            {
+                "name":"How to shop v2"
+            }
+        ]
+    }
+{% endschema %}
