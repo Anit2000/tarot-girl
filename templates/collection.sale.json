@@ -31,6 +31,81 @@
         "autoplay_interval": 3
       }
     },
+        "how_to_shop_v2_QfpqnU": {
+      "type": "how-to-shop-v2",
+      "blocks": {
+        "instruction_EQAQVA": {
+          "type": "instruction",
+          "settings": {
+            "icon_svg": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:8965:163:14\"><path d=\"M6 7h12l-1 12a2 2 0 01-2 2H9a2 2 0 01-2-2L6 7z\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linejoin=\"round\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9025:163:74\"></path><path d=\"M9 7a3 3 0 016 0\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9138:163:187\"></path></svg>",
+            "icon_bg": "",
+            "instruction": "Choose any 2 Spells & add them to your cart"
+          }
+        },
+        "instruction_X6KQGj": {
+          "type": "instruction",
+          "settings": {
+            "icon_svg": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9297:164:14\"><circle cx=\"7\" cy=\"7\" r=\"3\" stroke=\"#fff\" stroke-width=\"1.8\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9357:164:74\"></circle><circle cx=\"17\" cy=\"17\" r=\"3\" stroke=\"#fff\" stroke-width=\"1.8\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9418:164:135\"></circle><path d=\"M18 6L6 18\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9481:164:198\"></path></svg>",
+            "icon_bg": "",
+            "instruction": "Apply the B1G1 coupon code at checkout"
+          }
+        },
+        "instruction_V9haX9": {
+          "type": "instruction",
+          "settings": {
+            "icon_svg": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9677:165:14\"><path d=\"M20 12l-8 8-8-8 8-8 8 8z\" stroke=\"#fff\" stroke-width=\"1.6\" stroke-linejoin=\"round\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9737:165:74\"></path><path d=\"M9 12h6\" stroke=\"#fff\" stroke-width=\"1.8\" stroke-linecap=\"round\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:9828:165:165\"></path></svg>",
+            "icon_bg": "",
+            "instruction": "Get 1 Spell FREE with your purchase"
+          }
+        },
+        "instruction_C9GU74": {
+          "type": "instruction",
+          "settings": {
+            "icon_svg": "<svg width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:10018:166:14\"><path d=\"M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3.1 1.3 4.8 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z\" stroke=\"#fff\" stroke-width=\"1.6\" data-om-id=\"jsx:/https:/019e25b8-5f69-750e-a13a-4b26be745f2d.claudeusercontent.com/v1/design/projects/019e25b8-5f69-750e-a13a-4b26be745f2d/serve/collection.jsx:10078:166:74\"></path></svg>",
+            "icon_bg": "",
+            "instruction": "After booking, you’ll receive a message on WhatsApp"
+          }
+        }
+      },
+      "block_order": [
+        "instruction_EQAQVA",
+        "instruction_X6KQGj",
+        "instruction_V9haX9",
+        "instruction_C9GU74"
+      ],
+      "disabled": true,
+      "name": "How to shop v2",
+      "settings": {
+        "background_type": "color",
+        "bg_color": "linear-gradient(160deg, rgb(253, 244, 227) 0%, rgb(252, 217, 232) 55%, rgb(249, 168, 212) 100%)",
+        "heading": "How to Shop",
+        "heading_color": "#FFFFFF",
+        "terms_title": "Terms and Conditions",
+        "terms_border": "#831843",
+        "terms_text": "<ul><li>Offer valid on select spell readings only.</li><li>The free spell will be of equal or lesser value than the lowest-priced item in your cart.</li><li>Coupon cannot be combined with other offers or discounts.</li><li>Both readings will be delivered together via WhatsApp within 24–48 hours.</li></ul>",
+        "sales_terms_text": ""
+      }
+    },
+        "counter_v2_iex4VX": {
+      "type": "counter-v2",
+      "disabled": true,
+      "name": "Counter v2",
+      "settings": {
+        "heading": "HURRY!",
+        "heading_color": "#FC2679",
+        "heading_style": false,
+        "subheading_color": "#000000",
+        "subheading": "OFFER EXPIRES IN",
+        "counter_behavior": "loop",
+        "start_date": "2025-12-19 00:00:00",
+        "end_date": "2025-12-19 24:00:00",
+        "looping_hours": 24,
+        "days": true,
+        "hours": true,
+        "minutes": true,
+        "seconds": true
+      }
+    },
     "featured_collection_v2_EzWq6z": {
       "type": "featured-collection-v2",
       "name": "Featured collection v2",
@@ -81,6 +156,8 @@
   },
   "order": [
     "hero_slider_v2_QmTgGm",
-    "featured_collection_v2_EzWq6z"
+    "how_to_shop_v2_QfpqnU",
+    "featured_collection_v2_EzWq6z",
+    "counter_v2_iex4VX"
   ]
 }

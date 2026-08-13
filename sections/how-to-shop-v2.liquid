@@ -125,7 +125,7 @@
                     {% if step1_text != blank %}
                     <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
                         {% if step1_icon_svg != blank %}
-                        <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ step1_icon_bg }}">
+                        <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background:{{ step1_icon_bg }}">
                             {{ step1_icon_svg }}
                         </div>
                         {% endif %}
@@ -174,12 +174,12 @@
                     {% if block.type == block_to_render %}
                         <div class="sw-flex sw-gap-2 sw-items-center sw-mb-2 lg:sw-mb-4 lg:sw-gap-6">
                             {% if block.settings.icon_svg != blank %}
-                                <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px]" style="background-color:{{ block.settings.icon_bg }}">
+                                <div class="*:lg:sw-h-[40px] *:lg:sw-w-[40px] sw-rounded-full sw-p-1" style="background:{{ block.settings.icon_bg }}">
                                     {{ block.settings.icon_svg }}
                                 </div>
                             {% endif %}
                             {% if block.settings.instruction != blank %}
-                                <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold">{{ block.settings.instruction }}</p></div>
+                                <div><p class="sw-text-[12px] lg:sw-text-[22px] sw-font-heading sw-font-bold" style="color:{{ block.settings.text_color }}">{{ block.settings.instruction }}</p></div>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -311,9 +311,15 @@
                         "id":"icon_svg"
                     },
                     {
-                        "type":"color",
+                        "type":"color_background",
                         "label":"Icon Background",
                         "id":"icon_bg"
+                    },
+                    {
+                        "type":"color",
+                        "label":"Text color",
+                        "id":"text_color",
+                        "default":"#fff"
                     },
                     {
                         "type":"textarea",
@@ -333,9 +339,15 @@
                         "id":"icon_svg"
                     },
                     {
-                        "type":"color",
+                        "type":"color_background",
                         "label":"Icon Background",
                         "id":"icon_bg"
+                    },
+                    {
+                        "type":"color",
+                        "label":"Text color",
+                        "id":"text_color",
+                        "default":"#fff"
                     },
                     {
                         "type":"textarea",
