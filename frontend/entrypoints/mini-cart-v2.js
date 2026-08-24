@@ -510,7 +510,6 @@ class ATCButton extends HTMLElement {
           },
         }),
       );
-      document.dispatchEvent(new Event("custom:MiniCartShow"));
     } catch (err) {
       console.log("Failed to handle button click reason -->" + err.message);
       this.button?.classList.remove("adding");
