@@ -7,6 +7,8 @@
   endif
   assign icon_image = card_product.metafields.custom.icon
   assign subtitle = card_product.metafields.custom.one_line_description
+  assign show_add_cart_btn = section.settings.add_to_cart_btn | default: false
+  assign add_to_cart_text = section.settings.add_to_cart_btn_text | default : 'Add to cart'
 %}
 
 <a
@@ -271,7 +273,43 @@
         </p>
 
         <!-- BUTTON -->
-
+        {% if show_add_cart_btn %}
+          <atc-button data-variant="{{ card_product.selected_or_first_available_variant.id }}">
+              <button
+          data-role="add-to-cart"
+          class="
+            sw-w-full
+            sw-rounded-full
+            sw-py-2
+            sw-px-4
+            sw-text-[15px]
+            sw-font-semibold
+            sw-border-0
+            sw-font-secondary
+            sw-cursor-pointer
+            sw-transition-all
+            sw-duration-300
+            hover:sw-opacity-90
+            hover:sw-scale-[0.98]
+            sw-shadow-lg
+            sw-group
+            sw-bg-gradient-to-r sw-from-fuchsia-600 sw-via-purple-600 sw-to-pink-600
+          "
+          {% if card_product.selected_or_first_available_variant == false %}disabled{% endif %}
+          style="
+           
+            color:
+            {{ button_text_color | default: '#ffffff' }}
+          "
+        >
+          <span class="group-[&.adding]:sw-hidden">
+            {{ add_to_cart_text }}
+          </span>
+      <span class="sw-hidden group-[&.adding]:sw-flex sw-justify-center">{% render 'loader-v2', classes: 'sw-w-5 sw-h-5  sw-text-[#fff] sw-fill-[rgb(107,33,168)]' %}</span>
+      </button>
+          </atc-button>
+      
+        {% else %}
         <button
           class="
             sw-w-full
@@ -304,6 +342,7 @@
           Book Now
 
         </button>
+        {% endif %}
 
       </div>
 

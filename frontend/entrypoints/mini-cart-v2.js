@@ -41,7 +41,7 @@ class MiniCart extends HTMLElement {
     if (this.displayAnimation) {
       this.displayAnimation.cancel();
     }
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     this.style.display = "block";
     this.classList.add("animating");
     window.innerWidth < 768 ? (document.body.style.overflowY = "hidden") : "";
@@ -58,7 +58,7 @@ class MiniCart extends HTMLElement {
     if (this.displayAnimation) {
       this.displayAnimation.cancel();
     }
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
     this.displayAnimation = this.wrapper.animate(
       [
         { maxWidth: window.innerWidth <= 768 ? "100%" : "400px" },
@@ -118,7 +118,7 @@ class MiniCart extends HTMLElement {
       this.querySelector('[data-role="checkout-btn"]').innerHTML =
         checkoutBtnHtml.innerHTML;
       this.querySelector("discount-form").innerHTML = discountHtml.innerHTML;
-      console.log(data,'here is the data for use')
+      console.log(data, "here is the data for use");
       this.updateCartCountEverywhere.call(this, data.item_count);
       this.querySelector('[data-role="items-wrapper"]')
         ? (this.querySelector('[data-role="items-wrapper"]').innerHTML =
@@ -448,7 +448,7 @@ class FbtItem extends HTMLElement {
         throw new Error("Failed to add item to cart");
       }
       const res = await request.json();
-      
+
       document.dispatchEvent(
         new CustomEvent("custom:CartUpdate", {
           detail: res,
@@ -462,3 +462,69 @@ class FbtItem extends HTMLElement {
   }
 }
 customElements.define("fbt-item", FbtItem);
+
+class ATCButton extends HTMLElement {
+  constructor() {
+    super();
+
+    this.button = this.querySelector('button[data-role="add-to-cart"]');
+    this.variantId = this.dataset.variant;
+
+    this.button?.addEventListener("click", this.handleButtonClick.bind(this));
+  }
+  async handleButtonClick(e) {
+    try {
+      this.button?.classList.add("adding");
+      e.preventDefault();
+      const payload = {
+        items: [
+          {
+            id: this.variantId,
+            quantity: 1,
+          },
+        ],
+        sections: window.cartId,
+      };
+      this.classList.add("adding");
+      const request = await fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (request.status != 200) {
+        throw new Error("Failed to add to cart");
+      }
+      const res = await request.json();
+      document.dispatchEvent(
+        new CustomEvent("custom:CartUpdate", {
+          detail: res,
+        }),
+      );
+      document.dispatchEvent(
+        new CustomEvent("custom:showAtcPopup", {
+          detail: {
+            success: true,
+            failed: false,
+          },
+        }),
+      );
+      document.dispatchEvent(new Event("custom:MiniCartShow"));
+    } catch (err) {
+      console.log("Failed to handle button click reason -->" + err.message);
+      this.button?.classList.remove("adding");
+      document.dispatchEvent(
+        new CustomEvent("custom:showAtcPopup", {
+          detail: {
+            success: false,
+            failed: true,
+          },
+        }),
+      );
+    } finally {
+      this.button?.classList.remove("adding");
+    }
+  }
+}
+customElements.define("atc-button", ATCButton);

@@ -170,7 +170,7 @@
                         {% if section.settings.slider and section.settings.collection.products.size > 1  %}<featured-slider class=""><div class="sw-flex-nowrap sw-overflow-hidden sw-flex sw-w-full" data-role="slider-wrapper">{% endif %} 
                         {% for product in section.settings.collection.products  limit : section.settings.product_limit %}
                             <div class="{% if section.settings.slider and section.settings.collection.products.size > 1  %}keen-slider__slide sw-flex-[0_0_calc(100%/2_-_4px)] lg:sw-flex-[0_0_calc(100%/4_-_14px)] !sw-overflow-visible sw-pt-[1px] sw-p-[1px]{% if forloop.index == 1 %} sw-ml-[1px] {% elsif forloop.last %} sw-ml-[-2px] {% endif %}{% endif %}">
-                                {% render 'product-card-v2',card_product : product,button_bg: section.settings.card_button_bg,button_text_color:section.settings.card_button_color,card_tag_color: section.settings.tags_bg, notify_border:section.settings.notify_me_border, notify_text_color: section.settings.notify_me_text_color,lightning: section.settings.lightning_counter, price_color: section.settings.card_price_color, card_bg: section.settings.card_bg_color %}
+                                {% render 'product-card-v2',card_product : product,button_bg: section.settings.card_button_bg,button_text_color:section.settings.card_button_color,card_tag_color: section.settings.tags_bg, notify_border:section.settings.notify_me_border, notify_text_color: section.settings.notify_me_text_color,lightning: section.settings.lightning_counter, price_color: section.settings.card_price_color, card_bg: section.settings.card_bg_color, section: section %}
                             </div>
                         {% endfor %}
 
@@ -490,6 +490,18 @@
                 "type":"checkbox",
                 "label":"Enable slider",
                 "id":"slider"
+            },
+            {
+                "type":"checkbox",
+                "label": "Show add to cart button",
+                "id":"add_to_cart_btn"
+            },
+            {
+                "type":"text",
+                "label":"Add to cart button text",
+                "id":"add_to_cart_btn_text",
+                "visible_if": "{{ section.settings.add_to_cart_btn == true }}",
+                "default":"Add to cart"
             }
         ],
         "presets": [
