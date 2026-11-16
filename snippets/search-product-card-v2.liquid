@@ -1,3 +1,20 @@
-<search-card>
-    {{ card_product.title }}
-</search-card>
+<a href="{{ card_product.url }}" class="sw-block sw-bg-white sw-rounded-xl sw-p-3 sw-no-underline sw-border sw-border-purple-100/60 sw-shadow-sm">
+  <div class="sw-w-14 sw-h-14 sw-rounded-xl sw-overflow-hidden sw-mb-3">
+    {% if card_product.featured_image %}
+      <img
+        src="{{ card_product.featured_image | image_url: width: 120 }}"
+        alt="{{ card_product.featured_image.alt | escape }}"
+        class="sw-w-full sw-h-full sw-object-cover"
+        loading="lazy"
+        width="56"
+        height="56"
+      >
+    {% else %}
+      <div class="sw-w-full sw-h-full sw-bg-gradient-to-br sw-from-fuchsia-500 sw-to-purple-600 sw-flex sw-items-center sw-justify-center">
+        <span class="sw-text-white sw-text-xl">✨</span>
+      </div>
+    {% endif %}
+  </div>
+  <p class="sw-text-purple-900 sw-font-primary sw-font-semibold sw-text-sm sw-leading-snug sw-mb-1 sw-line-clamp-2">{{ card_product.title }}</p>
+  <p class="sw-text-purple-500 sw-font-secondary sw-text-xs sw-font-medium">from {{ card_product.price_min | money }}</p>
+</a>

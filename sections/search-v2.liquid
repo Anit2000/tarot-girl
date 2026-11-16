@@ -1,0 +1,303 @@
+{% style %}
+  #shopify-section-{{ section.id }} {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    transition: transform 0.3s ease;
+  }
+  #shopify-section-{{ section.id }}.search-bar--hidden {
+    transform: translateY(-100%);
+  }
+{% endstyle %}
+
+<search-input class="sw-block sw-bg-[linear-gradient(rgb(252,245,255)_0%,rgb(253,242,248)_100%)] sw-px-4 sw-py-2">
+  <button
+    type="button"
+    data-role="open-search"
+    class="sw-flex sw-items-center sw-gap-2 sw-w-full lg:sw-max-w-2xl lg:sw-mx-auto sw-bg-white [border:1px_solid_rgba(168,85,247,0.22)] sw-rounded-[14px] sw-px-3 sw-py-2 sw-cursor-text sw-text-left"
+    aria-label="Open search"
+  >
+    {% render 'icons-v2', icon: 'icon-search', classes: 'sw-w-4 sw-h-4 sw-flex-shrink-0' %}
+    <span data-role="typing-target" class="sw-text-[rgba(168,85,247,0.5)] sw-font-secondary sw-text-sm sw-flex-1 sw-min-h-[1.25em]"></span>
+  </button>
+  <script type="application/json" data-id="search-typing-config">
+    {
+      "strings": [{% assign anim_keywords = section.settings.animation_keywords | split: ',' %}{% for kw in anim_keywords %}{{ kw | strip | json }}{% unless forloop.last %},{% endunless %}{% endfor %}]
+    }
+  </script>
+</search-input>
+
+<search-popup>
+  <div
+    data-role="search-panel"
+    class="sw-fixed sw-inset-0 sw-z-[1002] sw-overflow-y-auto sw-bg-gradient-to-b sw-from-pink-50 sw-to-purple-50"
+  >
+    <div class="sw-w-full lg:sw-max-w-2xl lg:sw-mx-auto">
+
+    <!-- Search input row -->
+    <form action="{{ routes.search_url }}" method="get" class="sw-flex sw-items-center sw-gap-3 sw-px-4 sw-py-3 sw-border-b sw-border-purple-100/60">
+      <input type="hidden" name="type" value="product">
+      <div class="sw-flex-1 sw-flex sw-items-center sw-gap-2 sw-bg-white sw-rounded-full sw-px-4 sw-py-2.5 [border:1px_solid_rgba(168,85,247,0.22)]">
+        {% render 'icons-v2', icon: 'icon-search', classes: 'sw-w-4 sw-h-4 sw-flex-shrink-0' %}
+        <input
+          type="text"
+          name="q"
+          id="search-popup-input"
+          autocomplete="off"
+          class="sw-flex-1 sw-outline-none sw-border-0 sw-bg-transparent sw-p-0 sw-text-sm sw-font-secondary sw-text-purple-900 placeholder:sw-text-purple-300"
+        >
+        <button
+          type="button"
+          data-role="clear-search"
+          class="sw-hidden sw-w-5 sw-h-5 sw-flex-shrink-0 sw-text-purple-400 hover:sw-text-purple-600"
+          aria-label="Clear search"
+        >
+          {% render 'icons-v2', icon: 'icon-close', classes: 'sw-w-3.5 sw-h-3.5' %}
+        </button>
+        <span
+          data-role="search-loading"
+          class="sw-hidden sw-w-4 sw-h-4 sw-flex-shrink-0 sw-rounded-full sw-border-2 sw-border-purple-200 [border-top-color:#9333ea] sw-animate-spin"
+        ></span>
+      </div>
+      <button
+        type="button"
+        data-role="search-cancel"
+        class="sw-text-purple-600 sw-font-secondary sw-font-medium sw-text-sm sw-flex-shrink-0 sw-whitespace-nowrap"
+      >
+        Cancel
+      </button>
+    </form>
+
+    <div class="sw-px-4 sw-pb-8">
+
+      <!-- Default content: shown when input is empty -->
+      <div data-role="default-content">
+
+        <!-- Trending Searches -->
+        {% if section.settings.trending_searches %}
+          <div class="sw-mb-6 sw-mt-4">
+            {% if section.settings.search_keyword_title != blank %}
+              <p class="sw-text-xs sw-font-secondary sw-font-semibold sw-text-purple-600 sw-uppercase sw-tracking-widest sw-mb-3">
+                <span style="color:#D4A24C;">✦</span> {{ section.settings.search_keyword_title }}
+              </p>
+            {% endif %}
+            {% assign search_keywords = section.settings.search_keywords | split: ',' %}
+            <div class="sw-flex sw-flex-wrap sw-gap-2">
+              <div>
+                <input type="radio" name="search-keyword" value="" id="kw-all" class="sw-hidden sw-peer/kw" checked>
+                <label for="kw-all" class="sw-cursor-pointer sw-inline-block sw-px-4 sw-py-2 sw-rounded-full sw-text-sm sw-font-secondary sw-font-medium sw-border sw-border-[rgba(168,85,247,0.25)] sw-text-[#6b21a8] sw-bg-white sw-transition-all peer-[:checked]/kw:sw-bg-[linear-gradient(135deg,rgb(236,72,153),rgb(168,85,247))] peer-[:checked]/kw:sw-text-white peer-[:checked]/kw:sw-border-transparent">All</label>
+              </div>
+              {% for keyword in search_keywords %}
+                {% assign kw_clean = keyword | strip %}
+                {% assign kw_id = kw_clean | downcase | replace: ' ', '_' | replace: '&', 'and' %}
+                <div>
+                  <input type="radio" name="search-keyword" value="{{ kw_clean | downcase }}" id="kw_{{ kw_id }}" class="sw-hidden sw-peer/kw">
+                  <label for="kw_{{ kw_id }}" class="sw-cursor-pointer sw-inline-block sw-px-4 sw-py-2 sw-rounded-full sw-text-sm sw-font-secondary sw-font-medium sw-border sw-border-[rgba(168,85,247,0.25)] sw-text-[#6b21a8] sw-bg-white sw-transition-all peer-[:checked]/kw:sw-bg-[linear-gradient(135deg,rgb(236,72,153),rgb(168,85,247))] peer-[:checked]/kw:sw-text-white peer-[:checked]/kw:sw-border-transparent">{{ kw_clean }}</label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- Recommended Products -->
+        {% if section.settings.recommended_collection %}
+          {% assign rec_products = section.settings.recommended_collection.products %}
+          {% if rec_products.size > 0 %}
+            <div class="sw-mb-6">
+              {% if section.settings.recommended_products_title != blank %}
+                <p class="sw-text-lg sw-font-primary sw-font-bold sw-text-purple-900 sw-mb-4">{{ section.settings.recommended_products_title }}</p>
+              {% endif %}
+              <div class="sw-grid sw-grid-cols-2 lg:sw-grid-cols-3 sw-gap-3">
+                {% for product in rec_products limit: 6 %}
+                  {% if product.available %}
+                    {% render 'search-product-card-v2', card_product: product %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+
+        <!-- Coupon Cards -->
+        {% assign coupon_blocks = section.blocks | where: 'type', 'coupon_card' %}
+        {% if coupon_blocks.size > 0 %}
+          <div class="sw-mt-6 sw-mb-2">
+            {% if section.settings.coupon_section_title != blank %}
+              <p class="sw-text-lg sw-font-primary sw-font-bold sw-text-purple-900 sw-mb-4">{{ section.settings.coupon_section_title }}</p>
+            {% endif %}
+            <div class="coupon-scroll sw-flex sw-gap-3 sw-overflow-x-auto sw-pb-2 sw--mx-4 sw-px-4 lg:sw-grid lg:sw-grid-cols-2 lg:sw-overflow-x-visible lg:sw-mx-0 lg:sw-px-0">
+              {% for block in coupon_blocks %}
+                <div
+                  class="sw-flex-shrink-0 sw-w-[80vw] sw-max-w-[320px] lg:sw-w-auto lg:sw-max-w-none sw-rounded-2xl sw-p-4 sw-relative sw-overflow-hidden"
+                  style="background: linear-gradient(135deg, {{ block.settings.bg_from }}, {{ block.settings.bg_to }});"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="sw-flex sw-items-start sw-justify-between sw-mb-3">
+                    <div class="sw-inline-flex sw-items-center sw-bg-black/25 sw-rounded-full sw-px-3 sw-py-1.5">
+                      <span class="sw-text-white sw-text-xs sw-font-secondary sw-font-semibold sw-tracking-wide">{{ block.settings.badge_text }}</span>
+                    </div>
+                    <span class="sw-text-white/40 sw-text-base sw-leading-none sw-mt-1">+</span>
+                  </div>
+                  <p class="sw-text-white sw-font-primary sw-text-xl sw-leading-snug sw-mb-4">{{ block.settings.description }}</p>
+                  <div class="sw-flex sw-items-center sw-rounded-xl [border:1.5px_dashed_rgba(255,255,255,0.35)] sw-p-1">
+                    <span class="sw-flex-1 sw-text-white sw-font-secondary sw-font-semibold sw-text-sm sw-tracking-widest sw-pl-3">{{ block.settings.coupon_code }}</span>
+                    <button
+                      type="button"
+                      data-role="copy-coupon"
+                      data-code="{{ block.settings.coupon_code }}"
+                      class="sw-bg-white sw-text-purple-900 sw-font-secondary sw-font-bold sw-text-sm sw-px-5 sw-py-2.5 sw-rounded-lg sw-flex-shrink-0 sw-transition-all"
+                    >Copy</button>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+      </div><!-- /default-content -->
+
+      <!-- Search results: shown when query has matches -->
+      <div data-role="search-results" class="sw-hidden sw-mt-4"></div>
+
+      <!-- Empty state: shown when query has no matches -->
+      <div data-role="empty-state" class="sw-hidden">
+
+        <div class="sw-flex sw-flex-col sw-items-center sw-py-10">
+          <div class="sw-w-20 sw-h-20 sw-rounded-full sw-bg-purple-100/70 sw-flex sw-items-center sw-justify-center sw-mb-5">
+            {% render 'icons-v2', icon: 'icon-search', classes: 'sw-w-8 sw-h-8' %}
+          </div>
+          <p data-role="no-results-query" class="sw-text-purple-900 sw-font-primary sw-font-bold sw-text-xl sw-mb-1 sw-text-center"></p>
+          <p class="sw-text-purple-400 sw-font-secondary sw-text-sm sw-text-center">Try something different</p>
+        </div>
+
+        {% if section.settings.recommended_collection %}
+          {% assign rec_products = section.settings.recommended_collection.products %}
+          {% if rec_products.size > 0 %}
+            <div>
+              {% if section.settings.recommended_products_title != blank %}
+                <p class="sw-text-lg sw-font-primary sw-font-bold sw-text-purple-900 sw-mb-4">{{ section.settings.recommended_products_title }}</p>
+              {% endif %}
+              <div class="sw-grid sw-grid-cols-2 lg:sw-grid-cols-3 sw-gap-3">
+                {% for product in rec_products limit: 6 %}
+                  {% if product.available %}
+                    {% render 'search-product-card-v2', card_product: product %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div><!-- /empty-state -->
+
+    </div><!-- /content -->
+    </div><!-- /max-width wrapper -->
+  </div>
+</search-popup>
+
+<style>
+  search-popup [data-role="search-panel"] {
+    transform: translateY(-100%);
+    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  search-popup [data-role="search-panel"].is-open {
+    transform: translateY(0);
+    pointer-events: all;
+  }
+  .coupon-scroll::-webkit-scrollbar { display: none; }
+  .coupon-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+{% render 'vite-tag' with 'search-v2.js' %}
+
+{% schema %}
+{
+  "name": "Search Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "animation_keywords",
+      "label": "Typing Animation Keywords (comma-separated)",
+      "default": "Love readings..., Career guidance..., Energy & Chakra..., Astrology insights..."
+    },
+    {
+      "type": "checkbox",
+      "id": "trending_searches",
+      "label": "Show Trending Searches",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_keyword_title",
+      "label": "Trending Section Label",
+      "default": "Trending Searches"
+    },
+    {
+      "type": "text",
+      "id": "search_keywords",
+      "label": "Trending Keywords (comma-separated)",
+      "default": "Love, Career, Energy & Chakra, Astrology"
+    },
+    {
+      "type": "collection",
+      "id": "recommended_collection",
+      "label": "Recommended Products Collection"
+    },
+    {
+      "type": "text",
+      "id": "recommended_products_title",
+      "label": "Recommended Products Title",
+      "default": "Recommended Products"
+    },
+    {
+      "type": "text",
+      "id": "coupon_section_title",
+      "label": "Coupon Section Title",
+      "info": "Leave blank to hide the title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "coupon_card",
+      "name": "Coupon Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text",
+          "default": "+ BUY 2, GET 1"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Offer Description",
+          "default": "Pick any 2 readings, third is free"
+        },
+        {
+          "type": "text",
+          "id": "coupon_code",
+          "label": "Coupon Code",
+          "default": "B1G1"
+        },
+        {
+          "type": "color",
+          "id": "bg_from",
+          "label": "Gradient Start Color",
+          "default": "#7C3AED"
+        },
+        {
+          "type": "color",
+          "id": "bg_to",
+          "label": "Gradient End Color",
+          "default": "#9D174D"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search Bar"
+    }
+  ]
+}
+{% endschema %}
